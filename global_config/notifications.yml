@@ -1,0 +1,8 @@
+Notifications:
+ smtp_server: plnorelay.netscout.com
+ port: 25
+ password:
+ from: tools@netscout.com
+ receiver:
+  - eduardo.rodriguez@netscout.com
+  - devangshu.pal@netscout.com

@@ -1,0 +1,20 @@
+Service:
+ Customer: Netscout
+ Service_Category: Links
+ Key: Netscout;All;nG1;Links;Drill
+ Description: Monthly Drill Down Feed of Links KPIs from nG1 
+ query_file: nG1_queries/links_drilldown/service_linksDrillTopN_SanJose_monthly.xml
+ logging: logs/linksDrilldown_vaaspipe.log
+ logging_level: INFO
+ filename: links_nG1_Drill_TopN_{Location}
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+  - Customer
+  - Service
+  - Location
+  - Date
+  - appId
+  - totalTransactions
+  - networkServiceId
+  - appId_String
+  - networkServiceId_String

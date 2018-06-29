@@ -1,0 +1,24 @@
+Service:
+ Customer: Netscout
+ Service_Category: Unified Communications
+ Key: Netscout;All;nG1;UnifiedCommunications
+ Description: Monthly Feed of Unified Communications KPIs from nG1
+ query_file: nG1_queries/service_uc_monthly.xml
+ logging: logs/uc_monthly_vaaspipe.log
+ logging_level: INFO
+ filename: unifiedCommunications_nG1_Monthly_
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+  - Customer
+  - Service
+  - Location
+  - Date
+  - targetTime
+  - ucServiceId
+  - mosBucket3In
+  - mosBucket2In
+  - mosBucket1In
+  - seizures
+  - acceptablePercent
+  - targetTime_String
+  - ucServiceId_String

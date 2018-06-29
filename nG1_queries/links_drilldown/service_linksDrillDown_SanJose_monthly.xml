@@ -1,0 +1,25 @@
+<GenericClientQuery>
+<NetworkObjectData>
+<NetworkParameter>APPLICATION</NetworkParameter>
+<SelectColumnList><ClientColumn>utilizationIn</ClientColumn>
+<ClientColumn>octets</ClientColumn><ClientColumn>utilization</ClientColumn>
+<ClientColumn>octetsIn</ClientColumn><ClientColumn>utilizationOut</ClientColumn>
+<ClientColumn>octetsOut</ClientColumn><ClientColumn>memberId</ClientColumn>
+</SelectColumnList>
+</NetworkObjectData><FlowFilterList><FlowFilter appliedServiceType="nwtservice" serviceId="150310811" serviceType="nwtservice">
+<FilterList>
+<networkServiceId>150310811</networkServiceId>
+</FilterList></FlowFilter></FlowFilterList>
+<FunctionList><Function><name>TopN</name><column>utilization</column><order>descending</order><nValue>1000000</nValue></Function></FunctionList>
+<TimeDef>
+<duration>LAST_MONTH</duration>
+<resolution>NO_RESOLUTION</resolution>
+</TimeDef>
+<AggregateFlags><aggregateMe>false</aggregateMe><aggregateApp>true</aggregateApp></AggregateFlags>
+<params><updateKeys>false</updateKeys></params>
+</GenericClientQuery>
+<!--148735991   Westford ALL Links
+150310084       Plano ALL Links
+150310811       San Jose ALL Links
+160637025       MS - PUN ALL Links
+160638846       MS - DUB ALL Links-->

@@ -1,0 +1,23 @@
+<GenericClientQuery>
+<NetworkObjectData><NetworkParameter>APPLICATION</NetworkParameter>
+<SelectColumnList>
+<ClientColumn>ucServiceId</ClientColumn>
+<ClientColumn>targetTime</ClientColumn>
+<ClientColumn>completedStreams</ClientColumn>
+<ClientColumn>avgPacketLossPercent</ClientColumn>
+<ClientColumn>qosMismatchCompletedStreams</ClientColumn>
+<ClientColumn>singleDirCompletedStreams</ClientColumn>
+<ClientColumn>shortCountCompletedStreams</ClientColumn>
+</SelectColumnList>
+</NetworkObjectData><FlowFilterList><FlowFilter appliedServiceType="appservice" serviceId="161319361" serviceType="domain">
+<FilterList><domainId>161319361</domainId>
+</FilterList></FlowFilter></FlowFilterList>
+<FunctionList>
+</FunctionList>
+<TimeDef>
+<duration>YESTERDAY</duration>
+<resolution>ONE_DAY</resolution></TimeDef>
+<AggregateFlags><aggregateMe>false</aggregateMe>
+<aggregateApp>false</aggregateApp></AggregateFlags>
+<params><updateKeys>false</updateKeys></params>
+</GenericClientQuery>

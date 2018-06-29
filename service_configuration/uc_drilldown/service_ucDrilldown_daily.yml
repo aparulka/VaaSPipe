@@ -1,0 +1,23 @@
+Service:
+ Customer: Netscout
+ Service_Category: Unified Communications
+ Key: Netscout;All;nG1;UnifiedCommunications;Drill
+ Description: Daily Feed of Unified Communications KPIs from nG1
+ query_file: nG1_queries/uc_drilldown/service_ucDrillDown_daily.xml
+ logging: logs/uc_vaaspipe.log
+ logging_level: INFO
+ filename: unifiedCommunications_nG1_Daily_Drill_
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+ - Customer
+ - Service
+ - Location
+ - Date
+ - ucServiceId
+ - targetTime
+ - singleDirCompletedStreams
+ - shortCountCompletedStreams
+ - completedStreams
+ - qosMismatchCompletedStreams
+ - ucServiceId_String 
+ - targetTime_String

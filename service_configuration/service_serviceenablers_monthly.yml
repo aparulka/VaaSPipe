@@ -1,0 +1,23 @@
+Service:
+ Customer: Netscout
+ Service_Category: Service Enablers
+ Key: Netscout;All;nG1;ServiceEnablers
+ Description: Monthly Feed of Service Enablers KPIs from nG1
+ query_file: nG1_queries/service_serviceenablers_monthly.xml
+ logging: logs/serviceenablers_monthly_vaaspipe.log
+ logging_level: INFO
+ filename: serviceEnablers_nG1_Monthly_
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+  - Customer
+  - Service
+  - Location
+  - Date
+  - serviceId
+  - targetTime
+  - failedTransactions
+  - totalTransactions
+  - responseTime
+  - failedPercentage
+  - serviceId_String
+  - targetTime_String

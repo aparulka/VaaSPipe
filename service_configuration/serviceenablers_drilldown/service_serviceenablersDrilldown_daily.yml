@@ -1,0 +1,25 @@
+Service:
+ Customer: Netscout
+ Service_Category: Service Enablers
+ Key: Netscout;All;nG1;ServiceEnablers;Drill
+ Description: Daily Feed of Service Enablers Drill Down KPIs from nG1
+ query_file: nG1_queries/se_drilldown/service_serviceenablersDrillDown_daily.xml
+ logging: logs/serviceenablers_vaaspipe.log
+ logging_level: INFO
+ filename: serviceenablers_nG1_Daily_Drill_
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+  - Customer
+  - Service
+  - Location
+  - Date
+  - appId
+  - errorCode
+  - messageId
+  - targetTime
+  - errorCount
+  - serviceId
+  - appId_String
+  - messageId_String
+  - targetTime_String
+  - serviceId_String

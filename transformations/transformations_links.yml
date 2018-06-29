@@ -1,0 +1,18 @@
+Transformations:
+ Customer:
+  type: simple
+  default: Netscout
+ Location:
+  type: simple
+  default: Netscout
+  lookup_column: networkServiceId_String
+  mapping_file: service_mappings/links.cfg
+ Service:
+  type: simple
+  default: 'Links'
+  lookup_column: networkServiceId_String
+  mapping_file: service_mappings/links.cfg
+ Date:
+  type: date
+  lookup_column: targetTime_String
+  date_format: '%d-%m-%Y %H:%M:%S'
