@@ -27,13 +27,16 @@ logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s]:[%(levelname)s]:%
 
 
 logging.info("Query File: "+service['Service']['query_file'])
+query_file=open(service['Service']['query_file'], 'rb')
+
 api_response = vaas_de.query_dbONE(datasource.get('nG1_API').get('host'), 
                                    datasource.get('nG1_API').get('port'), 
 								   #datasource.get('nG1_API').get('query'), 
-								   open(service['Service']['query_file'], 'r'),
+								   query_file,
 								   datasource.get('nG1_API').get('user'), 
 								   datasource.get('nG1_API').get('password'))
 
+query_file.close()
 logging.info("=========== Start Transformations ======")
 
 result =   vaas_de.transformation(api_response.text, service['Service']['output_format'],

@@ -2,10 +2,14 @@ import csv
 from io import StringIO
 import requests
 import logging
-import os
-os.environ["REQUESTS_CA_BUNDLE"] = "cacert.pem"
 import datetime
 from dateutil.parser import parse
+from dateutil.tz import gettz
+
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning) # https://stackoverflow.com/questions/27981545/suppress-insecurerequestwarning-unverified-https-request-is-being-made-in-pytho
+
+
 
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -15,6 +19,7 @@ from email import encoders
 
 dbONE_API_headers= {'Content-Type': 'text/xml;charset=UTF-8'}
 service_mappings_separator="\t"
+tzinfos = {"EDT": gettz("America/Boston")}
 
 
 def query_dbONE(host, port, query, username, password, headers=dbONE_API_headers, api_version=None, verify=False, conversion='true',DT='csv', encrypted='false'):
@@ -100,7 +105,8 @@ def transformation_simple(record, headers, mapping, transformations):
 	logging.info("A simple transformation: "+ mapping)
 	
 	try:
-		lookups = list(csv.DictReader(open(transformations['mapping_file'], 'r'), delimiter=service_mappings_separator))
+		with open(transformations['mapping_file'], 'r') as mappings:
+			lookups = list(csv.DictReader(mappings, delimiter=service_mappings_separator))
 		lookup_column = headers.index(transformations['lookup_column'])
 		
 		for lookup in lookups:
@@ -117,7 +123,7 @@ def transformation_date(record, headers, mapping, transformations):
 		
 		lookup_column = headers.index(transformations['lookup_column'])	
 		
-		return datetime.date.strftime(parse( record[lookup_column] ) , transformations['date_format'])
+		return datetime.date.strftime(parse( record[lookup_column], tzinfos=tzinfos ) , transformations['date_format'])
 	except:
 		return "00-0-0000 00:00:00"
 	
