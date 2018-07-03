@@ -5,6 +5,7 @@ import logging
 import datetime
 from dateutil.parser import parse
 from dateutil.tz import gettz
+from dateutil.relativedelta import relativedelta
 
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning) # https://stackoverflow.com/questions/27981545/suppress-insecurerequestwarning-unverified-https-request-is-being-made-in-pytho
@@ -83,7 +84,9 @@ def transformation(text, output_headers, transformations):
 				if transformations[out_field]['type'] == 'simple':
 					eRow.append(transformation_simple(result, api_headers, out_field, transformations[out_field]))
 				if 	transformations[out_field]['type'] == 'date':
-					eRow.append(transformation_date(result, api_headers, out_field, transformations[out_field]))				
+					eRow.append(transformation_date(result, api_headers, out_field, transformations[out_field]))
+				if 	transformations[out_field]['type'] == 'date_injection':
+					eRow.append(transformation_date_injection(result, api_headers, out_field, transformations[out_field]))				
 				# eRow.append( "transformation_"+transformations[out_field]['type']() )		
 				
 				
@@ -119,14 +122,34 @@ def transformation_simple(record, headers, mapping, transformations):
 def transformation_date(record, headers, mapping, transformations):
 
 	try:
-		logging.info("A data transformation: "+ mapping)
+		logging.info("A date transformation: "+ mapping)
 		
 		lookup_column = headers.index(transformations['lookup_column'])	
 		
 		return datetime.date.strftime(parse( record[lookup_column], tzinfos=tzinfos ) , transformations['date_format'])
 	except:
 		return "00-0-0000 00:00:00"
+
+def transformation_date_injection(record, headers, mapping, transformations):
+	try:
+		logging.info("A date injection transformation: "+ mapping)
+
+		relativedelta_params = transformations['relativedelta']
+		replace_params = transformations['replace']
+		
+		logging.debug(relativedelta_params)
+		logging.debug(replace_params)
+
+		server_time = datetime.datetime.now()
+
+		transformed_time = (server_time + relativedelta(**relativedelta_params)).replace(**replace_params)
+		logging.debug("transformed_time: "+ transformed_time)
 	
+		return datetime.date.strftime( transformed_time , transformations['date_format'])
+	except:
+		return "00-0-0000 00:00:00"
+
+
 	
 def send_notification(server, port, from_email, to_email, subject, msg_body, attachment, filename, tls = 0, password = None):
 	msg = MIMEMultipart()

@@ -3,34 +3,3 @@ nG1_API:
  port: 8443
  user: svc-dBONE
  password: F34Mu93S7Rv6
- query: | 
-   <GenericClientQuery>
-   <NetworkObjectData>
-   <NetworkParameter>APPLICATION</NetworkParameter>
-   <SelectColumnList>
-   <ClientColumn>totalTransactions</ClientColumn>
-   <ClientColumn>responseTime</ClientColumn>
-   <ClientColumn>failedTransactions</ClientColumn>
-   <ClientColumn>serviceId</ClientColumn>
-   <ClientColumn>failedPercentage</ClientColumn>
-   <ClientColumn>targetTime</ClientColumn>
-   </SelectColumnList>
-   </NetworkObjectData>
-   <FlowFilterList><FlowFilter appliedServiceType="appservice" serviceId="160072365" serviceType="domain">
-   <FilterList><domainId>161319272</domainId></FilterList>
-   </FlowFilter></FlowFilterList>
-   <FunctionList>
-   <Function>
-   <name>Percent</name><numerator>failedTransactions</numerator><denominator>totalTransactions</denominator><ClientColumn>failedPercentage</ClientColumn>
-   </Function></FunctionList>
-   <TimeDef>
-   <duration>YESTERDAY</duration>
-   <resolution>ONE_DAY</resolution>
-   <!--startTime>2018-05-15_00:00:00</startTime>
-   <endTime>2018-05-16_00:00:00</endTime-->
-   </TimeDef>
-   <AggregateFlags><aggregateMe>false</aggregateMe>
-   <aggregateApp>false</aggregateApp></AggregateFlags>
-   <params><updateKeys>false</updateKeys></params>
-   </GenericClientQuery>
- 

@@ -1,0 +1,22 @@
+Service:
+ Customer: Netscout
+ Service_Category: Links
+ Key: Netscout;All;nG1;Links;Drill
+ Description: Daily Applications Errors on Links KPIs from nG1
+ query_file: nG1_queries/links/service_linksDrillTopN_SanJose_daily.xml
+ logging: logs/linksDrilldown_vaaspipe.log
+ logging_level: INFO
+ filename: links_nG1_Drill_TopN_SanJose
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+  - Customer
+  - Service
+  - Location
+  - Date
+  - appId
+  - totalTransactions
+  - networkServiceId
+  - appId_String
+  - networkServiceId_String
+  - targetTime
+  - targetTime_String

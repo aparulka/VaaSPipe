@@ -1,0 +1,45 @@
+<GenericClientQuery>
+<NetworkObjectData>
+<NetworkParameter>APPLICATION</NetworkParameter>
+<SelectColumnList>
+<ClientColumn>networkServiceId</ClientColumn>
+<ClientColumn>ipAddress</ClientColumn>
+<ClientColumn>ifn</ClientColumn>
+<ClientColumn>octets</ClientColumn>
+<ClientColumn>octetsIn</ClientColumn>
+<ClientColumn>octetsOut</ClientColumn>
+<ClientColumn>targetTime</ClientColumn>
+<ClientColumn>utilization</ClientColumn>
+<ClientColumn>utilizationIn</ClientColumn>
+<ClientColumn>utilizationOut</ClientColumn>
+</SelectColumnList>
+</NetworkObjectData>
+<FlowFilterList>
+<FlowFilter>
+<FilterList>
+<networkServiceId>160638846</networkServiceId>
+</FilterList>
+</FlowFilter>
+</FlowFilterList>
+<FunctionList/>
+<TimeDef>
+<duration>YESTERDAY</duration>
+<resolution>ONE_DAY</resolution>
+</TimeDef>
+<AggregateFlags>
+<aggregateMe/>
+<aggregateApp/>
+</AggregateFlags>
+<params>
+<updateKeys/>
+<includeVirtual/>
+<skipAggregation>false</skipAggregation>
+<skipBusinessLogic/>
+</params>
+</GenericClientQuery>
+
+<!--148735991   Westford ALL Links
+150310084       Plano ALL Links
+150310811       San Jose ALL Links
+160637025       MS - PUN ALL Links
+160638846       MS - DUB ALL Links-->
