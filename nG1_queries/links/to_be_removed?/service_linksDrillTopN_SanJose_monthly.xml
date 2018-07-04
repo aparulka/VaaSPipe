@@ -1,6 +1,7 @@
 <GenericClientQuery>
 <NetworkObjectData><NetworkParameter>APPLICATION</NetworkParameter>
 <SelectColumnList>
+<ClientColumn>targetTime</ClientColumn>
 <ClientColumn>networkServiceId</ClientColumn>
 <ClientColumn>totalTransactions</ClientColumn>
 <ClientColumn>networkServiceId</ClientColumn>

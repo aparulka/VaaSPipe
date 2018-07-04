@@ -1,6 +1,7 @@
 <GenericClientQuery>
 <NetworkObjectData><NetworkParameter>APPLICATION</NetworkParameter>
 <SelectColumnList>
+<ClientColumn>targetTime</ClientColumn>
 <ClientColumn>networkServiceId</ClientColumn>
 <ClientColumn>totalTransactions</ClientColumn>
 <ClientColumn>networkServiceId</ClientColumn>
@@ -15,7 +16,7 @@
 <FunctionList><Function><name>TopN</name><column>totalTransactions</column><order>descending</order><nValue>10</nValue></Function></FunctionList>
 <TimeDef>
 <duration>YESTERDAY</duration>
-<resolution>NO_RESOLUTION</resolution>
+<resolution>ONE_DAY</resolution>
 </TimeDef>
 <AggregateFlags><aggregateMe>true</aggregateMe><aggregateApp>false</aggregateApp></AggregateFlags>
 <params><updateKeys>false</updateKeys></params>

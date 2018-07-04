@@ -5,6 +5,7 @@
 <ClientColumn>octets</ClientColumn><ClientColumn>utilization</ClientColumn>
 <ClientColumn>octetsIn</ClientColumn><ClientColumn>utilizationOut</ClientColumn>
 <ClientColumn>octetsOut</ClientColumn><ClientColumn>memberId</ClientColumn>
+<ClientColumn>targetTime</ClientColumn>
 </SelectColumnList>
 </NetworkObjectData><FlowFilterList><FlowFilter appliedServiceType="nwtservice" serviceId="150310084" serviceType="nwtservice">
 <FilterList>

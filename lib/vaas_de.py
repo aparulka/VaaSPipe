@@ -10,6 +10,7 @@ from dateutil.relativedelta import relativedelta
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning) # https://stackoverflow.com/questions/27981545/suppress-insecurerequestwarning-unverified-https-request-is-being-made-in-pytho
 
+import sys, traceback
 
 
 import smtplib
@@ -142,11 +143,18 @@ def transformation_date_injection(record, headers, mapping, transformations):
 
 		server_time = datetime.datetime.now()
 
+		logging.debug("server_time: "+ str(server_time))
+
 		transformed_time = (server_time + relativedelta(**relativedelta_params)).replace(**replace_params)
-		logging.debug("transformed_time: "+ transformed_time)
+
+		logging.debug("transformed_time: "+ str(transformed_time))
 	
 		return datetime.date.strftime( transformed_time , transformations['date_format'])
-	except:
+	except Exception:
+		print("Exception in user code:")
+		print("-"*60)
+		traceback.print_exc(file=sys.stdout)
+		print("-"*60)
 		return "00-0-0000 00:00:00"
 
 

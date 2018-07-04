@@ -5,10 +5,11 @@
 <ClientColumn>octets</ClientColumn><ClientColumn>utilization</ClientColumn>
 <ClientColumn>octetsIn</ClientColumn><ClientColumn>utilizationOut</ClientColumn>
 <ClientColumn>octetsOut</ClientColumn><ClientColumn>memberId</ClientColumn>
+<ClientColumn>targetTime</ClientColumn>
 </SelectColumnList>
 </NetworkObjectData><FlowFilterList><FlowFilter appliedServiceType="nwtservice" serviceId="148735991" serviceType="nwtservice">
 <FilterList>
-<networkServiceId>148735991</networkServiceId>
+<networkServiceId>160638846</networkServiceId>
 </FilterList></FlowFilter></FlowFilterList>
 <FunctionList><Function><name>TopN</name><column>utilization</column><order>descending</order><nValue>1000000</nValue></Function></FunctionList>
 <TimeDef>
