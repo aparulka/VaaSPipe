@@ -1,7 +1,7 @@
 Service:
  Customer: Netscout
  Service_Category: Service Enablers
- Key: Netscout;All;nG1;ServiceEnablers
+ Key: PHASE 2;Netscout;All;nG1;ServiceEnablers;Daily
  Description: Daily Feed of Service Enablers KPIs from nG1 
  query_file: nG1_queries/service_enablers/service_enablers_daily.xml
  logging: logs/serviceenablers_vaaspipe.log

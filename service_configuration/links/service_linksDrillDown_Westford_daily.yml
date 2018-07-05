@@ -1,7 +1,7 @@
 Service:
  Customer: Netscout
  Service_Category: Links
- Key: Netscout;All;nG1;Links;Drill
+ Key: PHASE 2;Netscout;Westford;nG1;Links;Daily;Drill
  Description: Daily Drill Feed of Links KPIs from nG1 
  query_file: nG1_queries/links/service_linksDrillDown_Westford_daily.xml
  logging: logs/linksDrilldown_vaaspipe.log
@@ -11,6 +11,7 @@ Service:
  output_format:
   - Customer
   - Service
+  - networkServiceId
   - Location
   - Date
   - octetsIn

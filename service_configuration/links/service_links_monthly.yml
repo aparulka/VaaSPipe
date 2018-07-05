@@ -1,7 +1,7 @@
 Service:
  Customer: Netscout
  Service_Category: Links
- Key: Netscout;All;nG1;Links
+ Key: PHASE 2;Netscout;All;nG1;Links;Monthly
  Description: Monthly Feed of Links KPIs from nG1
  query_file: nG1_queries/links/service_links_monthly.xml
  logging: logs/links_monthly_vaaspipe.log

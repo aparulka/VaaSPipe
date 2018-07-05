@@ -1,7 +1,7 @@
 Service:
  Customer: Netscout
  Service_Category: Links
- Key: Netscout;All;nG1;Links;Drill
+ Key: PHASE 2;Netscout;Dublin;nG1;Links;TopN;Daily
  Description: Daily Applications Errors on Links KPIs from nG1 
  query_file: nG1_queries/links/service_linksDrillTopN_Dublin_daily.xml
  logging: logs/linksDrilldown_vaaspipe.log

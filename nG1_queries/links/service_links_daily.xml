@@ -4,8 +4,12 @@
 <SelectColumnList>
 <ClientColumn>networkServiceId</ClientColumn>
 <ClientColumn>octets</ClientColumn>
+<ClientColumn>octetsIn</ClientColumn>
+<ClientColumn>octetsOut</ClientColumn>
 <ClientColumn>targetTime</ClientColumn>
 <ClientColumn>utilization</ClientColumn>
+<ClientColumn>utilizationIn</ClientColumn>
+<ClientColumn>utilizationOut</ClientColumn>
 </SelectColumnList>
 </NetworkObjectData>
 <FlowFilterList>

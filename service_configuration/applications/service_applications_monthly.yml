@@ -1,7 +1,7 @@
 Service:
  Customer: Netscout
  Service_Category: Applications
- Key: Netscout;All;nG1;Applications
+ Key: PHASE 2;Netscout;All;nG1;Applications;Monthly
  Description: Monthly Feed of Applications KPIs from nG1
  query_file: nG1_queries/applications/service_applications_monthly.xml
  logging: logs/applications_monthly_vaaspipe.log

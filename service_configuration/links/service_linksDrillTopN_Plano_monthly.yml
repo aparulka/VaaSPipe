@@ -1,7 +1,7 @@
 Service:
  Customer: Netscout
  Service_Category: Links
- Key: Netscout;All;nG1;Links;Drill
+ Key: PHASE 2;Netscout;Plano;nG1;Links;TopN;Monthly
  Description: Monthly Drill Down Feed of Links KPIs from nG1 
  query_file: nG1_queries/links/service_linksDrillTopN_Plano_monthly.xml
  logging: logs/linksDrilldown_vaaspipe.log
