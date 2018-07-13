@@ -13,12 +13,11 @@ Service:
   - Service
   - Location
   - Date
-  - serviceId
-  - targetTime
-  - failedTransactions
   - totalTransactions
   - responseTime
+  - failedTransactions
+  - serviceId
   - failedPercentage
+  - targetTime
   - serviceId_String
   - targetTime_String
-

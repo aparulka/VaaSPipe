@@ -14,8 +14,14 @@ Service:
   - Location
   - Date
   - utilization
+  - utilizationIn  
+  - utilizationOut
   - networkServiceId
-  - targetTime
-  - octets
+  - Time
+  - Volume  
+  - octetsIn
+  - octetsOut  
   - networkServiceId_String
   - targetTime_String
+  
+

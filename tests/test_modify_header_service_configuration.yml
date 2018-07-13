@@ -1,0 +1,19 @@
+Service:
+ Customer: TEST_CUSTOMER
+ Service_Category: TEST
+ Key: TEST_CUSTOMER;All;nG1;TEST
+ Description: Daily Feed of Test KPIs from nG1
+ query_file: test_query_daily.xml
+ logging: logs/tests_vaaspipe.log
+ logging_level: INFO
+ filename: test_nG1_Daily_
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+  - serviceId
+  - TimeMODIFIED
+  - failedTransactions
+  - VolumeMODIFIED
+  - responseTime
+  - failedPercentage
+  - serviceId_String
+  - targetTime_String

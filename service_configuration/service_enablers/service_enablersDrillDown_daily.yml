@@ -3,7 +3,7 @@ Service:
  Service_Category: Service Enablers
  Key: PHASE 2;Netscout;All;nG1;ServiceEnablers;Daily;Drill
  Description: Daily Feed of Service Enablers Drill Down KPIs from nG1
- query_file: nG1_queries/service_enablers/service_serviceenablersDrillDown_daily.xml
+ query_file: nG1_queries/service_enablers/service_enablersDrillDown_daily.xml
  logging: logs/serviceenablers_vaaspipe.log
  logging_level: INFO
  filename: serviceenablers_nG1_Daily_Drill_

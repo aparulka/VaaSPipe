@@ -17,12 +17,12 @@ Service:
   - mosBucket2In
   - mosBucket1In
   - ucServiceId
-  - seizures
-  - acceptablePercent
+  - Total_Transactions
+  - Avg_Good_Mos
   - singleDirCompletedStreams
   - shortCountCompletedStreams
   - completedStreams
   - qosMismatchCompletedStreams
-  - targetTime
+  - Time
   - ucServiceId_String
   - targetTime_String

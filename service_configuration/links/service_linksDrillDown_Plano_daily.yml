@@ -11,16 +11,16 @@ Service:
  output_format:
   - Customer
   - Service
-  - networkServiceId
   - Location
   - Date
-  - octetsIn
-  - octetsOut
   - utilizationIn
-  - octets
   - utilization
   - utilizationOut
+  - networkServiceId
+  - Time
+  - Volume
+  - octetsIn
+  - octetsOut
   - ifn 
   - ipAddress
-  - targetTime
   - targetTime_String

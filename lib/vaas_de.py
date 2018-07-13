@@ -56,7 +56,7 @@ def transformation(text, output_headers, transformations):
 	header: a list containing the name of columns expected in the output
 	e.g.
 	text= 'serviceId,targetTime,failedTransactions,totalTransactions,responseTime,failedPercentage,serviceId_String,targetTime_String\n122029775,1529208000000,0,63203,146333.6818896887,0.0,"O365 Authentication (Pune)","Sun Jun 17 00:00:00 EDT 2018"\n122030298,1529208000000,0,414200,280154.0962761872,0.0,"O365 Exchange (Pune)","Sun Jun 17 00:00:00 EDT 2018"\n148578737,1529208000000,0,60359,285514.9159168117,0.0,"SalesForce (Pune)","Sun Jun 17 00:00:00 EDT 2018"\n94846774,1529208000000,0,37689,73932.96659587379,0.0,"O365 SharepointOnline (San Jose)","Sun Jun 17 00:00:00 EDT 2018"\n143019858,1529208000000,0,30682,82367.30223308883,0.0,"O365 Exchange (San Jose)","Sun Jun 17 00:00:00 EDT 2018"\n122029802,1529208000000,24,98316,80757.40459491647,0.024411082,"O365 Authentication (San Jose)","Sun Jun 17 00:00:00 EDT 2018"\n146302544,1529208000000,0,34668,43192.169221000375,0.0,"SalesForce (San Jose)","Sun Jun 17 00:00:00 EDT 2018"'
-	
+	 
 	headers = ['Customer', 'Service', 'Location', 'Date', 'mosBucket3In', 'mosBucket2In', 'mosBucket1In', 'ucServiceId', 'Total_Transactions', 'Avg_Good_Mos', 'Time', 'ucServiceId_String', 'targetTime_String']
 	
 	'''
@@ -66,33 +66,63 @@ def transformation(text, output_headers, transformations):
 	logging.debug(result_set)
 	logging.debug("======RESULT SET========<<<<")
 	
+	
+	
+	Header=True if 'Header' in transformations.keys() else False
+	
+	if Header:
+		if 'add_header' in transformations['Header'].keys():
+			# Adding a header to the result_set
+			result_set.insert(0, ",".join(transformations['Header']['add_header']))
+			
+		if 'modify_header' in transformations['Header'].keys():
+			# Assumes result_set contains header. Rename certain fields as per 'modify_header' mapping configuration
+			header=result_set[0].split(',')
+			mapping=transformations['Header']['modify_header']
+			for key, value in mapping.items():
+				header[header.index(key)]=value		
+			
+			result_set[0]=",".join(header)
+	else:
+		logging.debug("No changes made to Header")
+	
+	logging.debug(result_set)
 	api_headers= result_set.pop(0).split(',')
+	logging.debug(api_headers)
 	api_body = list(map(lambda x: x.replace('"','').split(','),result_set)) 
 	
 	
 	transformed = []
 	transformed.append(output_headers)
 	
-	for result in api_body:
-		eRow = [] # Enhanced Record
-		logging.info(result)
-		for out_field in output_headers:
-			try:
-				index = api_headers.index(out_field)	
-				eRow.append(result[index])
-			except ValueError:
-			
-				if transformations[out_field]['type'] == 'simple':
-					eRow.append(transformation_simple(result, api_headers, out_field, transformations[out_field]))
-				if 	transformations[out_field]['type'] == 'date':
-					eRow.append(transformation_date(result, api_headers, out_field, transformations[out_field]))
-				if 	transformations[out_field]['type'] == 'date_injection':
-					eRow.append(transformation_date_injection(result, api_headers, out_field, transformations[out_field]))				
-				# eRow.append( "transformation_"+transformations[out_field]['type']() )		
+	
+
+	Transformations=True if 'Transformations' in transformations.keys() else False
+	
+	logging.debug(Transformations)
+	
+	if Transformations:
+		transformations = transformations['Transformations']
+	
+		for result in api_body:
+			eRow = [] # Enhanced Record
+			logging.info(result)
+			for out_field in output_headers:
+				try:
+					index = api_headers.index(out_field)	
+					eRow.append(result[index])
+				except ValueError:
 				
-				
-		logging.info(eRow)			
-		transformed.append(eRow)
+					if transformations[out_field]['type'] == 'simple':
+						eRow.append(transformation_simple(result, api_headers, out_field, transformations[out_field]))
+					if 	transformations[out_field]['type'] == 'date':
+						eRow.append(transformation_date(result, api_headers, out_field, transformations[out_field]))
+					if 	transformations[out_field]['type'] == 'date_injection':
+						eRow.append(transformation_date_injection(result, api_headers, out_field, transformations[out_field]))							
+			logging.info(eRow)			
+			transformed.append(eRow)
+	else:
+		transformed = transformed + api_body
 		
 	logging.debug(transformed)
 	
@@ -104,7 +134,16 @@ def transformation(text, output_headers, transformations):
 	#print("\n".join(map(lambda x: print(x), transformed)))
 	#return "\n".join(map(lambda x: ",".join(x), transformed))
 	return response.getvalue()
-			
+
+
+def process_header(csv_input, transformations):
+
+	return "header,header,header"
+
+def get_body(csv_input):
+
+	return"body,body,body"
+	
 def transformation_simple(record, headers, mapping, transformations):
 	logging.info("A simple transformation: "+ mapping)
 	

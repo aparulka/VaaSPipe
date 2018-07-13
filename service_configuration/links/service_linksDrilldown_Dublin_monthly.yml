@@ -13,13 +13,14 @@ Service:
   - Service
   - Location
   - Date
-  - octetsIn
-  - octetsOut
   - utilizationIn
-  - octets
   - utilization
   - utilizationOut
+  - networkServiceId
+  - Time
+  - Volume
+  - octetsIn
+  - octetsOut
   - ifn 
   - ipAddress
-  - targetTime
-  - targetTime_String
+  - targetTime_String   

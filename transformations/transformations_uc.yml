@@ -16,3 +16,8 @@ Transformations:
   type: date
   lookup_column: targetTime_String
   date_format: '%d-%m-%Y %H:%M:%S'
+Header:
+ modify_header:
+  targetTime: Time
+  acceptablePercent: Avg_Good_Mos
+  seizures: Total_Transactions 

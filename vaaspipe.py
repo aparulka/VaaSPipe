@@ -40,7 +40,7 @@ query_file.close()
 logging.info("=========== Start Transformations ======")
 
 result =   vaas_de.transformation(api_response.text, service['Service']['output_format'],
-                                  transformations['Transformations']) 
+                                  transformations) 
 
 timestamp=vaas_de.get_time()
 								  

@@ -9,7 +9,7 @@ Service:
  filename: links_nG1_Drill_TopN_{Location}
  date_format: '%Y%m%d_%H%M'
  output_format:
-  - Customer
+   - Customer
   - Service
   - Location
   - Date
@@ -18,5 +18,5 @@ Service:
   - networkServiceId
   - appId_String
   - networkServiceId_String
-  - targetTime
+  - Time
   - targetTime_String

@@ -4,10 +4,7 @@ Transformations:
   default: Netscout
  Location:
   type: simple
-  default: Pune
- networkServiceId:
-  type: simple
-  default: 160637025  
+  default: Dublin
  Service:
   type: simple
   default: 'Links'
@@ -18,5 +15,3 @@ Transformations:
 Header:
  modify_header:
   targetTime: Time
-  octets: Volume
-

@@ -18,5 +18,5 @@ Service:
   - networkServiceId
   - appId_String
   - networkServiceId_String
-  - targetTime
+  - Time
   - targetTime_String
