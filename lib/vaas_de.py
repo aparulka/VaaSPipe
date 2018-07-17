@@ -1,4 +1,5 @@
 import csv
+import json
 from io import StringIO
 import requests
 import logging
@@ -43,8 +44,91 @@ def query_nGPulse(host, port, query, username, password, version=None):
 	'''
 	Builds nGPulse API query
 	'''
+	VaaS_Customer = 'Netscout'
+	VaaS_nGP_Hostname = 'ngeniuspulse.netscout.com'
+	nGP_Service_Test_List = ['Salesforce','O365 Online','Oracle Web Service','Links','Jabber']
+	nGP_Location_List = ['Plano','Westford','San Jose','Pune','Dublin','Shanghai','Colorado Springs','Frankfurt','Berlin','Bracknell']
+
+	# Get the API Key
+
+	url = 'http://' + VaaS_nGP_Hostname + '/ipm/auth/login'
+
+	data = {'emailOrUsername' : 'ngp_api', 'password' : 'welovenGP2019!'}
+
+	response = requests.post(url, data=data)
+
+	parsed_json = json.loads(response.text)
+
+	token =  parsed_json['accessToken']
+
+	token_string = ('Access %s' %token)
+
+	# Get a list of service tests 
+
+	url = 'http://' + VaaS_nGP_Hostname + '/ipm/v1/admin/tests'
+
+	params = {'query' : '{"status":"Running"}'}
+
+	headers = {'ngp-authorization' : token_string}
+
+	response = requests.get(url, params=params, headers=headers)
+	parsed_json = json.loads(response.text)
+
+	service_dict = {}
+
+	#debug only
+	#print "Service Tests available are: \n"
+
+	for index, item in enumerate(parsed_json):
+	 name =  parsed_json[index]['name']
+	 id =  parsed_json[index]['_id']
+	 service_dict[name] = id
+	 # debug only 
+	 # print name
+
+
 	
-	return ''
+	today = datetime.datetime.now()
+	last_day = today - relativedelta(days=1)
+	
+	start_time = last_day
+	end_time = today
+	 
+	start_time_ms = int(start_time.strftime("%s")) * 1000
+	end_time_ms = int(end_time.strftime("%s")) * 1000
+	
+	output_datestamp =  last_day.strftime("%Y-%m-%d")
+	csv_output_datestamp =  last_day.strftime("%Y%m%d")
+	
+	url = 'http://' + VaaS_nGP_Hostname + '/query/table'
+
+	parsed_response = StringIO()
+	writer = csv.writer(parsed_response,delimiter=',',quoting=csv.QUOTE_MINIMAL)
+	
+	header=['Date','VaaS_Customer','Location','Service Test','Availability (%)']
+	writer.writerow(header)
+	
+	for nGP_Service_Test in nGP_Service_Test_List:
+	 id = service_dict[nGP_Service_Test]
+	 params = {'metrics' : 'availPercent', 'type' : 'test,agent', 'end' : end_time_ms, 'start' : start_time_ms, 'test' : id, 'rowLimit' : '100'}
+
+	 headers = {'ngp-authorization' : token_string}
+
+	 response = requests.get(url, params=params, headers=headers)
+	 
+	 parsed_json = json.loads(response.text)
+
+
+	 
+	 for index, item in enumerate(parsed_json['data']):
+	  nPoint =  parsed_json['data'][index]['agent']['name']
+	  if nPoint in nGP_Location_List:  
+	   availability =  parsed_json['data'][index]['availPercent'] 
+	   print('%s,%s,%s,%s,%s' % (output_datestamp,VaaS_Customer,nPoint,nGP_Service_Test,availability))
+	   writer.writerow([output_datestamp,VaaS_Customer,nPoint,nGP_Service_Test,availability])
+
+	
+	return parsed_response.getvalue()
  
 
 def transformation(text, output_headers, transformations):
