@@ -1,0 +1,25 @@
+Service:
+ Customer: Netscout
+ Service_Category: Applications
+ Key: PHASE 2;Netscout;All;nG1;Applications;Daily;Errors
+ Description: Daily Feed of Applications Errors from nG1
+ query_file: nG1_queries/applications/service_applicationsDrillDown_daily.xml
+ logging: logs/applications_vaaspipe.log
+ logging_level: INFO
+ filename: applications_nG1_Daily_Errors_
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+  - customer
+  - service
+  - location
+  - date
+  - appId
+  - errorCode
+  - messageId
+  - targetTime
+  - errorCount
+  - serviceId
+  - appId_String
+  - messageId_String
+  - targetTime_String
+  - serviceId_String

@@ -9,18 +9,18 @@ Service:
  filename: links_nG1_Daily_
  date_format: '%Y%m%d_%H%M'
  output_format:
-  - Customer
-  - Service
-  - Location
-  - Date
+  - customer
+  - service
+  - location
+  - date
   - utilization
   - utilizationIn  
   - utilizationOut
   - networkServiceId
-  - Time
-  - Volume  
-  - octetsIn
-  - octetsOut  
+  - targetTime
+  - volume  
+  - volumeIn
+  - volumeOut  
   - networkServiceId_String
   - targetTime_String
   

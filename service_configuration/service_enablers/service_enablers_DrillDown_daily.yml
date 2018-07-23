@@ -1,0 +1,25 @@
+Service:
+ Customer: Netscout
+ Service_Category: Service Enablers
+ Key: PHASE 2;Netscout;All;nG1;ServiceEnablers;Daily;Errors
+ Description: Daily Feed of Service Enablers Errors from nG1
+ query_file: nG1_queries/service_enablers/service_enablersDrillDown_daily.xml
+ logging: logs/serviceenablers_vaaspipe.log
+ logging_level: INFO
+ filename: serviceEnablers_nG1_Daily_Errors_
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+  - customer
+  - service
+  - location
+  - date
+  - appId
+  - errorCode
+  - messageId
+  - targetTime
+  - errorCount
+  - serviceId
+  - appId_String
+  - messageId_String
+  - targetTime_String
+  - serviceId_String

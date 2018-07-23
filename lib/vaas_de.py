@@ -37,100 +37,171 @@ def query_dbONE(host, port, query, username, password, headers=dbONE_API_headers
 	
 	response = requests.post(query_url, headers=headers, data=query, verify=verify)
 	
-	return response
+	return response.text
 	
 	
-def query_nGPulse(host, port, query, username, password, version=None):
+def query_nGPulse(datasource, query, version=None):
 	'''
 	Builds nGPulse API query
 	'''
-	VaaS_Customer = 'Netscout'
-	VaaS_nGP_Hostname = 'ngeniuspulse.netscout.com'
-	nGP_Service_Test_List = ['Salesforce','O365 Online','Oracle Web Service','Links','Jabber']
-	nGP_Location_List = ['Plano','Westford','San Jose','Pune','Dublin','Shanghai','Colorado Springs','Frankfurt','Berlin','Bracknell']
 
-	# Get the API Key
-
-	url = 'http://' + VaaS_nGP_Hostname + '/ipm/auth/login'
-
-	data = {'emailOrUsername' : 'ngp_api', 'password' : 'welovenGP2019!'}
-
-	response = requests.post(url, data=data)
-
-	parsed_json = json.loads(response.text)
-
-	token =  parsed_json['accessToken']
-
-	token_string = ('Access %s' %token)
-
-	# Get a list of service tests 
-
-	url = 'http://' + VaaS_nGP_Hostname + '/ipm/v1/admin/tests'
-
-	params = {'query' : '{"status":"Running"}'}
-
-	headers = {'ngp-authorization' : token_string}
-
-	response = requests.get(url, params=params, headers=headers)
-	parsed_json = json.loads(response.text)
-
-	service_dict = {}
-
-	#debug only
-	#print "Service Tests available are: \n"
-
-	for index, item in enumerate(parsed_json):
-	 name =  parsed_json[index]['name']
-	 id =  parsed_json[index]['_id']
-	 service_dict[name] = id
-	 # debug only 
-	 # print name
-
+	# Setup
+	
+	hostname = get_hostname(datasource['host'], datasource['port'])
+	print(hostname)
+	nGP_Service_Test_List = query['nGP_Service_Test_List']
+	nGP_Location_List = query['nGP_Location_List']
 
 	
-	today = datetime.datetime.now()
-	last_day = today - relativedelta(days=1)
-	
-	start_time = last_day
-	end_time = today
-	 
+	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
+	kpi_filter_params = query['kpi_filter_params']
+
+	# Time calculations
+	now = datetime.datetime.now()	
+	start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
+	end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
 	start_time_ms = int(start_time.strftime("%s")) * 1000
 	end_time_ms = int(end_time.strftime("%s")) * 1000
+	output_datestamp =  end_time.strftime("%Y-%m-%d")
 	
-	output_datestamp =  last_day.strftime("%Y-%m-%d")
-	csv_output_datestamp =  last_day.strftime("%Y%m%d")
+	kpi_filter_params['start'] = start_time_ms
+	kpi_filter_params['end'] = end_time_ms
 	
-	url = 'http://' + VaaS_nGP_Hostname + '/query/table'
+	logging.info("start_time: "+start_time.strftime('%d-%m-%Y %H:%M:%S'))
+	logging.info("end_time: "+end_time.strftime('%d-%m-%Y %H:%M:%S'))
+	
+	
+	# Get the Acces Token
+	url = 'http://' + hostname + '/ipm/auth/login'
+	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
+	response = requests.post(url, data=data)
+	authentication_json = json.loads(response.text)
+	print(authentication_json)
+	token =  authentication_json['accessToken']
+	token_string = ('Access %s' %token)
+	auth_headers = {'ngp-authorization' : token_string}
+	
+	# Get a list of service tests 
+	url = 'http://' + hostname + '/ipm/v1/admin/tests'
+	params = {'query' : '{"status":"Running"}'}
+	
+	response = requests.get(url, params=params, headers=auth_headers)
+	services_json = json.loads(response.text)
+
+	services = {}
+
+	for index, item in enumerate(services_json):
+		name =  services_json[index]['name']
+		id =  services_json[index]['_id']
+		services[name] = id
+
+	
+	url = 'http://' + hostname + '/query/table'
 
 	parsed_response = StringIO()
 	writer = csv.writer(parsed_response,delimiter=',',quoting=csv.QUOTE_MINIMAL)
 	
-	header=['Date','VaaS_Customer','Location','Service Test','Availability (%)']
-	writer.writerow(header)
+	# Writing header as a Transformation.
+	# header=['Date','Location','Service Test','Availability (%)']
+	# writer.writerow(header)
 	
 	for nGP_Service_Test in nGP_Service_Test_List:
-	 id = service_dict[nGP_Service_Test]
-	 params = {'metrics' : 'availPercent', 'type' : 'test,agent', 'end' : end_time_ms, 'start' : start_time_ms, 'test' : id, 'rowLimit' : '100'}
+		id = services[nGP_Service_Test]
+		
+		kpi_filter_params['test'] = id
+		
+		response = requests.get(url, params=kpi_filter_params, headers=auth_headers)
+		
+		parsed_json = json.loads(response.text)
 
-	 headers = {'ngp-authorization' : token_string}
 
-	 response = requests.get(url, params=params, headers=headers)
 	 
-	 parsed_json = json.loads(response.text)
-
-
-	 
-	 for index, item in enumerate(parsed_json['data']):
-	  nPoint =  parsed_json['data'][index]['agent']['name']
-	  if nPoint in nGP_Location_List:  
-	   availability =  parsed_json['data'][index]['availPercent'] 
-	   print('%s,%s,%s,%s,%s' % (output_datestamp,VaaS_Customer,nPoint,nGP_Service_Test,availability))
-	   writer.writerow([output_datestamp,VaaS_Customer,nPoint,nGP_Service_Test,availability])
+		for index, item in enumerate(parsed_json['data']):
+			nPoint =  parsed_json['data'][index]['agent']['name']
+			if nPoint in nGP_Location_List:  
+				availability =  parsed_json['data'][index]['availPercent'] 
+				writer.writerow([output_datestamp,nPoint,nGP_Service_Test,availability])
 
 	
 	return parsed_response.getvalue()
  
+def query_nGPulse_server(datasource, query, version=None):
+	'''
+	Builds nGPulse API query
+	'''
 
+	# Setup
+	
+	hostname = get_hostname(datasource['host'], datasource['port'])
+	print(hostname)
+	nGP_Server_List = query['nGP_Server_List']
+	
+	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
+	kpi_filter_params = query['kpi_filter_params']
+
+	# Time calculations
+	now = datetime.datetime.now()	
+	start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
+	end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
+	start_time_ms = int(start_time.strftime("%s")) * 1000
+	end_time_ms = int(end_time.strftime("%s")) * 1000
+	output_datestamp =  end_time.strftime("%Y-%m-%d")
+	
+	kpi_filter_params['start'] = start_time_ms
+	kpi_filter_params['end'] = end_time_ms
+	
+	logging.info("start_time: "+start_time.strftime('%d-%m-%Y %H:%M:%S'))
+	logging.info("end_time: "+end_time.strftime('%d-%m-%Y %H:%M:%S'))
+	
+	
+	# Get the Acces Token
+	url = 'http://' + hostname + '/ipm/auth/login'
+	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
+	response = requests.post(url, data=data)
+	authentication_json = json.loads(response.text)
+	print(authentication_json)
+	token =  authentication_json['accessToken']
+	token_string = ('Access %s' %token)
+	auth_headers = {'ngp-authorization' : token_string}
+
+	# Infrastructure querying
+	
+	url = 'http://' + hostname + '/query/table'
+
+
+	# f.write ('Date,VaaS_Customer,Service,Infrastructure_ID,Normal (%),Degraded (%),Excessive (%),Critical (%),No Data (%),Count\n')
+
+	headers = {'ngp-authorization' : token_string}
+
+	response = requests.get(url, params=kpi_filter_params, headers=headers)
+	 
+	parsed_json = json.loads(response.text)
+
+	
+	parsed_response = StringIO()
+	writer = csv.writer(parsed_response,delimiter=',',quoting=csv.QUOTE_MINIMAL)
+	
+	for index, item in enumerate(parsed_json['data']):
+	  server =  parsed_json['data'][index]['server']['name']
+	  if server in nGP_Server_List:  
+	   green =  parsed_json['data'][index]['status']['green'] 
+	   yellow =  parsed_json['data'][index]['status']['yellow'] 
+	   orange =  parsed_json['data'][index]['status']['orange'] 
+	   red =  parsed_json['data'][index]['status']['red'] 
+	   gray =  parsed_json['data'][index]['status']['gray'] 
+	   count =  parsed_json['data'][index]['status']['count'] 
+	   writer.writerow([output_datestamp,server,green,yellow,orange,red,gray,count])
+	   
+	return parsed_response.getvalue()
+ 
+ 
+def get_hostname(hostname, port):	
+	if port is not None:
+		return hostname + ":" + port
+	else:
+		return hostname
+	
+ 
 def transformation(text, output_headers, transformations):
 	'''
 	Provides a CSV dictionary object that matches expected Service Output format.
@@ -145,7 +216,7 @@ def transformation(text, output_headers, transformations):
 	
 	'''
 
-	result_set = text.strip().split("\n")
+	result_set = text.strip().split("\r\n")
 	logging.debug(">>>======RESULT SET========")
 	logging.debug(result_set)
 	logging.debug("======RESULT SET========<<<<")

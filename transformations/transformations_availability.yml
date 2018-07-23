@@ -1,0 +1,10 @@
+Header:
+ add_header:
+  - date 
+  - location
+  - service
+  - availabilityPercentage
+Transformations:
+ customer:
+  type: simple
+  default: Netscout

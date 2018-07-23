@@ -1,0 +1,16 @@
+Service:
+ Customer: Netscout
+ Service_Category: Availability
+ Key: Netscout;All;nGP;Availability;Daily
+ Description: Daily Feed of Service Availability Percentage for All Locations
+ query_file: nGP_queries/availability/availability_tests_daily.yml
+ logging: logs/availability_tests.log
+ logging_level: INFO
+ filename: availability_nGP_Daily_
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+  - date
+  - customer 
+  - location
+  - service
+  - availabilityPercentage

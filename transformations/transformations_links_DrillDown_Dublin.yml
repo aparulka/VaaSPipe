@@ -4,14 +4,13 @@ Transformations:
   default: Netscout
  location:
   type: simple
-  default: Netscout
-  lookup_column: networkServiceId_String
-  mapping_file: service_mappings/links.cfg
+  default: Dublin
+ networkServiceId:
+  type: simple
+  default: 160638846 
  service:
   type: simple
   default: 'Links'
-  lookup_column: networkServiceId_String
-  mapping_file: service_mappings/links.cfg
  date:
   type: date
   lookup_column: targetTime_String
@@ -20,6 +19,4 @@ Header:
  modify_header:
   octets: volume
   octetsIn: volumeIn
-  octetsOut: volumeOut   
-   
-   
+  octetsOut: volumeOut

@@ -1,0 +1,5 @@
+nGPulse: 
+ host: ngeniuspulse.netscout.com
+ port:
+ emailOrUsername: ngp_api
+ password: welovenGP2019!

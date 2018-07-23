@@ -10,16 +10,7 @@ Transformations:
  service:
   type: simple
   default: 'Links'
-  lookup_column: networkServiceId_String
-  mapping_file: service_mappings/links.cfg
  date:
   type: date
   lookup_column: targetTime_String
   date_format: '%d-%m-%Y %H:%M:%S'
-Header:
- modify_header:
-  octets: volume
-  octetsIn: volumeIn
-  octetsOut: volumeOut   
-   
-   

@@ -1,0 +1,21 @@
+Header:
+ add_header:
+  - date
+  - infrastructureId
+  - normalPercentage
+  - degradedPercentage
+  - excessivePercentage
+  - criticalPercentage
+  - noDataPercentage
+  - count
+Transformations:
+ customer:
+  type: simple
+  default: Netscout
+ location:
+  type: simple
+  default: Netscout
+ service:
+  type: simple
+  default: Infrastructure
+ 

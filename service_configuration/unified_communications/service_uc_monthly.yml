@@ -9,20 +9,20 @@ Service:
  filename: unifiedCommunications_nG1_Monthly_
  date_format: '%Y%m%d_%H%M'
  output_format:
-  - Customer
-  - Service
-  - Location
-  - Date
+  - customer
+  - service
+  - location
+  - date
   - mosBucket3In
   - mosBucket2In
   - mosBucket1In
   - ucServiceId
-  - Total_Transactions
-  - Avg_Good_Mos
+  - totalTransactions
+  - avgGoodMos
   - singleDirCompletedStreams
   - shortCountCompletedStreams
   - completedStreams
   - qosMismatchCompletedStreams
-  - Time
+  - targetTime
   - ucServiceId_String
   - targetTime_String

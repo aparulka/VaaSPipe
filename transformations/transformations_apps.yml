@@ -1,18 +1,18 @@
 Transformations:
- Customer:
+ customer:
   type: simple
   default: Netscout
- Location:
+ location:
   type: simple
   default: Netscout
   lookup_column: serviceId_String
   mapping_file: service_mappings/applications.cfg
- Service:
+ service:
   type: simple
   default: 'Applications'
   lookup_column: serviceId_String
   mapping_file: service_mappings/applications.cfg
- Date:
+ date:
   type: date
   lookup_column: targetTime_String
   date_format: '%d-%m-%Y %H:%M:%S'

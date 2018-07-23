@@ -1,0 +1,40 @@
+Query:
+ nGP_Service_Test_List:
+  - Salesforce 
+  - O365 Online
+  - Oracle Web Service
+  - Links
+  - Jabber 
+ nGP_Location_List:
+  - Plano
+  - Westford
+  - San Jose
+  - Pune
+  - Dublin
+  - Shanghai
+  - Colorado Springs
+  - Frankfurt
+  - Berlin
+  - Bracknell 
+ kpi_filter_params:
+  metrics: availPercent
+  type: test,agent
+  start:
+   relativedelta:
+    days: -2
+   replace:
+    hour: 0
+    minute: 0
+    second: 0
+    microsecond: 0
+   date_format: '%d-%m-%Y %H:%M:%S'
+  end:
+   relativedelta:
+    days: -1
+   replace:
+    hour: 0
+    minute: 0
+    second: 0
+    microsecond: 0
+   date_format: '%d-%m-%Y %H:%M:%S'  
+  rowLimit: 100

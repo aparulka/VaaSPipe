@@ -17,7 +17,7 @@ parser.add_argument('-d','-datasource', action="store", dest="datasource")
 pipe_setup=parser.parse_args()
 
 datasource=yaml.load(open(pipe_setup.datasource,"r"))
-transformations=yaml.load(open(pipe_setup.transformations,"r"))
+# transformations=yaml.load(open(pipe_setup.transformations,"r"))
 service=yaml.load(open(pipe_setup.service,"r"))
 notification=yaml.load(open(pipe_setup.notifications,"r"))
 
@@ -28,14 +28,22 @@ logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s]:[%(levelname)s]:%
 
 logging.info("Query File: "+service['Service']['query_file'])
 query_file=open(service['Service']['query_file'], 'rb')
+with open(service['Service']['query_file'], 'rb') as input:
+			query=yaml.load(input)
 
-api_response = vaas_de.query_dbONE(datasource.get('nG1_API').get('host'), 
-                                   datasource.get('nG1_API').get('port'), 
-								   #datasource.get('nG1_API').get('query'), 
-								   query_file,
-								   datasource.get('nG1_API').get('user'), 
-								   datasource.get('nG1_API').get('password'))
+api_response = vaas_de.query_nGPulse(datasource['nGPulse'], 
+								   query['Query'])
 
+								   
+								   
+# api_response = vaas_de.query_dbONE(datasource.get('nG1_API').get('host'), 
+                                   # datasource.get('nG1_API').get('port'), 
+								   # #datasource.get('nG1_API').get('query'), 
+								   # query_file,
+								   # datasource.get('nG1_API').get('user'), 
+								   # datasource.get('nG1_API').get('password'))								   
+								   
+								   
 query_file.close()
 logging.info("=========== Start Transformations ======")
 

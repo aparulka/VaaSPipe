@@ -1,0 +1,22 @@
+Service:
+ Customer: Netscout
+ Service_Category: Links
+ Key: PHASE 2;Netscout;Plano;nG1;Links;TopN;Monthly
+ Description: Monthly Feed of Plano Links Top Applications from nG1 
+ query_file: nG1_queries/links/service_linksDrillTopN_Plano_monthly.xml
+ logging: logs/linksDrilldown_vaaspipe.log
+ logging_level: INFO
+ filename: links_nG1_Monthly_TopN_Plano_
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+  - customer
+  - service
+  - location
+  - date
+  - appId
+  - totalTransactions
+  - networkServiceId
+  - appId_String
+  - networkServiceId_String
+  - targetTime
+  - targetTime_String

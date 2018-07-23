@@ -1,23 +1,22 @@
 Transformations:
- Customer:
+ customer:
   type: simple
   default: Netscout
- Location:
+ location:
   type: simple
   default: Netscout
   lookup_column: ucServiceId_String
   mapping_file: service_mappings/unified_communications.cfg
- Service:
+ service:
   type: simple
   default: 'Applications'
   lookup_column: ucServiceId_String
   mapping_file: service_mappings/unified_communications.cfg
- Date:
+ date:
   type: date
   lookup_column: targetTime_String
   date_format: '%d-%m-%Y %H:%M:%S'
 Header:
  modify_header:
-  targetTime: Time
-  acceptablePercent: Avg_Good_Mos
-  seizures: Total_Transactions 
+  acceptablePercent: avgGoodMos
+  seizures: totalTransactions 

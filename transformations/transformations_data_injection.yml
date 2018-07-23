@@ -1,18 +1,18 @@
 Transformations:
- Customer:
+ customer:
   type: simple
   default: Netscout
- Location:
+ location:
   type: simple
   default: Netscout
   lookup_column: networkServiceId_String
   mapping_file: service_mappings/links.cfg
- Service:
+ service:
   type: simple
   default: 'Links'
   lookup_column: networkServiceId_String
   mapping_file: service_mappings/links.cfg
- Date:
+ date:
   type: date_injection
   relativedelta:
    months: -1
