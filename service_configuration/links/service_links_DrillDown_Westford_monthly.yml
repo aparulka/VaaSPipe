@@ -1,7 +1,7 @@
 Service:
- Customer: Netscout
+ Customer: NTCT IT
  Service_Category: Links
- Key: PHASE 2;Netscout;Westford;nG1;Links;Monthly;DrillDown
+ Key: PHASE 2;NTCT IT;Westford;nG1;Links;Monthly;DrillDown
  Description: Monthly Feed of Westford Links Drill-Down KPIs from nG1 
  query_file: nG1_queries/links/service_linksDrillDown_Westford_monthly.xml
  logging: logs/linksDrilldown_vaaspipe.log

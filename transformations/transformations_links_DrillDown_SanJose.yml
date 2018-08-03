@@ -1,7 +1,7 @@
 Transformations:
  customer:
   type: simple
-  default: Netscout
+  default: NTCT IT
  location:
   type: simple
   default: San Jose

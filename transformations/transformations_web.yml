@@ -1,0 +1,21 @@
+Header:
+ add_header:
+  - date
+  - service
+  - serviceTestName
+  - npoint
+  - availabilityPercentage
+  - avgResponseTime
+  - count
+  - startTimeMs
+  - endTimeMs  
+Transformations:
+ customer:
+  type: simple
+  default: NTCT IT  
+ serviceTestType:
+  type: simple
+  default: Web Test
+ location:
+  type: simple
+  default: World

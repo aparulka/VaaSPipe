@@ -1,10 +1,10 @@
 Transformations:
  customer:
   type: simple
-  default: Netscout
+  default: NTCT IT
  location:
   type: simple
-  default: Netscout
+  default: NTCT IT
   lookup_column: serviceId_String
   mapping_file: service_mappings/serviceenablers.cfg
  service:

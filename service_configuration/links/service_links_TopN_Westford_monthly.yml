@@ -1,7 +1,7 @@
 Service:
- Customer: Netscout
+ Customer: NTCT IT
  Service_Category: Links
- Key: PHASE 2;Netscout;Westford;nG1;Links;TopN;Monthly
+ Key: PHASE 2;NTCT IT;Westford;nG1;Links;TopN;Monthly
  Description: Daily Feed of Westford Links Top Applications from nG1 
  query_file: nG1_queries/links/service_linksDrillTopN_Westford_monthly.xml
  logging: logs/linksDrilldown_vaaspipe.log

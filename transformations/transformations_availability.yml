@@ -4,7 +4,9 @@ Header:
   - location
   - service
   - availabilityPercentage
+  - startTimeMs
+  - endTimeMs
 Transformations:
  customer:
   type: simple
-  default: Netscout
+  default: NTCT IT

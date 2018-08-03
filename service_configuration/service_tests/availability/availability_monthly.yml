@@ -1,0 +1,18 @@
+Service:
+ Customer: NTCT IT
+ Service_Category: Availability Test
+ Key: NTCT IT;All;nGP;Availability;Monthly
+ Description: Monthly Feed of Service Availability Percentage for All Locations
+ query_file: nGP_queries/service_tests/availability/availability_query_monthly.yml
+ logging: logs/availability_tests.log
+ logging_level: INFO
+ filename: availability_nGP_Monthly_
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+  - customer 
+  - location
+  - service
+  - date
+  - availabilityPercentage
+  - startTimeMs
+  - endTimeMs

@@ -1,0 +1,40 @@
+# Reports - Added this new file for reports
+Service:
+ Customer: NTCT IT
+ Service_Category: Applications
+ # Reports - Changed the below Daily to 'last3months'
+ Key: PHASE 2;NTCT IT;All;nG1;Oracle-NON-AGGREGATE;Last3Months
+ # Reports - Changed the below line
+ Description: Historical data of Applications KPIs from nG1
+ # Reports - Changed the below line
+ query_file: nG1_queries/applications/service_applications_oracle_non_agg_last3months.xml
+ # Reports - Added the below
+ int_output_file: output/intermediate/service_applications_oracle_non_agg_last3months_int_output.csv
+ # Reports - Added the below
+ trans_input_file: output/intermediate/service_applications_oracle_non_agg_last3months_int_output.csv
+ # Reports - Added the below
+ trans_output_file: output/transformations/service_applications_oracle_non_agg_last3months_trans_output.csv
+ # Reports - Changed the name below
+ logging: logs/applications_vaaspipe_non_agg.log
+ logging_level: INFO
+ # Reports - Changed the below line
+ filename: Oracle_Non_Agg_nG1_last3months_
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+  - customer
+  - service
+  - location
+  - date
+  - totalTransactions
+  - responseTime
+  - failedTransactions
+  - serviceId
+  - failedPercentage
+  - targetTime
+  - serviceId_String
+  - targetTime_String
+  - successfulTransactions
+  - timeOutPercentage
+  - successfulPercentage
+  - timeout
+

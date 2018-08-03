@@ -1,0 +1,23 @@
+Service:
+ Customer: NTCT IT
+ Service_Category: Ping Test
+ Key: NTCT IT;All;nGP;Ping Test;Monthly
+ Description: Monthly Feed of Service Latency Tests for All Locations
+ query_file: nGP_queries/availability/ping_tests_monthly.yml
+ logging: logs/ping_tests.log
+ logging_level: INFO
+ filename: ping_nGP_Monthly_
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+  - customer
+  - location
+  - service
+  - date  
+  - serviceTestType
+  - serviceTestName
+  - npoint
+  - availabilityPercentage
+  - avgPingLatency
+  - count
+  - startTimeMs
+  - endTimeMs

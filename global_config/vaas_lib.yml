@@ -1,0 +1,11 @@
+Timezone: US/Eastern
+Tzinfos:
+ CST: US/Central
+ CDT: US/Central
+ EST: US/Eastern
+ EDT: US/Eastern
+ MST: US/Mountain
+ MDT: US/Mountain
+ PST: US/Pacific
+ PDT: US/Pacific
+Output_Separator: "\t"

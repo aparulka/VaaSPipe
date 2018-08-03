@@ -1,0 +1,49 @@
+Query:
+ nGP_Server_List:
+  - wstcond 
+  - plncucmsub
+  - BOSNETDHCP
+  
+ nGP_Router_List:
+  - ar-brac-uk-1
+  - ar-brno-cz-1
+
+ nGP_AccessPoint_List:
+  - lap-madr-es-1
+  - lap-melb-au-1
+  
+ nGP_Switch_List:
+  - sr-dub-ie-7-2
+  
+ nGP_WirelessController_List:
+  - WLC-PLNO-2
+  - WLC-DUB-1
+  
+ nGP_GenericDevice_List:
+  
+ kpi_filter_params:
+  metrics: status
+  type: 
+   - device
+   - server
+  start:
+   relativedelta:
+    months: -1
+   replace:
+    day: 1
+    hour: 0
+    minute: 0
+    second: 0
+    microsecond: 0
+   date_format: '%d-%m-%Y %H:%M:%S'
+  end:
+   relativedelta:
+    months: 0
+   replace:
+    day: 1
+    hour: 0
+    minute: 0
+    second: 0
+    microsecond: 0
+   date_format: '%d-%m-%Y %H:%M:%S'  
+  rowLimit: 200000

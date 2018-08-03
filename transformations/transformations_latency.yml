@@ -1,0 +1,23 @@
+Header:
+ add_header:
+  - date
+  - service
+  - serviceTestName
+  - npoint
+  - availabilityPercentage
+  - avgLatency
+  - bestLatency
+  - worstLatency
+  - count
+  - startTimeMs
+  - endTimeMs  
+Transformations:
+ customer:
+  type: simple
+  default: NTCT IT  
+ serviceTestType:
+  type: simple
+  default: Latency Test
+ location:
+  type: simple
+  default: World

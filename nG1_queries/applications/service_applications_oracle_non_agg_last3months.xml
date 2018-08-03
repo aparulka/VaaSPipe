@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenericClientQuery>
+   <NetworkObjectData>
+      <NetworkParameter>APPLICATION</NetworkParameter>
+      <SelectColumnList>
+         <ClientColumn>totalTransactions</ClientColumn>
+         <ClientColumn>successfulTransactions</ClientColumn>
+         <ClientColumn>timeOutPercentage</ClientColumn>
+         <ClientColumn>responseTime</ClientColumn>
+         <ClientColumn>failedTransactions</ClientColumn>
+         <ClientColumn>successfulPercentage</ClientColumn>
+         <ClientColumn>serviceId</ClientColumn>
+         <ClientColumn>failedPercentage</ClientColumn>
+         <ClientColumn>timeout</ClientColumn>
+         <ClientColumn>targetTime</ClientColumn>
+      </SelectColumnList>
+   </NetworkObjectData>
+   <FlowFilterList>
+      <FlowFilter appliedServiceType="appservice" serviceId="147609947" serviceType="domain">
+         <FilterList>
+            <domainId>147609947</domainId>
+         </FilterList>
+      </FlowFilter>
+   </FlowFilterList>
+   <FunctionList>
+      <Function>
+         <name>Percent</name>
+         <numerator>successfulTransactions</numerator>
+         <denominator>totalTransactions</denominator>
+         <ClientColumn>successfulPercentage</ClientColumn>
+      </Function>
+      <Function>
+         <name>Percent</name>
+         <numerator>timeout</numerator>
+         <denominator>totalTransactions</denominator>
+         <ClientColumn>timeOutPercentage</ClientColumn>
+      </Function>
+      <Function>
+         <name>Percent</name>
+         <numerator>failedTransactions</numerator>
+         <denominator>totalTransactions</denominator>
+         <ClientColumn>failedPercentage</ClientColumn>
+      </Function>
+   </FunctionList>
+   <TimeDef>
+      <startTime>2017-04-01_00:00:00</startTime>
+      <endTime>2018-07-01_00:00:00</endTime>
+      <resolution>ONE_DAY</resolution>
+   </TimeDef>
+   <AggregateFlags>
+      <aggregateMe>false</aggregateMe>
+      <aggregateApp>false</aggregateApp>
+   </AggregateFlags>
+   <params>
+      <updateKeys>false</updateKeys>
+   </params>
+</GenericClientQuery>

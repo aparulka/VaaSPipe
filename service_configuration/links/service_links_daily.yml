@@ -1,7 +1,7 @@
 Service:
- Customer: Netscout
+ Customer: NTCT IT
  Service_Category: Links
- Key: PHASE 2;Netscout;All;nG1;Links;Daily
+ Key: PHASE 2;NTCT IT;All;nG1;Links;Daily
  Description: Daily Feed of Links KPIs from nG1 
  query_file: nG1_queries/links/service_links_daily.xml
  logging: logs/links_vaaspipe.log

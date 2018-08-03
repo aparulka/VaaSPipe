@@ -1,0 +1,29 @@
+Header:
+ add_header:
+  - date 
+  - serviceTestName
+  - npoint
+  - availabilityPercentage 
+  - callerAvgMOS
+  - calleeAvgMOS
+  - count
+  - startTimeMs
+  - endTimeMs  
+Transformations:
+ customer:
+  type: simple
+  default: NTCT IT
+ service:
+  type: simple
+  default: Jabber  
+ serviceTestType:
+  type: simple
+  default: VoIP Test
+ location:
+  type: simple
+  default: World
+  
+  
+  
+  
+

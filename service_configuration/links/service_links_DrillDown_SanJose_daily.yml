@@ -1,7 +1,7 @@
 Service:
- Customer: Netscout
+ Customer: NTCT IT
  Service_Category: Links
- Key: PHASE 2;Netscout;San Jose;nG1;Links;Daily;DrillDown
+ Key: PHASE 2;NTCT IT;San Jose;nG1;Links;Daily;DrillDown
  Description: Daily Feed of San Jose Links Drill-Down KPIs from nG1 
  query_file: nG1_queries/links/service_linksDrillDown_SanJose_daily.xml
  logging: logs/linksDrilldown_vaaspipe.log

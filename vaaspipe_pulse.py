@@ -17,7 +17,7 @@ parser.add_argument('-d','-datasource', action="store", dest="datasource")
 pipe_setup=parser.parse_args()
 
 datasource=yaml.load(open(pipe_setup.datasource,"r"))
-# transformations=yaml.load(open(pipe_setup.transformations,"r"))
+transformations=yaml.load(open(pipe_setup.transformations,"r"))
 service=yaml.load(open(pipe_setup.service,"r"))
 notification=yaml.load(open(pipe_setup.notifications,"r"))
 
@@ -31,18 +31,33 @@ query_file=open(service['Service']['query_file'], 'rb')
 with open(service['Service']['query_file'], 'rb') as input:
 			query=yaml.load(input)
 
-api_response = vaas_de.query_nGPulse(datasource['nGPulse'], 
-								   query['Query'])
 
-								   
-								   
-# api_response = vaas_de.query_dbONE(datasource.get('nG1_API').get('host'), 
-                                   # datasource.get('nG1_API').get('port'), 
-								   # #datasource.get('nG1_API').get('query'), 
-								   # query_file,
-								   # datasource.get('nG1_API').get('user'), 
-								   # datasource.get('nG1_API').get('password'))								   
-								   
+			
+api_response=None
+if service['Service']['Service_Category'] in ['Applications', 'Links', 'Service Enablers', 'Unified Communications']:
+	api_response = vaas_de.query_dbONE(datasource.get('nG1_API').get('host'), 
+									   datasource.get('nG1_API').get('port'), 
+									   query_file,
+									   datasource.get('nG1_API').get('user'), 
+									   datasource.get('nG1_API').get('password'))
+elif service['Service']['Service_Category'] in ['Availability Test']:
+	api_response = vaas_de.query_nGPulse_availability(datasource['nGPulse'],query['Query'])
+elif service['Service']['Service_Category'] in ['Infrastructure']:
+	api_response = vaas_de.query_nGPulse_server(datasource['nGPulse'],query['Query'])
+elif service['Service']['Service_Category'] in ['VoIP Test']:
+	api_response = vaas_de.query_nGPulse_voip(datasource['nGPulse'],query['Query'])
+elif service['Service']['Service_Category'] in ['Latency Test']:
+	api_response = vaas_de.query_nGPulse_latency(datasource['nGPulse'],query['Query'])
+elif service['Service']['Service_Category'] in ['Ping Test']:
+	api_response = vaas_de.query_nGPulse_ping(datasource['nGPulse'],query['Query'])
+elif service['Service']['Service_Category'] in ['Web Test']:	
+	api_response = vaas_de.query_nGPulse_web(datasource['nGPulse'],query['Query'])
+else:
+	raise Exception(service['Service_Category']+' is not a valid Service Category')
+
+
+
+								   								   
 								   
 query_file.close()
 logging.info("=========== Start Transformations ======")

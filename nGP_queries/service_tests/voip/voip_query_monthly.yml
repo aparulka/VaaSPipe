@@ -1,0 +1,28 @@
+Query:
+ nGP_Service_Test_List:
+  - Dublin to San Jose
+  - Frankfurt to San Jose
+ kpi_filter_params:
+  metrics: availPercent,avgLqmosRx,avgLqmosTx,count
+  type: test,agent
+  start:
+   relativedelta:
+    months: -1
+   replace:
+    day: 1
+    hour: 0
+    minute: 0
+    second: 0
+    microsecond: 0
+   date_format: '%d-%m-%Y %H:%M:%S'
+  end:
+   relativedelta:
+    months: 0
+   replace:
+    day: 1
+    hour: 0
+    minute: 0
+    second: 0
+    microsecond: 0
+   date_format: '%d-%m-%Y %H:%M:%S'  
+  rowLimit: 1000

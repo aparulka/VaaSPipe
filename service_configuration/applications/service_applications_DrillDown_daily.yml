@@ -1,7 +1,7 @@
 Service:
- Customer: Netscout
+ Customer: NTCT IT
  Service_Category: Applications
- Key: PHASE 2;Netscout;All;nG1;Applications;Daily;Errors
+ Key: PHASE 2;NTCT IT;All;nG1;Applications;Daily;Errors
  Description: Daily Feed of Applications Errors from nG1
  query_file: nG1_queries/applications/service_applicationsDrillDown_daily.xml
  logging: logs/applications_vaaspipe.log

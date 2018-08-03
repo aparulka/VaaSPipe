@@ -1,7 +1,7 @@
 Service:
- Customer: Netscout
+ Customer: NTCT IT
  Service_Category: Links
- Key: PHASE 2;Netscout;Pune;nG1;Links;Daily;DrillDown
+ Key: PHASE 2;NTCT IT;Pune;nG1;Links;Daily;DrillDown
  Description: Daily Feed of Pune Links Drill-Down KPIs from nG1 
  query_file: nG1_queries/links/service_linksDrillDown_Pune_daily.xml
  logging: logs/linksDrilldown_vaaspipe.log

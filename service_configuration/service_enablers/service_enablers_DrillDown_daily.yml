@@ -1,7 +1,7 @@
 Service:
- Customer: Netscout
+ Customer: NTCT IT
  Service_Category: Service Enablers
- Key: PHASE 2;Netscout;All;nG1;ServiceEnablers;Daily;Errors
+ Key: PHASE 2;NTCT IT;All;nG1;ServiceEnablers;Daily;Errors
  Description: Daily Feed of Service Enablers Errors from nG1
  query_file: nG1_queries/service_enablers/service_enablersDrillDown_daily.xml
  logging: logs/serviceenablers_vaaspipe.log

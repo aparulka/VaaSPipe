@@ -1,7 +1,7 @@
 Service:
- Customer: Netscout
+ Customer: NTCT IT
  Service_Category: Unified Communications
- Key: PHASE 2;Netscout;All;nG1;UnifiedCommunications;Daily
+ Key: PHASE 2;NTCT IT;All;nG1;UnifiedCommunications;Daily
  Description: Daily Feed of Unified Communications KPIs from nG1  
  query_file: nG1_queries/unified_communications/service_uc_daily.xml
  logging: logs/uc_vaaspipe.log

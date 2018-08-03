@@ -1,7 +1,7 @@
 Service:
- Customer: Netscout
+ Customer: NTCT IT
  Service_Category: Links
- Key: PHASE 2;Netscout;Plano;nG1;Links;Daily;DrillDown
+ Key: PHASE 2;NTCT IT;Plano;nG1;Links;Daily;DrillDown
  Description: Daily Feed of Plano Links Drill-Down KPIs from nG1 
  query_file: nG1_queries/links/service_linksDrillDown_Plano_daily.xml
  logging: logs/linksDrilldown_vaaspipe.log

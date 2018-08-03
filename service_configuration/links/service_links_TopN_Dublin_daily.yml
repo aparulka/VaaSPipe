@@ -1,7 +1,7 @@
 Service:
- Customer: Netscout
+ Customer: NTCT IT
  Service_Category: Links
- Key: PHASE 2;Netscout;Dublin;nG1;Links;TopN;Daily
+ Key: PHASE 2;NTCT IT;Dublin;nG1;Links;TopN;Daily
  Description: Daily Feed of Dublin Links Top Applications from nG1
  query_file: nG1_queries/links/service_linksDrillTopN_Dublin_daily.xml
  logging: logs/linksDrilldown_vaaspipe.log

@@ -1,24 +1,24 @@
 Service:
- Customer: Netscout
+ Customer: NTCT IT
  Service_Category: Infrastructure
- Key: Netscout;All;nGP;Infrastructure;Daily
+ Key: NTCT IT;All;nGP;Infrastructure;Daily
  Description: Daily Feed of Infrastructure Health checks All Locations
- query_file: nGP_queries/availability/infrastructure_daily.yml
- logging: logs/availability_tests.log
+ query_file: nGP_queries/infrastructure/infrastructure_query_daily.yml
+ logging: logs/infrastructure_tests.log
  logging_level: INFO
  filename: infrastructure_nGP_Daily_
  date_format: '%Y%m%d_%H%M'
  output_format:
-  - date
   - customer 
   - location
   - service
-  - infrastructureId
+  - date
+  - infrastructureName
   - normalPercentage
   - degradedPercentage
   - excessivePercentage
   - criticalPercentage
   - noDataPercentage
   - count
-
-  
+  - startTimeMs
+  - endTimeMs

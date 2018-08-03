@@ -21,8 +21,9 @@ Query:
   type: test,agent
   start:
    relativedelta:
-    days: -2
+    months: -1
    replace:
+    day: 1
     hour: 0
     minute: 0
     second: 0
@@ -30,11 +31,12 @@ Query:
    date_format: '%d-%m-%Y %H:%M:%S'
   end:
    relativedelta:
-    days: -1
+    months: 0 
    replace:
+    day: 1
     hour: 0
     minute: 0
     second: 0
     microsecond: 0
    date_format: '%d-%m-%Y %H:%M:%S'  
-  rowLimit: 100
+  rowLimit: 10000

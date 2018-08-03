@@ -1,5 +1,4 @@
-import csv
-import json
+import csv, json, yaml
 from io import StringIO
 import requests
 import logging
@@ -7,6 +6,7 @@ import datetime
 from dateutil.parser import parse
 from dateutil.tz import gettz
 from dateutil.relativedelta import relativedelta
+import pytz
 
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning) # https://stackoverflow.com/questions/27981545/suppress-insecurerequestwarning-unverified-https-request-is-being-made-in-pytho
@@ -20,10 +20,28 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
-dbONE_API_headers= {'Content-Type': 'text/xml;charset=UTF-8'}
-service_mappings_separator="\t"
-tzinfos = {"EDT": gettz("America/Boston")}
+with open('global_config/vaas_lib.yml', 'rb') as input:
+			vaas_lib=yaml.load(input)
 
+			
+			
+dbONE_API_headers= {'Content-Type': 'text/xml;charset=UTF-8'}
+
+service_mappings_separator=vaas_lib['Output_Separator']
+output_separator=vaas_lib['Output_Separator']
+
+
+# Available timezones are stored in pytz.all_timezones
+
+tz = pytz.timezone(vaas_lib['Timezone'])
+
+
+# https://stackoverflow.com/questions/38470781/how-to-get-timezone-from-datetime-string-in-python
+
+tzinfos= dict()
+for code, timezone in vaas_lib['Tzinfos'].items(): 
+	tzinfos[code] = gettz(timezone)
+	
 
 def query_dbONE(host, port, query, username, password, headers=dbONE_API_headers, api_version=None, verify=False, conversion='true',DT='csv', encrypted='false'):
 	'''
@@ -35,12 +53,18 @@ def query_dbONE(host, port, query, username, password, headers=dbONE_API_headers
 	
 	logging.info(query_url)
 	
-	response = requests.post(query_url, headers=headers, data=query, verify=verify)
+	api_response = requests.post(query_url, headers=headers, data=query, verify=verify)
 	
-	return response.text
+	reader = csv.DictReader(StringIO(api_response.text), delimiter=",", quotechar='"')
 	
+	response=StringIO()
+	writer = csv.DictWriter(response, reader.fieldnames, delimiter=output_separator)
+	writer.writeheader()
+	writer.writerows(reader)
+	return response.getvalue().strip().split("\r\n")
+	#return response.text.strip().replace(output_separator, " ").replace(",", output_separator).split("\r\n")
 	
-def query_nGPulse(datasource, query, version=None):
+def query_nGPulse_availability(datasource, query, version=None):
 	'''
 	Builds nGPulse API query
 	'''
@@ -57,12 +81,12 @@ def query_nGPulse(datasource, query, version=None):
 	kpi_filter_params = query['kpi_filter_params']
 
 	# Time calculations
-	now = datetime.datetime.now()	
+	now = datetime.datetime.now(tz)	
 	start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
 	end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
-	start_time_ms = int(start_time.strftime("%s")) * 1000
-	end_time_ms = int(end_time.strftime("%s")) * 1000
-	output_datestamp =  end_time.strftime("%Y-%m-%d")
+	start_time_ms = int(start_time.timestamp())
+	end_time_ms = int(end_time.timestamp())
+	output_datestamp =  start_time.strftime("%d-%m-%Y %H:%M:%S")
 	
 	kpi_filter_params['start'] = start_time_ms
 	kpi_filter_params['end'] = end_time_ms
@@ -76,7 +100,6 @@ def query_nGPulse(datasource, query, version=None):
 	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
 	response = requests.post(url, data=data)
 	authentication_json = json.loads(response.text)
-	print(authentication_json)
 	token =  authentication_json['accessToken']
 	token_string = ('Access %s' %token)
 	auth_headers = {'ngp-authorization' : token_string}
@@ -97,9 +120,9 @@ def query_nGPulse(datasource, query, version=None):
 
 	
 	url = 'http://' + hostname + '/query/table'
-
+	
 	parsed_response = StringIO()
-	writer = csv.writer(parsed_response,delimiter=',',quoting=csv.QUOTE_MINIMAL)
+	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
 	
 	# Writing header as a Transformation.
 	# header=['Date','Location','Service Test','Availability (%)']
@@ -117,13 +140,13 @@ def query_nGPulse(datasource, query, version=None):
 
 	 
 		for index, item in enumerate(parsed_json['data']):
-			nPoint =  parsed_json['data'][index]['agent']['name']
+			nPoint =  parsed_json['data'][index]['agent']['name'].replace("\t", " ")
 			if nPoint in nGP_Location_List:  
 				availability =  parsed_json['data'][index]['availPercent'] 
-				writer.writerow([output_datestamp,nPoint,nGP_Service_Test,availability])
+				writer.writerow([output_datestamp,nPoint,nGP_Service_Test,availability, start_time_ms, end_time_ms])
 
 	
-	return parsed_response.getvalue()
+	return parsed_response.getvalue().strip().split("\r\n")
  
 def query_nGPulse_server(datasource, query, version=None):
 	'''
@@ -133,19 +156,37 @@ def query_nGPulse_server(datasource, query, version=None):
 	# Setup
 	
 	hostname = get_hostname(datasource['host'], datasource['port'])
-	print(hostname)
+
+	
+	# Include VMs and HyperVisors in nGP_Server_List
 	nGP_Server_List = query['nGP_Server_List']
+	nGP_Router_List = query['nGP_Router_List']
+	nGP_AccessPoint_List = query['nGP_AccessPoint_List']
+	nGP_Switch_List = query['nGP_Switch_List']
+	nGP_WirelessController_List = query['nGP_WirelessController_List']
+	nGP_GenericDevice_List = query['nGP_GenericDevice_List']
+
+	infra = {}
+
+	infra['server'] = nGP_Server_List or []
+	infra['router'] = nGP_Router_List or []
+	infra['accesspoint'] = nGP_AccessPoint_List or []
+	infra['switch'] = nGP_Switch_List or []
+	infra['wirelesscontroller'] = nGP_WirelessController_List or []
+	infra['generic'] = nGP_GenericDevice_List or []	
+	
+	
 	
 	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
 	kpi_filter_params = query['kpi_filter_params']
 
 	# Time calculations
-	now = datetime.datetime.now()	
+	now = datetime.datetime.now(tz)	
 	start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
 	end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
-	start_time_ms = int(start_time.strftime("%s")) * 1000
-	end_time_ms = int(end_time.strftime("%s")) * 1000
-	output_datestamp =  end_time.strftime("%Y-%m-%d")
+	start_time_ms = int(start_time.timestamp())
+	end_time_ms = int(end_time.timestamp())
+	output_datestamp =  start_time.strftime("%d-%m-%Y %H:%M:%S")
 	
 	kpi_filter_params['start'] = start_time_ms
 	kpi_filter_params['end'] = end_time_ms
@@ -159,7 +200,6 @@ def query_nGPulse_server(datasource, query, version=None):
 	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
 	response = requests.post(url, data=data)
 	authentication_json = json.loads(response.text)
-	print(authentication_json)
 	token =  authentication_json['accessToken']
 	token_string = ('Access %s' %token)
 	auth_headers = {'ngp-authorization' : token_string}
@@ -168,40 +208,381 @@ def query_nGPulse_server(datasource, query, version=None):
 	
 	url = 'http://' + hostname + '/query/table'
 
-
-	# f.write ('Date,VaaS_Customer,Service,Infrastructure_ID,Normal (%),Degraded (%),Excessive (%),Critical (%),No Data (%),Count\n')
-
 	headers = {'ngp-authorization' : token_string}
 
-	response = requests.get(url, params=kpi_filter_params, headers=headers)
-	 
-	parsed_json = json.loads(response.text)
+	parsed_response = StringIO()
+	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
+	
+	for type in kpi_filter_params['type']:
+		kpi_filter_params['type'] = type
+		response = requests.get(url, params=kpi_filter_params, headers=headers) 
+		parsed_json = json.loads(response.text)
+		
+		for index, item in enumerate(parsed_json['data']):
+			service =  parsed_json['data'][index][type]['deviceType']
+			infrastructureId =  parsed_json['data'][index][kpi_filter_params['type']]['name']
+			if infrastructureId in infra[service]:  
+				green =  parsed_json['data'][index]['status']['green'] 
+				yellow =  parsed_json['data'][index]['status']['yellow'] 
+				orange =  parsed_json['data'][index]['status']['orange'] 
+				red =  parsed_json['data'][index]['status']['red'] 
+				gray =  parsed_json['data'][index]['status']['gray'] 
+				count =  parsed_json['data'][index]['status']['count'] 	
+				writer.writerow([output_datestamp,service.replace(output_separator, " "),infrastructureId.replace(output_separator, " "),green,yellow,orange,red,gray,count, start_time_ms, end_time_ms])
+		
+	# for index, item in enumerate(parsed_json['data']):
+	  # server =  parsed_json['data'][index]['server']['name']
+	  # if server in nGP_Server_List:  
+	   # green =  parsed_json['data'][index]['status']['green'] 
+	   # yellow =  parsed_json['data'][index]['status']['yellow'] 
+	   # orange =  parsed_json['data'][index]['status']['orange'] 
+	   # red =  parsed_json['data'][index]['status']['red'] 
+	   # gray =  parsed_json['data'][index]['status']['gray'] 
+	   # count =  parsed_json['data'][index]['status']['count'] 
+	   # writer.writerow([output_datestamp,server,green,yellow,orange,red,gray,count])
+	   
+	return parsed_response.getvalue().strip().split("\r\n")
+
+def query_nGPulse_voip(datasource, query, version=None):
+	'''
+	Builds nGPulse API query
+	'''
+
+	# Setup
+	
+	hostname = get_hostname(datasource['host'], datasource['port'])
+	print(hostname)
+
+	nGP_Service_Test_List = query['nGP_Service_Test_List']
+	
+	
+	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
+	kpi_filter_params = query['kpi_filter_params']
+
+	# Time calculations
+	now = datetime.datetime.now(tz)	
+	start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
+	end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
+	start_time_ms = int(start_time.timestamp())
+	end_time_ms = int(end_time.timestamp())
+	output_datestamp =  start_time.strftime("%d-%m-%Y %H:%M:%S")
+	
+	kpi_filter_params['start'] = start_time_ms
+	kpi_filter_params['end'] = end_time_ms
+	
+	logging.info("start_time: "+start_time.strftime('%d-%m-%Y %H:%M:%S'))
+	logging.info("end_time: "+end_time.strftime('%d-%m-%Y %H:%M:%S'))
+	
+	
+	# Get the Acces Token
+	url = 'http://' + hostname + '/ipm/auth/login'
+	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
+	response = requests.post(url, data=data)
+	authentication_json = json.loads(response.text)
+	token =  authentication_json['accessToken']
+	token_string = ('Access %s' %token)
+	auth_headers = {'ngp-authorization' : token_string}
+	
+	# Get a list of service tests 
+	url = 'http://' + hostname + '/ipm/v1/admin/tests'
+	params = {'query' : '{"status":"Running"}'}
+	
+	response = requests.get(url, params=params, headers=auth_headers)
+	services_json = json.loads(response.text)
+
+	service_dict = {}
+
+	#debug only
+	#print "Service Tests available are: \n"
+
+	for index, item in enumerate(services_json):
+	 name =  services_json[index]['name']
+	 id =  services_json[index]['_id']
+	 service_dict[name] = id
 
 	
+	url = 'http://' + hostname + '/query/table'
+
 	parsed_response = StringIO()
-	writer = csv.writer(parsed_response,delimiter=',',quoting=csv.QUOTE_MINIMAL)
+	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
 	
-	for index, item in enumerate(parsed_json['data']):
-	  server =  parsed_json['data'][index]['server']['name']
-	  if server in nGP_Server_List:  
-	   green =  parsed_json['data'][index]['status']['green'] 
-	   yellow =  parsed_json['data'][index]['status']['yellow'] 
-	   orange =  parsed_json['data'][index]['status']['orange'] 
-	   red =  parsed_json['data'][index]['status']['red'] 
-	   gray =  parsed_json['data'][index]['status']['gray'] 
-	   count =  parsed_json['data'][index]['status']['count'] 
-	   writer.writerow([output_datestamp,server,green,yellow,orange,red,gray,count])
-	   
-	return parsed_response.getvalue()
- 
- 
+	for nGP_Service_Test in nGP_Service_Test_List:
+	 id = service_dict[nGP_Service_Test]
+	 kpi_filter_params['test'] = id
+	 headers = {'ngp-authorization' : token_string}
+	 response = requests.get(url, params=kpi_filter_params, headers=headers) 
+	 parsed_json = json.loads(response.text)
+
+	 for index, item in enumerate(parsed_json['data']):
+	  nPoint =  parsed_json['data'][index]['agent']['name'].replace(output_separator, " ")
+	  availability =  parsed_json['data'][index]['availPercent']
+	  caller_mos =  parsed_json['data'][index]['avgLqmosRx'] 
+	  callee_mos =  parsed_json['data'][index]['avgLqmosTx'] 
+	  count  =  parsed_json['data'][index]['count'] 
+	  writer.writerow([output_datestamp,nGP_Service_Test.replace(output_separator, " "),nPoint,availability,caller_mos,callee_mos,count, start_time_ms, end_time_ms])
+
+	
+	return parsed_response.getvalue().strip().split("\r\n")
+
+def query_nGPulse_latency(datasource, query, version=None):
+	'''
+	Builds nGPulse API query
+	'''
+
+	# Setup
+	
+	hostname = get_hostname(datasource['host'], datasource['port'])
+	print(hostname)
+
+	# populate a dict of service tests per service
+	service_app = {}
+	service_app = query['Services']
+	
+	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
+	kpi_filter_params = query['kpi_filter_params']
+
+	# Time calculations
+	now = datetime.datetime.now(tz)	
+	start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
+	end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
+	start_time_ms = int(start_time.timestamp())
+	end_time_ms = int(end_time.timestamp())
+	output_datestamp =  start_time.strftime("%d-%m-%Y %H:%M:%S")
+	
+	kpi_filter_params['start'] = start_time_ms
+	kpi_filter_params['end'] = end_time_ms
+	
+	logging.info("start_time: "+start_time.strftime('%d-%m-%Y %H:%M:%S'))
+	logging.info("end_time: "+end_time.strftime('%d-%m-%Y %H:%M:%S'))
+	
+	
+	# Get the Acces Token
+	url = 'http://' + hostname + '/ipm/auth/login'
+	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
+	response = requests.post(url, data=data)
+	authentication_json = json.loads(response.text)
+	token =  authentication_json['accessToken']
+	token_string = ('Access %s' %token)
+	auth_headers = {'ngp-authorization' : token_string}
+	
+	# Get a list of service tests 
+	url = 'http://' + hostname + '/ipm/v1/admin/tests'
+	params = {'query' : '{"status":"Running"}'}
+	
+	response = requests.get(url, params=params, headers=auth_headers)
+	services_json = json.loads(response.text)
+
+	service_dict = {}
+
+	for service in service_app.keys():
+		for ping_test in service_app[service]:
+			 # get the service_id
+			for index, item in enumerate(services_json):
+			 name =  services_json[index]['name']
+			 id =  services_json[index]['_id']
+			 service_dict[name] = id
+
+
+	url = 'http://' + hostname + '/query/table'
+
+	parsed_response = StringIO()
+	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
+	
+	for service in service_app.keys():
+	 for ping_test in service_app[service]:
+	  kpi_filter_params['test'] = service_dict[ping_test]
+
+	  headers = {'ngp-authorization' : token_string}
+
+	  response = requests.get(url, params=kpi_filter_params, headers=headers)
+	 
+	  parsed_json = json.loads(response.text)
+
+	  for index, item in enumerate(parsed_json['data']):
+	   nPoint =  parsed_json['data'][index]['agent']['name']
+	   availability =  parsed_json['data'][index]['availPercent'] 
+	   Avg_Latency =  parsed_json['data'][index]['avgavg']
+	   Best_Latency =  parsed_json['data'][index]['avgbest']
+	   Worst_Latency =  parsed_json['data'][index]['avgworst']
+	   count = parsed_json['data'][index]['count'] 
+	   writer.writerow([output_datestamp,service.replace(output_separator, " "),ping_test.replace(output_separator, " "),nPoint.replace(output_separator, " "),availability,Avg_Latency,Best_Latency,Worst_Latency,count, start_time_ms, end_time_ms])
+	
+	return parsed_response.getvalue().strip().split("\r\n")
+ 	
+def query_nGPulse_ping(datasource, query, version=None):
+	'''
+	Builds nGPulse API query
+	'''
+
+	# Setup
+	
+	hostname = get_hostname(datasource['host'], datasource['port'])
+	print(hostname)
+
+	# populate a dict of service tests per service
+	service_app = {}
+	service_app = query['Services']
+	
+	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
+	kpi_filter_params = query['kpi_filter_params']
+
+	# Time calculations
+	now = datetime.datetime.now(tz)	
+	start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
+	end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
+	start_time_ms = int(start_time.timestamp())
+	end_time_ms = int(end_time.timestamp())
+	output_datestamp =  start_time.strftime("%d-%m-%Y %H:%M:%S")
+	
+	kpi_filter_params['start'] = start_time_ms
+	kpi_filter_params['end'] = end_time_ms
+	
+	logging.info("start_time: "+start_time.strftime('%d-%m-%Y %H:%M:%S'))
+	logging.info("end_time: "+end_time.strftime('%d-%m-%Y %H:%M:%S'))
+	
+	
+	# Get the Acces Token
+	url = 'http://' + hostname + '/ipm/auth/login'
+	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
+	response = requests.post(url, data=data)
+	authentication_json = json.loads(response.text)
+	token =  authentication_json['accessToken']
+	token_string = ('Access %s' %token)
+	auth_headers = {'ngp-authorization' : token_string}
+	
+	# Get a list of service tests 
+	url = 'http://' + hostname + '/ipm/v1/admin/tests'
+	params = {'query' : '{"status":"Running"}'}
+	
+	response = requests.get(url, params=params, headers=auth_headers)
+	services_json = json.loads(response.text)
+
+	service_dict = {}
+
+	for service in service_app.keys():
+		for ping_test in service_app[service]:
+			 # get the service_id
+			for index, item in enumerate(services_json):
+			 name =  services_json[index]['name']
+			 id =  services_json[index]['_id']
+			 service_dict[name] = id
+
+
+	url = 'http://' + hostname + '/query/table'
+
+	parsed_response = StringIO()
+	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
+	
+	for service in service_app.keys():
+	 for ping_test in service_app[service]:
+	  kpi_filter_params['test'] = service_dict[ping_test]
+
+	  headers = {'ngp-authorization' : token_string}
+
+	  response = requests.get(url, params=kpi_filter_params, headers=headers)
+	 
+	  parsed_json = json.loads(response.text)
+
+	  for index, item in enumerate(parsed_json['data']):
+		   nPoint =  parsed_json['data'][index]['agent']['name']
+		   availability =  parsed_json['data'][index]['availPercent'] 
+		   Avg_Ping_Latency =  parsed_json['data'][index]['avgping_results']
+		   count = parsed_json['data'][index]['count'] 
+		   writer.writerow([output_datestamp,service.replace(output_separator, " "),ping_test.replace(output_separator, " "),nPoint.replace(output_separator, " "),availability,Avg_Ping_Latency,count, start_time_ms, end_time_ms])
+	
+	return parsed_response.getvalue().strip().split("\r\n")
+ 	
+def query_nGPulse_web(datasource, query, version=None):
+	'''
+	Builds nGPulse API query
+	'''
+
+	# Setup
+	
+	hostname = get_hostname(datasource['host'], datasource['port'])
+	print(hostname)
+
+	# populate a dict of service tests per service
+	service_app = {}
+	service_app = query['Services']
+	
+	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
+	kpi_filter_params = query['kpi_filter_params']
+
+	# Time calculations
+	now = datetime.datetime.now(tz)	
+	start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
+	end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
+	start_time_ms = int(start_time.timestamp())
+	end_time_ms = int(end_time.timestamp())
+	output_datestamp =  start_time.strftime("%d-%m-%Y %H:%M:%S")
+	
+	kpi_filter_params['start'] = start_time_ms
+	kpi_filter_params['end'] = end_time_ms
+	
+	logging.info("start_time: "+start_time.strftime('%d-%m-%Y %H:%M:%S'))
+	logging.info("end_time: "+end_time.strftime('%d-%m-%Y %H:%M:%S'))
+	
+	
+	# Get the Acces Token
+	
+	url = 'http://' + hostname + '/ipm/auth/login'
+	
+	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
+	response = requests.post(url, data=data)
+	authentication_json = json.loads(response.text)
+	token =  authentication_json['accessToken']
+	token_string = ('Access %s' %token)
+	auth_headers = {'ngp-authorization' : token_string}
+	
+	# Get a list of service tests 
+	url = 'http://' + hostname + '/ipm/v1/admin/tests'
+	params = {'query' : '{"status":"Running"}'}
+	
+	response = requests.get(url, params=params, headers=auth_headers)
+	services_json = json.loads(response.text)
+
+	service_dict = {}
+
+	for service in service_app.keys():
+		for ping_test in service_app[service]:
+			 # get the service_id
+			for index, item in enumerate(services_json):
+			 name =  services_json[index]['name']
+			 id =  services_json[index]['_id']
+			 service_dict[name] = id
+
+
+	url = 'http://' + hostname + '/query/table'
+
+	parsed_response = StringIO()
+	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
+	
+	for service in service_app.keys():
+	 for ping_test in service_app[service]:
+	  kpi_filter_params['test'] = service_dict[ping_test]
+
+	  headers = {'ngp-authorization' : token_string}
+
+	  response = requests.get(url, params=kpi_filter_params, headers=headers)
+	 
+	  parsed_json = json.loads(response.text)
+
+	  for index, item in enumerate(parsed_json['data']):
+		   nPoint =  parsed_json['data'][index]['agent']['name']
+		   availability =  parsed_json['data'][index]['availPercent'] 
+		   Avg_Response =  parsed_json['data'][index]['avgResponse']
+		   count = parsed_json['data'][index]['count'] 
+		   writer.writerow([output_datestamp,service.replace(output_separator, " "),ping_test.replace(output_separator, " "),nPoint.replace(output_separator, " "),availability,Avg_Response,count, start_time_ms, end_time_ms])
+	
+	return parsed_response.getvalue().strip().split("\r\n")
+ 	
 def get_hostname(hostname, port):	
 	if port is not None:
 		return hostname + ":" + port
 	else:
 		return hostname
 	
- 
 def transformation(text, output_headers, transformations):
 	'''
 	Provides a CSV dictionary object that matches expected Service Output format.
@@ -216,42 +597,38 @@ def transformation(text, output_headers, transformations):
 	
 	'''
 
-	result_set = text.strip().split("\r\n")
+	result_set = text
 	logging.debug(">>>======RESULT SET========")
 	logging.debug(result_set)
 	logging.debug("======RESULT SET========<<<<")
-	
-	
 	
 	Header=True if 'Header' in transformations.keys() else False
 	
 	if Header:
 		if 'add_header' in transformations['Header'].keys():
 			# Adding a header to the result_set
-			result_set.insert(0, ",".join(transformations['Header']['add_header']))
+			result_set.insert(0, output_separator.join(transformations['Header']['add_header']))
 			
 		if 'modify_header' in transformations['Header'].keys():
 			# Assumes result_set contains header. Rename certain fields as per 'modify_header' mapping configuration
-			header=result_set[0].split(',')
+			header=result_set[0].split(output_separator)
 			mapping=transformations['Header']['modify_header']
 			for key, value in mapping.items():
 				header[header.index(key)]=value		
 			
-			result_set[0]=",".join(header)
+			result_set[0]=output_separator.join(header)
 	else:
 		logging.debug("No changes made to Header")
 	
 	logging.debug(result_set)
-	api_headers= result_set.pop(0).split(',')
+	api_headers= result_set.pop(0).split(output_separator)
 	logging.debug(api_headers)
-	api_body = list(map(lambda x: x.replace('"','').split(','),result_set)) 
+	api_body = list(map(lambda x: x.replace('"','').split(output_separator),result_set)) 
 	
 	
 	transformed = []
 	transformed.append(output_headers)
 	
-	
-
 	Transformations=True if 'Transformations' in transformations.keys() else False
 	
 	logging.debug(Transformations)
@@ -264,10 +641,9 @@ def transformation(text, output_headers, transformations):
 			logging.info(result)
 			for out_field in output_headers:
 				try:
-					index = api_headers.index(out_field)	
+					index = api_headers.index(out_field)
 					eRow.append(result[index])
 				except ValueError:
-				
 					if transformations[out_field]['type'] == 'simple':
 						eRow.append(transformation_simple(result, api_headers, out_field, transformations[out_field]))
 					if 	transformations[out_field]['type'] == 'date':
@@ -282,7 +658,7 @@ def transformation(text, output_headers, transformations):
 	logging.debug(transformed)
 	
 	response = StringIO()
-	writer = csv.writer(response,delimiter=',',quoting=csv.QUOTE_MINIMAL)
+	writer = csv.writer(response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
 	
 	writer.writerows(transformed)
 	
@@ -290,15 +666,6 @@ def transformation(text, output_headers, transformations):
 	#return "\n".join(map(lambda x: ",".join(x), transformed))
 	return response.getvalue()
 
-
-def process_header(csv_input, transformations):
-
-	return "header,header,header"
-
-def get_body(csv_input):
-
-	return"body,body,body"
-	
 def transformation_simple(record, headers, mapping, transformations):
 	logging.info("A simple transformation: "+ mapping)
 	
@@ -310,9 +677,9 @@ def transformation_simple(record, headers, mapping, transformations):
 		for lookup in lookups:
 			if lookup[transformations['lookup_column']] in record:
 				return lookup[mapping]
-
-	except KeyError:
 		return transformations['default']
+	except KeyError:
+		return transformations['default']	
 	
 def transformation_date(record, headers, mapping, transformations):
 
@@ -335,7 +702,7 @@ def transformation_date_injection(record, headers, mapping, transformations):
 		logging.debug(relativedelta_params)
 		logging.debug(replace_params)
 
-		server_time = datetime.datetime.now()
+		server_time = datetime.datetime.now(tz)
 
 		logging.debug("server_time: "+ str(server_time))
 
@@ -351,8 +718,6 @@ def transformation_date_injection(record, headers, mapping, transformations):
 		print("-"*60)
 		return "00-0-0000 00:00:00"
 
-
-	
 def send_notification(server, port, from_email, to_email, subject, msg_body, attachment, filename, tls = 0, password = None):
 	msg = MIMEMultipart()
 	msg['From'] = from_email
@@ -379,4 +744,4 @@ def send_notification(server, port, from_email, to_email, subject, msg_body, att
 	smtp_srv.quit()
 	
 def get_time(format_str="%Y%m%d_%H%M"):
-	return datetime.datetime.now().strftime(format_str)
+	return datetime.datetime.now(tz).strftime(format_str)

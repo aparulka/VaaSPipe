@@ -1,21 +1,25 @@
 Header:
  add_header:
   - date
-  - infrastructureId
+  - service
+  - infrastructureName
   - normalPercentage
   - degradedPercentage
   - excessivePercentage
   - criticalPercentage
   - noDataPercentage
   - count
+  - startTimeMs
+  - endTimeMs  
 Transformations:
  customer:
   type: simple
-  default: Netscout
+  default: NTCT IT
  location:
   type: simple
-  default: Netscout
- service:
-  type: simple
-  default: Infrastructure
+  default: NTCT IT
+  lookup_column: infrastructureName
+  mapping_file: service_mappings/infrastructure.cfg
+ 
+ 
  

@@ -1,0 +1,30 @@
+Query:
+ Services:
+  O365 Exchange: 
+   - Egress IP - Plano
+   - MS EXO Peering Point - Plano
+   - MS EXO Peering Point - Plano
+ kpi_filter_params:
+  metrics: availPercent,avgavg,avgbest,avgworst,count
+  type: test,agent
+  start:
+   relativedelta:
+    months: -1
+   replace:
+    day: 1
+    hour: 0
+    minute: 0
+    second: 0
+    microsecond: 0
+   date_format: '%d-%m-%Y %H:%M:%S'
+  end:
+   relativedelta:
+    months: 0
+   replace:
+    day: 1
+    hour: 0
+    minute: 0
+    second: 0
+    microsecond: 0
+   date_format: '%d-%m-%Y %H:%M:%S'  
+  rowLimit: 10000

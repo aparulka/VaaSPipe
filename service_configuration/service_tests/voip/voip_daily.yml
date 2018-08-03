@@ -1,0 +1,24 @@
+Service:
+ Customer: NTCT IT
+ Service_Category: VoIP Test
+ Key: NTCT IT;All;nGP;VoIP Test;Daily
+ Description: Daily Feed of Service VoIp Tests for All Locations
+ query_file: nGP_queries/service_tests/voip/voip_query_daily.yml
+ logging: logs/voip_tests.log
+ logging_level: INFO
+ filename: voip_nGP_Daily_
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+  - customer
+  - location
+  - service   
+  - date  
+  - serviceTestType  
+  - serviceTestName 
+  - npoint 
+  - availabilityPercentage 
+  - callerAvgMOS
+  - calleeAvgMOS
+  - count
+  - startTimeMs
+  - endTimeMs
