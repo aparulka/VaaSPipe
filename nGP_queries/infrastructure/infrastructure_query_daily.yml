@@ -7,6 +7,7 @@ Query:
  nGP_Router_List:
   - ar-brac-uk-1
   - ar-brno-cz-1
+  - vr-duba-uae-1
 
  nGP_AccessPoint_List:
   - lap-madr-es-1
@@ -16,8 +17,12 @@ Query:
   - sr-dub-ie-7-2
   
  nGP_WirelessController_List:
+  - WLC-SING-1
+  - WLC-BNG-1
+  - WLC-WST-1
   - WLC-PLNO-2
   - WLC-DUB-1
+  - WLC-DUB-2
   
  nGP_GenericDevice_List:
   
