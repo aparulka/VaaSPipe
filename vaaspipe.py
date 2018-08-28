@@ -52,11 +52,10 @@ elif service['Service']['Service_Category'] in ['Ping Test']:
 	api_response = vaas_de.query_nGPulse_ping(datasource['nGPulse'],query['Query'])
 elif service['Service']['Service_Category'] in ['Web Test']:	
 	api_response = vaas_de.query_nGPulse_web(datasource['nGPulse'],query['Query'])
+elif service['Service']['Service_Category'] in ['Dimensions']:
+	api_response = vaas_de.query_psql(datasource.get('postGres').get('host'),datasource.get('postGres').get('user'),datasource.get('postGres').get('password'),datasource.get('postGres').get('dbname'),service.get('Service').get('query_file'))
 else:
 	raise Exception(service['Service_Category']+' is not a valid Service Category')
-
-
-
 								   								   
 								   
 query_file.close()

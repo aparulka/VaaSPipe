@@ -1,0 +1,13 @@
+Header:
+ add_header:
+  - appid
+  - protocoltypecode
+  - name
+  - longname
+  - protocolgroup
+  - parent
+Transformations:
+ customer:
+  type: simple
+  default: NTCT IT
+

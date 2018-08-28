@@ -1,0 +1,6 @@
+postGres:
+ host: 192.168.99.18
+ user: netscout
+ password: netscout
+ dbname: pgsql_stealth_db
+

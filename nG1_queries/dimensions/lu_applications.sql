@@ -1,0 +1,1 @@
+select appid,protocoltypecode,name,longname,protocolgroup,parent from lu_applications
