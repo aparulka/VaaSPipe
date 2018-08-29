@@ -2,10 +2,10 @@ Query:
  nGP_Server_List:
   - wstcupspub.netscout.com
   - wstcucmsub1.netscout.com
-  - plncucmsub^M
+  - plncucmsub
   - plncupssub
-  - wstcond ^M
-  - BOSNETDHCP^M
+  - wstcond
+  - BOSNETDHCP
   - bosnetesx01.netscout.com
   - bosnetesx02.netscout.com
   - bosnetesx03.netscout.com
@@ -46,9 +46,9 @@ Query:
   - WLC-SING-1
   - WLC-BNG-1
   - WLC-WST-1
-  - WLC-PLNO-2^M
-  - WLC-DUB-1^M
-  - WLC-DUB-2^M
+  - WLC-PLNO-2
+  - WLC-DUB-1
+  - WLC-DUB-2
   
  nGP_GenericDevice_List:
   
