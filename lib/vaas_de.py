@@ -7,6 +7,7 @@ from dateutil.parser import parse
 from dateutil.tz import gettz
 from dateutil.relativedelta import relativedelta
 import pytz
+import psycopg2
 
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning) # https://stackoverflow.com/questions/27981545/suppress-insecurerequestwarning-unverified-https-request-is-being-made-in-pytho
@@ -66,6 +67,26 @@ def query_dbONE(host, port, query, username, password, headers=dbONE_API_headers
 	writer.writerows(reader)
 	return response.getvalue().strip().split("\r\n")
 	#return response.text.strip().replace(output_separator, " ").replace(",", output_separator).split("\r\n")
+
+
+def query_psql(host,user,password,dbname,sql):
+
+	conn = psycopg2.connect(host=host,user=user,password=password,dbname=dbname)
+	cur = conn.cursor()
+	query_file=open(sql, 'r')
+	query = query_file.read()
+
+	cur.execute(query)
+	all = cur.fetchall()
+	
+	#all=[(58841411, '050PLUS', '050Plus', 'UGP@050Plus', 'WEB', 'TCP'), (58835929, '30th Activ', '30th Active Directory', '30th Active Directory', 'NONE', 'TCP'),(58836025, '30th Intra', '30th Intra-Farm Services', '30th Intra-Farm Services', 'NONE', 'TCP')]
+	
+	myList = []
+	
+	for row in all:
+		myList.append("\t".join(map(str,row)))
+ 
+	return myList
 	
 def query_nGPulse_availability(datasource, query, version=None):
 	'''

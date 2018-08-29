@@ -5,6 +5,7 @@ Notifications:
  from: tools@netscout.com
  receiver:
   - eduardo.rodriguez@netscout.com
-  - gerhard.pieters@netscout.com
-  - praveen.rao@netscout.com
-  - kiran.soma@netscout.com
+  - devangshu.pal@netscout.com
+#  - gerhard.pieters@netscout.com
+#  - praveen.rao@netscout.com
+#  - kiran.soma@netscout.com
