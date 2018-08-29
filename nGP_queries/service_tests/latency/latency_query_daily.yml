@@ -3,7 +3,6 @@ Query:
   O365 Exchange: 
    - Egress IP - Plano
    - MS EXO Peering Point - Plano
-   - MS EXO Peering Point - Plano
  kpi_filter_params:
   metrics: availPercent,avgavg,avgbest,avgworst,count
   type: test,agent
