@@ -1,0 +1,23 @@
+Transformations:
+ customer:
+  type: simple
+  default: NTCT IT
+ location:
+  type: simple
+  default: Allen
+ networkServiceId:
+  type: simple
+  default: 174327696
+ service:
+  type: simple
+  default: 'Links'
+ date:
+  type: date
+  lookup_column: targetTime_String
+  date_format: '%d-%m-%Y %H:%M:%S'
+Header:
+ modify_header:
+  octets: volume
+  octetsIn: volumeIn
+  octetsOut: volumeOut
+
