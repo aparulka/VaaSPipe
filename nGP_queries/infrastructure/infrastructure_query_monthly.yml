@@ -42,7 +42,7 @@ Query:
  nGP_Switch_List:
   - sr-dub-ie-7-2
   
- nGP_WirelessController_List:^M
+ nGP_WirelessController_List:
   - WLC-SING-1
   - WLC-BNG-1
   - WLC-WST-1
