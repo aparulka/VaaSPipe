@@ -1,6 +1,6 @@
 ## What is VaaSPipe
 
-VaaSPipe is a flexible module to extract dataset (KPIs, Dimension) from VaaS customer systems.
+VaaSPipe is a flexible module to extract datasets (KPIs, Dimension) from VaaS customer systems.
 It is written in Python3 and takes in 4 YAML arguments to chain the various components of each data pipeline:
 
 - Service Configuration: service configuration and main parameters
