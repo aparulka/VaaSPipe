@@ -91,4 +91,6 @@ After testing the feature and getting approval, you'll be ready to merge to mast
 - git push origin master
 ```
 
+## Resource utilization
 
+To monitor VaaSPipe, use docker stats command.  Typically, VaaSPipe execution last a few seconds (<10 seconds) and use around 20MB of RAM. In idle state, the memory footprint of VaaSPipe is only 644KBytes
