@@ -11,9 +11,11 @@ It is written in Python3 and takes in 4 YAML arguments to chain the various comp
 ## Running VaaSPipe:
 
 Typical command:
+
 /VaaSPipe # python3 vaaspipe.py -s service_configuration/applications/service_applications_daily.yml -t transformations/transformations_apps.yml -n global_config/notifications.yml -d global_config/datasource.yml
 
 VaaSPipe help:
+
 /VaaSPipe # python3 vaaspipe.py -h
 usage: vaaspipe -service service.yml -transformations transformations.yml -notification notification.yml -datasource datasource.yml
 
