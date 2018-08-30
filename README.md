@@ -10,6 +10,30 @@ It is written in Python3 and takes in 4 YAML arguments to chain the various comp
 
 ## Running VaaSPipe:
 
+VaaSPipe is designed to be run inside a container with all required Python dependencies. The image is based off Alpine OS and as of this writting takes about 300MB.
+
+One can also run VaaSPipe on any system with Python and this requirements installed:
+
+```
+/VaaSPipe # python3 -m pip list
+Package         Version
+--------------- ---------
+certifi         2018.8.24
+chardet         3.0.4
+idna            2.7
+pip             18.0
+psycopg2        2.7.5
+python-dateutil 2.7.3
+pytz            2018.5
+PyYAML          3.13
+requests        2.19.1
+setuptools      40.2.0
+six             1.11.0
+urllib3         1.23
+wheel           0.31.1
+
+```
+
 Typical command:
 
 ```
