@@ -67,6 +67,28 @@ optional arguments:
 If you want to merge any code into VaaSPipe, you'll need a pull request, or email eduardo.rodriguez@netscout.com.
 
 The typical development workflow used in this project is this:
-
+```
 - Select a directory to host your development environment
+- git init # setup git in development directory
+- git clone http://vaas-git.labs.netscout.com/erodrigu/VaaSPipe.git # clone VaaSPipe
+- git remote add origin http://vaas-git.labs.netscout.com/erodrigu/VaaSPipe.git # setup origin to simplify commands
+- git fetch --all
+- git reset --hard origin/master
+- git checkout -b your-branch-name master
+- git branch # ensure you're in the right branch
+- << Work on your code and configuration changes >>
+- git add -A :/ # stage changes
+- git commit –a # commit changes locally.  Do not forget to add a commit message
+- git push -u origin your-branch-name # push changes to GitLab server
+```
+
+After testing the feature and getting approval, you'll be ready to merge to master to produce a new release
+
+```
+- git checkout master
+- git pull origin master
+- git merge first_updates
+- git push origin master
+```
+
 
