@@ -26,8 +26,7 @@ optional arguments:
   -s SERVICE, -service SERVICE
   -t TRANSFORMATIONS, -transformations TRANSFORMATIONS
   -n NOTIFICATIONS, -notifications NOTIFICATIONS
-  -d DATASOURCE, -datasource DATASOURCE
-```
+  -d DATASOURCE, -datasource DATASOURCE```
 
 ## Developing for VaaSPipe:
 
