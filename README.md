@@ -76,7 +76,7 @@ The typical development workflow used in this project is this:
 - git reset --hard origin/master
 - git checkout -b your-branch-name master
 - git branch # ensure you're in the right branch
-- << Work on your code and configuration changes >>
+<< Work on your code and configuration changes >>
 - git add -A :/ # stage changes
 - git commit –a # commit changes locally.  Do not forget to add a commit message
 - git push -u origin your-branch-name # push changes to GitLab server
