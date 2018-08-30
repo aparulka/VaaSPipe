@@ -8,9 +8,12 @@ It is written in Python3 and takes in 4 YAML arguments to chain the various comp
 - Notification: specify the details of the STMP server and a list of email addresses to send CSV (tab-separated) outputs attached to an email
 - Data Source: specify the details of the source system. It supports nG1, nGP and nG1 Postgres data sources
 
-## Running VaaSPipe:
+## Building and Running VaaSPipe:
 
 VaaSPipe is designed to be run inside a container with all required Python dependencies. The image is based off Alpine OS and as of this writting takes about 300MB.
+
+The lastest production & development ready image can be fetched from http://vaas-git.labs.netscout.com/erodrigu/docker_images.git , VaaSPipe/Dockerfile
+( http://172.20.237.165/erodrigu/docker_images/tree/master/VaaSPipe ).  Build your image/container by following the instructions in the corresponding README.md
 
 One can also run VaaSPipe on any system with Python and this requirements installed:
 
