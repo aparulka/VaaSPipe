@@ -43,6 +43,9 @@ Typical command:
 /VaaSPipe # python3 vaaspipe.py -s service_configuration/applications/service_applications_daily.yml -t transformations/transformations_apps.yml -n global_config/notifications.yml -d global_config/datasource.yml
 ```
 
+NOTE: Before you run a sample command, make sure notification.yml has been edited to include only your target email address.
+
+
 VaaSPipe help:
 
 ```
