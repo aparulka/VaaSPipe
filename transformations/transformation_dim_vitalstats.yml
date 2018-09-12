@@ -1,0 +1,8 @@
+Header:
+ add_header:
+  - id
+  - name
+Transformations:
+ customer:
+  type: simple
+  default: NTCT IT

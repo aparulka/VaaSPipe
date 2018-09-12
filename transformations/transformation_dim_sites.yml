@@ -1,0 +1,14 @@
+Header:
+ add_header:
+  - siteid
+  - sitename
+  - speed
+  - country
+  - subdivision
+  - city
+  - latitude
+  - longitude
+Transformations:
+ customer:
+  type: simple
+  default: NTCT IT

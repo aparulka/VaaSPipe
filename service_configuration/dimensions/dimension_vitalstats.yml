@@ -1,0 +1,14 @@
+Service:
+ Customer: NTCT IT
+ Service_Category: Dimensions
+ Key: NTCT IT;All;nG1;Dimensions;Daily
+ Description: Feed of lu_vitalstats lookup table from nG1
+ query_file: nG1_queries/dimensions/lu_vitalstats.sql
+ logging: logs/dimensions_vaaspipe.log
+ logging_level: INFO
+ filename: lu_vitalstats_
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+  - customer
+  - id
+  - name

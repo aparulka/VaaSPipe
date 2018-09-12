@@ -1,0 +1,8 @@
+Header:
+ add_header:
+  - codecid
+  - codecname
+Transformations:
+ customer:
+  type: simple
+  default: NTCT IT

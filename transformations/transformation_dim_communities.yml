@@ -1,0 +1,15 @@
+Header:
+ add_header:
+  - id
+  - clientaddress
+  - name
+  - comm_type
+  - country
+  - subdivision
+  - city
+  - latitude
+  - longitude
+Transformations:
+ customer:
+  type: simple
+  default: NTCT IT

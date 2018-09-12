@@ -1,0 +1,20 @@
+Service:
+ Customer: NTCT IT
+ Service_Category: Dimensions
+ Key: NTCT IT;All;nG1;Dimensions;Daily
+ Description: Feed of lu_sites lookup table from nG1
+ query_file: nG1_queries/dimensions/lu_sites.sql
+ logging: logs/dimensions_vaaspipe.log
+ logging_level: INFO
+ filename: lu_sites_
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+  - customer
+  - siteid
+  - sitename
+  - speed
+  - country
+  - subdivision
+  - city
+  - latitude
+  - longitude

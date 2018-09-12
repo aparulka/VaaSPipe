@@ -1,0 +1,16 @@
+Service:
+ Customer: NTCT IT
+ Service_Category: Dimensions
+ Key: NTCT IT;All;nG1;Dimensions;Daily
+ Description: Feed of lu_messages lookup table from nG1
+ query_file: nG1_queries/dimensions/lu_messages.sql
+ logging: logs/dimensions_vaaspipe.log
+ logging_level: INFO
+ filename: lu_messages_
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+  - customer
+  - appid
+  - protocoltypecode
+  - messageid
+  - messagename

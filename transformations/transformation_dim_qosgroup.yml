@@ -1,0 +1,9 @@
+Header:
+ add_header:
+  - serverqos
+  - clientqos
+  - qosname
+Transformations:
+ customer:
+  type: simple
+  default: NTCT IT

@@ -1,0 +1,1 @@
+select networkserviceid,servicename,country,subdivision,city,latitude,longitude from lu_networkservices

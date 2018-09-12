@@ -39,4 +39,4 @@ Query:
     second: 0
     microsecond: 0
    date_format: '%d-%m-%Y %H:%M:%S'  
-  rowLimit: 10000
+  rowLimit: 500

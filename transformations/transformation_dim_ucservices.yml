@@ -1,0 +1,13 @@
+Header:
+ add_header:
+  - ucserviceid
+  - servicename
+  - country
+  - subdivision
+  - city
+  - latitude
+  - longitude
+Transformations:
+ customer:
+  type: simple
+  default: NTCT IT

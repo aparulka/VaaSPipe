@@ -1,0 +1,16 @@
+Header:
+ add_header:
+  - deviceaddress
+  - devicecurrentaddress
+  - ifn
+  - devicename
+  - speed
+  - country
+  - subdivision
+  - city
+  - latitude
+  - longitude
+Transformations:
+ customer:
+  type: simple
+  default: NTCT IT

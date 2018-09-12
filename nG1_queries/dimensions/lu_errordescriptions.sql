@@ -1,0 +1,1 @@
+select appid,errorcode,errordescription from lu_errordescriptions

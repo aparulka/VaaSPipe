@@ -1,0 +1,8 @@
+Header:
+ add_header:
+  - vrfgroup
+  - vrfname
+Transformations:
+ customer:
+  type: simple
+  default: NTCT IT

@@ -23,4 +23,4 @@ Query:
     second: 0
     microsecond: 0
    date_format: '%d-%m-%Y %H:%M:%S'  
-  rowLimit: 1000
+  rowLimit: 500

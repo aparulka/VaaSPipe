@@ -1,0 +1,1 @@
+select appid,protocoltypecode,messageid,messagename from lu_messages

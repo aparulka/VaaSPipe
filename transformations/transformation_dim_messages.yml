@@ -1,0 +1,10 @@
+Header:
+ add_header:
+  - appid
+  - protocoltypecode
+  - messageid
+  - messagename
+Transformations:
+ customer:
+  type: simple
+  default: NTCT IT

@@ -1,0 +1,9 @@
+Header:
+ add_header:
+  - appid
+  - errorcode
+  - errordescription
+Transformations:
+ customer:
+  type: simple
+  default: NTCT IT
