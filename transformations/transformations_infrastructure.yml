@@ -2,6 +2,7 @@ Header:
  add_header:
   - date
   - service
+  - location
   - infrastructureName
   - normalPercentage
   - degradedPercentage
@@ -15,11 +16,4 @@ Transformations:
  customer:
   type: simple
   default: NTCT IT
- location:
-  type: simple
-  default: NTCT IT
-  lookup_column: infrastructureName
-  mapping_file: service_mappings/infrastructure.cfg
- 
- 
  

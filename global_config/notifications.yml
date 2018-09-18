@@ -4,8 +4,4 @@ Notifications:
  password:
  from: tools@netscout.com
  receiver:
-  - eduardo.rodriguez@netscout.com
-  - devangshu.pal@netscout.com
-#  - gerhard.pieters@netscout.com
-#  - praveen.rao@netscout.com
-#  - kiran.soma@netscout.com
+  - michael.beakey@netscout.com

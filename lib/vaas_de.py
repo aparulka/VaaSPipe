@@ -244,15 +244,19 @@ def query_nGPulse_server(datasource, query, version=None):
 		
 		for index, item in enumerate(parsed_json['data']):
 			service =  parsed_json['data'][index][type]['deviceType']
-			infrastructureId =  parsed_json['data'][index][kpi_filter_params['type']]['name']
-			if infrastructureId in infra[service]:  
+			infrastructureId =  parsed_json['data'][index][kpi_filter_params['type']]['name']	
+			try:
+				locationId = parsed_json['data'][index][type]['sites'][0]['name']
+			except (IndexError,KeyError):
+				locationId = 'Unknown'
+			if (infrastructureId in infra[service] or infra[service] == []):
 				green =  parsed_json['data'][index]['status']['green'] 
 				yellow =  parsed_json['data'][index]['status']['yellow'] 
 				orange =  parsed_json['data'][index]['status']['orange'] 
 				red =  parsed_json['data'][index]['status']['red'] 
 				gray =  parsed_json['data'][index]['status']['gray'] 
 				count =  parsed_json['data'][index]['status']['count'] 	
-				writer.writerow([output_datestamp,service.replace(output_separator, " "),infrastructureId.replace(output_separator, " "),green,yellow,orange,red,gray,count, start_time_ms, end_time_ms])
+				writer.writerow([output_datestamp,service.replace(output_separator, " "),locationId.replace(output_separator, " "),infrastructureId.replace(output_separator, " "),green,yellow,orange,red,gray,count, start_time_ms, end_time_ms])
 		
 	# for index, item in enumerate(parsed_json['data']):
 	  # server =  parsed_json['data'][index]['server']['name']
@@ -276,8 +280,10 @@ def query_nGPulse_voip(datasource, query, version=None):
 	
 	hostname = get_hostname(datasource['host'], datasource['port'])
 	print(hostname)
+	
 
-	nGP_Service_Test_List = query['nGP_Service_Test_List']
+
+	nGP_Service_Test_List = query['nGP_Service_Test_List'] or []
 	
 	
 	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
@@ -320,9 +326,13 @@ def query_nGPulse_voip(datasource, query, version=None):
 	#print "Service Tests available are: \n"
 
 	for index, item in enumerate(services_json):
-	 name =  services_json[index]['name']
-	 id =  services_json[index]['_id']
-	 service_dict[name] = id
+		name =  services_json[index]['name']
+		id =  services_json[index]['_id']
+		type = services_json[index]['type']
+		if (type == 'e61fc6a0-8e66-11e7-8fd5-29a1890f4ff0'):
+			# it's a VoIP service test
+			print (name)
+			service_dict[name] = id
 
 	
 	url = 'http://' + hostname + '/query/table'
@@ -330,20 +340,23 @@ def query_nGPulse_voip(datasource, query, version=None):
 	parsed_response = StringIO()
 	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
 	
-	for nGP_Service_Test in nGP_Service_Test_List:
-	 id = service_dict[nGP_Service_Test]
-	 kpi_filter_params['test'] = id
-	 headers = {'ngp-authorization' : token_string}
-	 response = requests.get(url, params=kpi_filter_params, headers=headers) 
-	 parsed_json = json.loads(response.text)
-
-	 for index, item in enumerate(parsed_json['data']):
-	  nPoint =  parsed_json['data'][index]['agent']['name'].replace(output_separator, " ")
-	  availability =  parsed_json['data'][index]['availPercent']
-	  caller_mos =  parsed_json['data'][index]['avgLqmosRx'] 
-	  callee_mos =  parsed_json['data'][index]['avgLqmosTx'] 
-	  count  =  parsed_json['data'][index]['count'] 
-	  writer.writerow([output_datestamp,nGP_Service_Test.replace(output_separator, " "),nPoint,availability,caller_mos,callee_mos,count, start_time_ms, end_time_ms])
+	for nGP_Service_Test, item in service_dict.items():
+		id = service_dict[nGP_Service_Test]
+		# check if this service test is on our list or if the list is null (meaning get all service tests)
+		if (nGP_Service_Test in nGP_Service_Test_List or nGP_Service_Test_List  == []):
+			kpi_filter_params['test'] = id
+			headers = {'ngp-authorization' : token_string}
+			response = requests.get(url, params=kpi_filter_params, headers=headers) 
+			parsed_json = json.loads(response.text)
+		
+			# get the data from all the npoints
+			for index, item in enumerate(parsed_json['data']):
+				nPoint =  parsed_json['data'][index]['agent']['name'].replace(output_separator, " ")
+				availability =  parsed_json['data'][index]['availPercent']
+				caller_mos =  parsed_json['data'][index]['avgLqmosRx'] 
+				callee_mos =  parsed_json['data'][index]['avgLqmosTx'] 
+				count  =  parsed_json['data'][index]['count'] 
+				writer.writerow([output_datestamp,nGP_Service_Test.replace(output_separator, " "),nPoint,availability,caller_mos,callee_mos,count, start_time_ms, end_time_ms])
 
 	
 	return parsed_response.getvalue().strip().split("\r\n")

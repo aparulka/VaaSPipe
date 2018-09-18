@@ -1,55 +1,13 @@
 Query:
  nGP_Server_List:
-  - wstcupspub.netscout.com
-  - wstcucmsub1.netscout.com
-  - plncucmsub
-  - plncupssub
-  - wstcond 
-  - BOSNETDHCP
-  - bosnetesx01.netscout.com
-  - bosnetesx02.netscout.com
-  - bosnetesx03.netscout.com
-  - sjcnetesx01.netscout.com
-  - alnnetesx01.netscout.com
   
  nGP_Router_List:
-  - ar-brac-uk-1
-  - ar-brno-cz-1
-  - vr-duba-uae-1
 
  nGP_AccessPoint_List:
-  - Finance_2West_back
-  - 1Center_RCX_door
-  - 3_East_End
-  - 2West_end
-  - 1WEST_accounting_hall
-  - 1East_MFG_end
-  - 2_West_Exec_area
-  - 2Center_Exec_Area
-  - 2EAST_Kitchen_Hall
-  - 1West_End
-  - 3west_END
-  - 2West_HR_Fileroom
-  - 2Center_cafeteria
-  - 1Center_MFG_kitchen
-  - 2Center_Boardroom
-  - 1WEST_GYM
-  - 3East_Kitchen_area_hall
-  - 1Center_Security_Office
-  - 3East_hall_near3106
-  - 3Center_Support_Area
-  - 1East_MFG_Floor_middle
 
  nGP_Switch_List:
-  - sr-dub-ie-7-2
   
  nGP_WirelessController_List:
-  - WLC-SING-1
-  - WLC-BNG-1
-  - WLC-WST-1
-  - WLC-PLNO-2
-  - WLC-DUB-1
-  - WLC-DUB-2
   
  nGP_GenericDevice_List:
   
