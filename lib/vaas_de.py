@@ -331,7 +331,6 @@ def query_nGPulse_voip(datasource, query, version=None):
 		type = services_json[index]['type']
 		if (type == 'e61fc6a0-8e66-11e7-8fd5-29a1890f4ff0'):
 			# it's a VoIP service test
-			print (name)
 			service_dict[name] = id
 
 	
@@ -410,14 +409,19 @@ def query_nGPulse_latency(datasource, query, version=None):
 	services_json = json.loads(response.text)
 
 	service_dict = {}
+	
+	
 
 	for service in service_app.keys():
 		for ping_test in service_app[service]:
 			 # get the service_id
 			for index, item in enumerate(services_json):
-			 name =  services_json[index]['name']
-			 id =  services_json[index]['_id']
-			 service_dict[name] = id
+				name =  services_json[index]['name']
+				id =  services_json[index]['_id']
+				type = services_json[index]['type']
+				if (type == 'e645ec40-8e66-11e7-8fd5-29a1890f4ff0'):
+					# it's a VoIP service test
+					service_dict[name] = id
 
 
 	url = 'http://' + hostname + '/query/table'

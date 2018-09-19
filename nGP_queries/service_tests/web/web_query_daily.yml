@@ -4,6 +4,8 @@ Query:
    - Office 365 Exchange Site
   Salesforce:
    - Salesforce
+  IT:
+  - thescout-it
  kpi_filter_params:
   metrics: availPercent,avgResponse,count
   type: test,agent
