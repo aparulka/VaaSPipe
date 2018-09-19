@@ -22,7 +22,9 @@ Transformations:
  location:
   type: simple
   default: World
-  
+  lookup_column: npoint
+  mapping_file: service_mappings/npoints.cfg
+
   
   
   
