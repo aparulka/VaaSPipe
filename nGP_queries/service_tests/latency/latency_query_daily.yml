@@ -1,7 +1,5 @@
 Query:
- Services:
-  Oracle Web Service: 
-   - Oracle Latency
+ nGP_Service_Test_List:
  kpi_filter_params:
   metrics: availPercent,avgavg,avgbest,avgworst,count
   type: test,agent

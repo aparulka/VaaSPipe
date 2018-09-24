@@ -1,7 +1,6 @@
 Header:
  add_header:
   - date
-  - service
   - serviceTestName
   - npoint
   - availabilityPercentage
@@ -21,3 +20,8 @@ Transformations:
   default: World
   lookup_column: npoint
   mapping_file: service_mappings/npoints.cfg
+ service:
+  type: simple
+  default: Unknown
+  lookup_column: serviceTestName
+  mapping_file: service_mappings/service_test_web.cfg

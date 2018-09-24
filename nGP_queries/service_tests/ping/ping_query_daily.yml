@@ -1,9 +1,5 @@
 Query:
- Services:
-  Links: 
-   - Plano Ping Test
-  Salesforce:
-   - Bangalore Ping test
+ nGP_Service_Test_List:
  kpi_filter_params:
   metrics: availPercent,avgping_results,count
   type: test,agent
