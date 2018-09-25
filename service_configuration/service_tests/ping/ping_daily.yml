@@ -2,7 +2,7 @@ Service:
  Customer: NTCT IT
  Service_Category: Ping Test
  Key: NTCT IT;All;nGP;Ping Test;Daily
- Description: Daily Feed of Service Latency Tests for All Locations
+ Description: Daily Feed of Service Ping Tests for All Locations
  query_file: nGP_queries/service_tests/ping/ping_query_daily.yml
  logging: logs/ping_tests.log
  logging_level: INFO

@@ -21,7 +21,7 @@ Transformations:
   default: VoIP Test
  location:
   type: simple
-  default: World
+  default: Unknown
   lookup_column: npoint
   mapping_file: service_mappings/npoints.cfg
 

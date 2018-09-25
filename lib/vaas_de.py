@@ -539,10 +539,7 @@ def query_nGPulse_voip(datasource, query, version=None):
 	# Setup
 	
 	hostname = get_hostname(datasource['host'], datasource['port'])
-	print(hostname)
 	
-
-
 	nGP_Service_Test_List = query['nGP_Service_Test_List'] or []
 	
 	
@@ -573,12 +570,27 @@ def query_nGPulse_voip(datasource, query, version=None):
 	token_string = ('Access %s' %token)
 	auth_headers = {'ngp-authorization' : token_string}
 	
+	# Get the service type_id for VoIP 
+
+	url = 'http://' + hostname + '/ipm/v1/admin/testTypes'
+	params = {'query' : '{"status":"Running","group":"VoIP"}'}
+	
+	response = requests.get(url, params=params, headers=auth_headers)
+	service_type_json = json.loads(response.text)
+	
+	for index, item in enumerate(service_type_json):
+		service_type_name = service_type_json[index]['name']
+		if (service_type_name == 'VoipPulse'):
+			service_type_id =  service_type_json[index]['_id']
+		
+		
 	# Get a list of service tests 
 	url = 'http://' + hostname + '/ipm/v1/admin/tests'
 	params = {'query' : '{"status":"Running"}'}
 	
 	response = requests.get(url, params=params, headers=auth_headers)
 	services_json = json.loads(response.text)
+	
 
 	service_dict = {}
 
@@ -586,7 +598,7 @@ def query_nGPulse_voip(datasource, query, version=None):
 		name =  services_json[index]['name']
 		id =  services_json[index]['_id']
 		type = services_json[index]['type']
-		if (type == 'e61fc6a0-8e66-11e7-8fd5-29a1890f4ff0'):
+		if (type == service_type_id):
 			# it's a VoIP service test
 			service_dict[name] = id
 
@@ -626,7 +638,7 @@ def query_nGPulse_latency(datasource, query, version=None):
 	# Setup
 	
 	hostname = get_hostname(datasource['host'], datasource['port'])
-	print(hostname)
+	
 
 	nGP_Service_Test_List = query['nGP_Service_Test_List'] or []
 
@@ -658,6 +670,20 @@ def query_nGPulse_latency(datasource, query, version=None):
 	token_string = ('Access %s' %token)
 	auth_headers = {'ngp-authorization' : token_string}
 	
+	
+	# Get the service type_id for Latency
+
+	url = 'http://' + hostname + '/ipm/v1/admin/testTypes'
+	params = {'query' : '{"status":"Running","group":"latency"}'}
+	
+	response = requests.get(url, params=params, headers=auth_headers)
+	service_type_json = json.loads(response.text)
+	
+	for index, item in enumerate(service_type_json):
+		service_type_name = service_type_json[index]['name']
+		if (service_type_name == 'latency'):
+			service_type_id =  service_type_json[index]['_id']
+	
 	# Get a list of service tests 
 	url = 'http://' + hostname + '/ipm/v1/admin/tests'
 	params = {'query' : '{"status":"Running"}'}
@@ -671,9 +697,8 @@ def query_nGPulse_latency(datasource, query, version=None):
 		name =  services_json[index]['name']
 		id =  services_json[index]['_id']
 		type = services_json[index]['type']
-		if (type == 'e645ec40-8e66-11e7-8fd5-29a1890f4ff0'):
+		if (type == service_type_id):
 			# it's a Latency service test
-			print (name)
 			service_dict[name] = id
 
 
@@ -712,7 +737,7 @@ def query_nGPulse_ping(datasource, query, version=None):
 	# Setup
 	
 	hostname = get_hostname(datasource['host'], datasource['port'])
-	print(hostname)
+	
 
 	nGP_Service_Test_List = query['nGP_Service_Test_List'] or []
 
@@ -744,6 +769,19 @@ def query_nGPulse_ping(datasource, query, version=None):
 	token_string = ('Access %s' %token)
 	auth_headers = {'ngp-authorization' : token_string}
 	
+	# Get the service type_id for Ping
+
+	url = 'http://' + hostname + '/ipm/v1/admin/testTypes'
+	params = {'query' : '{"status":"Running","group":"ping"}'}
+	
+	response = requests.get(url, params=params, headers=auth_headers)
+	service_type_json = json.loads(response.text)
+	
+	for index, item in enumerate(service_type_json):
+		service_type_name = service_type_json[index]['name']
+		if (service_type_name == 'ping'):
+			service_type_id =  service_type_json[index]['_id']
+	
 	# Get a list of service tests 
 	url = 'http://' + hostname + '/ipm/v1/admin/tests'
 	params = {'query' : '{"status":"Running"}'}
@@ -757,9 +795,8 @@ def query_nGPulse_ping(datasource, query, version=None):
 		name =  services_json[index]['name']
 		id =  services_json[index]['_id']
 		type = services_json[index]['type']
-		if (type == 'e63a7a90-8e66-11e7-8fd5-29a1890f4ff0'):
+		if (type == service_type_id):
 			# it's a Ping service test
-			print (name)
 			service_dict[name] = id
 
 
@@ -797,7 +834,7 @@ def query_nGPulse_web(datasource, query, version=None):
 	# Setup
 	
 	hostname = get_hostname(datasource['host'], datasource['port'])
-	print(hostname)
+	
 
 	nGP_Service_Test_List = query['nGP_Service_Test_List'] or []
 
@@ -829,6 +866,20 @@ def query_nGPulse_web(datasource, query, version=None):
 	token_string = ('Access %s' %token)
 	auth_headers = {'ngp-authorization' : token_string}
 	
+	
+	# Get the service type_id for Web
+
+	url = 'http://' + hostname + '/ipm/v1/admin/testTypes'
+	params = {'query' : '{"status":"Running","group":"Web"}'}
+	
+	response = requests.get(url, params=params, headers=auth_headers)
+	service_type_json = json.loads(response.text)
+	
+	for index, item in enumerate(service_type_json):
+		service_type_name = service_type_json[index]['name']
+		if (service_type_name == 'Web'):
+			service_type_id =  service_type_json[index]['_id']
+	
 	# Get a list of service tests 
 	url = 'http://' + hostname + '/ipm/v1/admin/tests'
 	params = {'query' : '{"status":"Running"}'}
@@ -842,9 +893,8 @@ def query_nGPulse_web(datasource, query, version=None):
 		name =  services_json[index]['name']
 		id =  services_json[index]['_id']
 		type = services_json[index]['type']
-		if (type == 'e61195d0-8e66-11e7-8fd5-29a1890f4ff0'):
+		if (type == service_type_id):
 			# it's a Web service test
-			print (name)
 			service_dict[name] = id
 
 

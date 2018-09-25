@@ -1,9 +1,5 @@
 Query:
- Services:
-  O365 Exchange: 
-   - Office 365 Exchange Site
-  Salesforce:
-   - Salesforce
+ nGP_Service_Test_List:
  kpi_filter_params:
   metrics: availPercent,avgResponse,count
   type: test,agent
