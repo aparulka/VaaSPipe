@@ -1,0 +1,23 @@
+Service:
+ Customer: NTCT IT
+ Service_Category: Web Test
+ Key: NTCT IT;All;nGP;Web Test;Monthly
+ Description: Monthly Feed of Service Web Tests for All Locations
+ query_file: nGP_queries/service_tests/web/web_query_monthly.yml
+ logging: logs/web_tests.log
+ logging_level: INFO
+ filename: web_nGP_Monthly_
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+  - customer
+  - location  
+  - service
+  - date
+  - serviceTestType  
+  - serviceTestName
+  - npoint
+  - availabilityPercentage
+  - avgResponseTime
+  - count
+  - startTimeMs
+  - endTimeMs

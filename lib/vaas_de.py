@@ -923,6 +923,105 @@ def query_nGPulse_web(datasource, query, version=None):
 			
 				
 	return parsed_response.getvalue().strip().split("\r\n")
+	
+
+def query_nGPulse_o365_onedrive(datasource, query, version=None):
+	'''
+	Builds nGPulse API query
+	'''
+
+	# Setup
+	
+	hostname = get_hostname(datasource['host'], datasource['port'])
+	
+
+	nGP_Service_Test_List = query['nGP_Service_Test_List'] or []
+
+	
+	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
+	kpi_filter_params = query['kpi_filter_params']
+
+	# Time calculations
+	now = datetime.datetime.now(tz)	
+	start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
+	end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
+	start_time_ms = int(start_time.timestamp())
+	end_time_ms = int(end_time.timestamp())
+	output_datestamp =  start_time.strftime("%d-%m-%Y %H:%M:%S")
+	
+	kpi_filter_params['start'] = start_time_ms
+	kpi_filter_params['end'] = end_time_ms
+	
+	logging.info("start_time: "+start_time.strftime('%d-%m-%Y %H:%M:%S'))
+	logging.info("end_time: "+end_time.strftime('%d-%m-%Y %H:%M:%S'))
+	
+	
+	# Get the Acces Token
+	url = 'http://' + hostname + '/ipm/auth/login'
+	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
+	response = requests.post(url, data=data)
+	authentication_json = json.loads(response.text)
+	token =  authentication_json['accessToken']
+	token_string = ('Access %s' %token)
+	auth_headers = {'ngp-authorization' : token_string}
+	
+	
+	# Get the service type_id for o365AccountOneDrive
+
+	url = 'http://' + hostname + '/ipm/v1/admin/testTypes'
+	params = {'query' : '{"status":"Running","group":"o365AccountOneDrive"}'}
+	
+	response = requests.get(url, params=params, headers=auth_headers)
+	service_type_json = json.loads(response.text)
+	
+	for index, item in enumerate(service_type_json):
+		service_type_name = service_type_json[index]['name']
+		if (service_type_name == 'o365AccountOneDrive'):
+			service_type_id =  service_type_json[index]['_id']
+	
+	# Get a list of service tests 
+	url = 'http://' + hostname + '/ipm/v1/admin/tests'
+	params = {'query' : '{"status":"Running"}'}
+	
+	response = requests.get(url, params=params, headers=auth_headers)
+	services_json = json.loads(response.text)
+
+	service_dict = {}
+	
+	for index, item in enumerate(services_json):
+		name =  services_json[index]['name']
+		id =  services_json[index]['_id']
+		type = services_json[index]['type']
+		if (type == service_type_id):
+			# it's a o365AccountOneDrive service test
+			service_dict[name] = id
+
+
+	url = 'http://' + hostname + '/query/table'
+
+	parsed_response = StringIO()
+	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
+	
+	
+	for nGP_Service_Test, item in service_dict.items():
+		id = service_dict[nGP_Service_Test]
+		# check if this service test is on our list or if the list is null (meaning get all service tests)
+		if (nGP_Service_Test in nGP_Service_Test_List or nGP_Service_Test_List  == []):
+			kpi_filter_params['test'] = id
+			headers = {'ngp-authorization' : token_string}
+			response = requests.get(url, params=kpi_filter_params, headers=headers) 
+			parsed_json = json.loads(response.text)
+		
+			# get the data from all the npoints
+			for index, item in enumerate(parsed_json['data']):
+				nPoint =  parsed_json['data'][index]['agent']['name']
+				availability =  parsed_json['data'][index]['availPercent'] 
+				maxupload_time =  parsed_json['data'][index]['maxupload_time']
+				count = parsed_json['data'][index]['count'] 
+				writer.writerow([output_datestamp,nGP_Service_Test.replace(output_separator, " "),nPoint.replace(output_separator, " "),availability,maxupload_time,count, start_time_ms, end_time_ms])
+			
+				
+	return parsed_response.getvalue().strip().split("\r\n")
  	
 
  	
