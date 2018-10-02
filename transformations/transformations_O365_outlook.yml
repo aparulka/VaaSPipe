@@ -1,0 +1,25 @@
+Header:
+ add_header:
+  - date
+  - serviceTestName
+  - npoint
+  - availabilityPercentage
+  - maxRespTime
+  - count
+  - startTimeMs
+  - endTimeMs  
+Transformations:
+ customer:
+  type: simple
+  default: NTCT IT  
+ serviceTestType:
+  type: simple
+  default: O365 Outlook Test
+ location:
+  type: simple
+  default: World
+  lookup_column: npoint
+  mapping_file: service_mappings/npoints.cfg
+ service:
+  type: simple
+  default: O365 Exchange

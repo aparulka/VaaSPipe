@@ -1,0 +1,24 @@
+Query:
+ nGP_Service_Test_List:
+ kpi_filter_params:
+  metrics: availPercent,maxresp_time,count
+  type: test,agent
+  start:
+   relativedelta:
+    days: -1
+   replace:
+    hour: 0
+    minute: 0
+    second: 0
+    microsecond: 0
+   date_format: '%d-%m-%Y %H:%M:%S'
+  end:
+   relativedelta:
+    days: 0
+   replace:
+    hour: 0
+    minute: 0
+    second: 0
+    microsecond: 0
+   date_format: '%d-%m-%Y %H:%M:%S'  
+  rowLimit: 500

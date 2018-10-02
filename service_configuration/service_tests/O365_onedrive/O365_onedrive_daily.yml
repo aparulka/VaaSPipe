@@ -6,7 +6,7 @@ Service:
  query_file: nGP_queries/service_tests/O365_onedrive/O365_onedrive_query_daily.yml
  logging: logs/O365_onedrive_tests.log
  logging_level: INFO
- filename: web_nGP_Daily_
+ filename: O365_OneDrive_nGP_Daily_
  date_format: '%Y%m%d_%H%M'
  output_format:
   - customer
