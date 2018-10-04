@@ -42,8 +42,6 @@ if service['Service']['Service_Category'] in ['Applications', 'Links', 'Service 
 									   datasource.get('nG1_API').get('password')
 									   ,ssl=datasource.get('nG1_API').get('ssl')
 									   )
-elif service['Service']['Service_Category'] in ['Availability Test']:
-	api_response = vaas_de.query_nGPulse_availability(datasource['nGPulse'],query['Query'], ssl=datasource.get('nGPulse').get('ssl'))
 elif service['Service']['Service_Category'] in ['Infrastructure']:
 	api_response = vaas_de.query_nGPulse_server(datasource['nGPulse'],query['Query'], ssl=datasource.get('nGPulse').get('ssl'))
 elif service['Service']['Service_Category'] in ['VoIP Test']:
