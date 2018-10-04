@@ -44,7 +44,7 @@ for code, timezone in vaas_lib['Tzinfos'].items():
 	tzinfos[code] = gettz(timezone)
 	
 
-def query_dbONE(host, port, query, username, password, headers=dbONE_API_headers, api_version=None, verify=False, conversion='true',DT='csv', encrypted='false'):
+def query_dbONE(host, port, query, username, password, ssl=True, headers=dbONE_API_headers, api_version=None, verify=False, conversion='true',DT='csv', encrypted='false'):
 	'''
 	Builds DBONE API query.
 	Format as of nG1 6.1 is of type: https://192.168.99.18:8443/dbonequerydata/?username=svc-dBONE/password=F34Mu93S7Rv6/encrypted=false/conversion=true/DT=csv 
@@ -53,7 +53,11 @@ def query_dbONE(host, port, query, username, password, headers=dbONE_API_headers
 	['serviceId\ttargetTime\tfailedTransactions\ttotalTransactions\tresponseTime\tfailedPercentage\tserviceId_String\ttargetTime_String', '122029775\t1535256000000\t0\t67407\t139304.6454063840\t0.0000000000\tO365 Authentication (Pune)\tSun Aug 26 00:00:00 EDT 2018', '122030298\t1535256000000\t0\t714182\t291171.5849273787\t0.0000000000\tO365 Exchange (Pune)\tSun Aug 26 00:00:00 EDT 2018', '148578737\t1535256000000\t0\t38039\t317043.3394678725\t0.0000000000\tSalesForce (Pune)\tSun Aug 26 00:00:00 EDT 2018', '94846774\t1535256000000\t0\t8865\t46995.6806848213\t0.0000000000\tO365 SharepointOnline (San Jose)\tSun Aug 26 00:00:00 EDT 2018', '122029802\t1535256000000\t0\t106665\t73553.7996398695\t0.0000000000\tO365 Authentication (San Jose)\tSun Aug 26 00:00:00 EDT 2018', '143019858\t1535256000000\t0\t63500\t59822.7504096811\t0.0000000000\tO365 Exchange (San Jose)\tSun Aug 26 00:00:00 EDT 2018', '154069910\t1535256000000\t0\t23268\t9597.5654082906\t0.0000000000\tO365 DNS - San Jose\tSun Aug 26 00:00:00 EDT 2018', '160829939\t1535256000000\t0\t10384\t108296.9919417476\t0.0000000000\tMS - Oracle Web Service (San Jose)\tSun Aug 26 00:00:00 EDT 2018', '146302544\t1535256000000\t0\t112729\t45417.2753807910\t0.0000000000\tSalesForce (San Jose)\tSun Aug 26 00:00:00 EDT 2018', '150305546\t1535256000000\t0\t4320\t117166.7053240741\t0.0000000000\tSalesForce (Dublin)\tSun Aug 26 00:00:00 EDT 2018', '150890489\t1535256000000\t0\t21609\t81929.8512155592\t0.0000000000\tO365 Authentication (Dublin)\tSun Aug 26 00:00:00 EDT 2018', '150890611\t1535256000000\t0\t6625\t21468.1678743961\t0.0000000000\tO365 Yammer (Dublin)\tSun Aug 26 00:00:00 EDT 2018', '150890195\t1535256000000\t0\t74874\t169611.7007146197\t0.0000000000\tO365 Exchange (Dublin)\tSun Aug 26 00:00:00 EDT 2018', '150890800\t1535256000000\t0\t6462\t100479.6674407803\t0.0000000000\tO365 SharePoint Online (Dublin)\tSun Aug 26 00:00:00 EDT 2018', '160829875\t1535256000000\t0\t8619\t109075.1588242128\t0.0000000000\tMS - Oracle Web Service (Dublin)\tSun Aug 26 00:00:00 EDT 2018', '149342864\t1535256000000\t0\t239052\t14331.4416870124\t0.0000000000\tOracle Web Service (Westford)\tSun Aug 26 00:00:00 EDT 2018', '164944267\t1535256000000\t0\t145920\t23786.7653852749\t0.0000000000\tOracle HTTP Westford\tSun Aug 26 00:00:00 EDT 2018', '130075227\t1535256000000\t0\t62153\t18566.1742623453\t0.0000000000\tO365 DNS (Westford)\tSun Aug 26 00:00:00 EDT 2018', '74789789\t1535256000000\t619\t42856\t4241.3775836352\t1.4443718195\tOracle DB (DEV)\tSun Aug 26 00:00:00 EDT 2018', '121963273\t1535256000000\t2\t299075\t67590.1085916253\t0.0006687286\tO365 Authentication (WST)\tSun Aug 26 00:00:00 EDT 2018', '147541832\t1535256000000\t0\t2046906\t118518.7814007372\t0.0000000000\tO365 Exchange (Westford)\tSun Aug 26 00:00:00 EDT 2018', '147542093\t1535256000000\t0\t76975\t64820.7045221033\t0.0000000000\tO365 SharePointOnline (Westford)\tSun Aug 26 00:00:00 EDT 2018', '148485149\t1535256000000\t0\t2159047\t68781.6154765379\t0.0000000000\tSalesForce (Westford)\tSun Aug 26 00:00:00 EDT 2018', '147542280\t1535256000000\t0\t59647\t34953.7453136011\t0.0000000000\tO365 Yammer (Westford)\tSun Aug 26 00:00:00 EDT 2018', '147542030\t1535256000000\t0\t16943\t30232.1714572390\t0.0000000000\tO365 Online (Westford)\tSun Aug 26 00:00:00 EDT 2018', '174471288\t1535256000000\t0\t568629\t40821.9890067947\t0.0000000000\tSalesForce (Allen)\tSun Aug 26 00:00:00 EDT 2018', '174469762\t1535256000000\t0\t13328\t23962.5794802055\t0.0000000000\tO365 SharePointOnline (Allen)\tSun Aug 26 00:00:00 EDT 2018', '174470370\t1535256000000\t0\t486939\t126330.4470779381\t0.0000000000\tO365 Exchange (Allen)\tSun Aug 26 00:00:00 EDT 2018', '174470316\t1535256000000\t0\t1308\t7626.7706422018\t0.0000000000\tO365 DNS (Allen)\tSun Aug 26 00:00:00 EDT 2018', '174469821\t1535256000000\t0\t82966\t114643.3308956400\t0.0000000000\tO365 Authentication (Allen)\tSun Aug 26 00:00:00 EDT 2018', '174469663\t1535256000000\t0\t1708\t19632.9841920375\t0.0000000000\tO365 Online (Allen)\tSun Aug 26 00:00:00 EDT 2018']
 	'''
 	
-	query_url='https://'+host+':'+str(port)+'/dbonequerydata/?username='+username+'/password='+password+'/encrypted='+encrypted+'/conversion='+conversion+'/DT='+DT
+	# defaults to SSL
+	protocol = get_protocol(ssl)
+	print(protocol)
+	
+	query_url= protocol+host+':'+str(port)+'/dbonequerydata/?username='+username+'/password='+password+'/encrypted='+encrypted+'/conversion='+conversion+'/DT='+DT
 	
 	logging.info(query_url)
 	
@@ -66,8 +70,6 @@ def query_dbONE(host, port, query, username, password, headers=dbONE_API_headers
 	writer.writeheader()
 	writer.writerows(reader)
 	return response.getvalue().strip().split("\r\n")
-	#return response.text.strip().replace(output_separator, " ").replace(",", output_separator).split("\r\n")
-
 
 def query_psql(host,user,password,dbname,sql):
 
@@ -88,12 +90,15 @@ def query_psql(host,user,password,dbname,sql):
  
 	return myList
 	
-def query_nGPulse_availability(datasource, query, version=None):
+def query_nGPulse_availability(datasource, query, version=None, ssl=False):
 	'''
 	Builds nGPulse API query
 	'''
 
 	# Setup
+	
+	protocol = get_protocol(ssl)
+	print(protocol)
 	
 	hostname = get_hostname(datasource['host'], datasource['port'])
 	print(hostname)
@@ -120,7 +125,7 @@ def query_nGPulse_availability(datasource, query, version=None):
 	
 	
 	# Get the Acces Token
-	url = 'http://' + hostname + '/ipm/auth/login'
+	url = protocol + hostname + '/ipm/auth/login'
 	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
 	response = requests.post(url, data=data)
 	authentication_json = json.loads(response.text)
@@ -129,7 +134,7 @@ def query_nGPulse_availability(datasource, query, version=None):
 	auth_headers = {'ngp-authorization' : token_string}
 	
 	# Get a list of service tests 
-	url = 'http://' + hostname + '/ipm/v1/admin/tests'
+	url = protocol + hostname + '/ipm/v1/admin/tests'
 	params = {'query' : '{"status":"Running"}'}
 	
 	response = requests.get(url, params=params, headers=auth_headers)
@@ -143,7 +148,7 @@ def query_nGPulse_availability(datasource, query, version=None):
 		services[name] = id
 
 	
-	url = 'http://' + hostname + '/query/table'
+	url = protocol + hostname + '/query/table'
 	
 	parsed_response = StringIO()
 	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
@@ -172,12 +177,15 @@ def query_nGPulse_availability(datasource, query, version=None):
 	
 	return parsed_response.getvalue().strip().split("\r\n")
  
-def query_nGPulse_server(datasource, query, version=None):
+def query_nGPulse_server(datasource, query, version=None, ssl=False):
 	'''
 	Builds nGPulse API query
 	'''
 
 	# Setup
+	
+	protocol = get_protocol(ssl)
+	print(protocol)
 	
 	hostname = get_hostname(datasource['host'], datasource['port'])
 
@@ -220,7 +228,7 @@ def query_nGPulse_server(datasource, query, version=None):
 	
 	
 	# Get the Acces Token
-	url = 'http://' + hostname + '/ipm/auth/login'
+	url = protocol + hostname + '/ipm/auth/login'
 	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
 	response = requests.post(url, data=data)
 	authentication_json = json.loads(response.text)
@@ -230,7 +238,7 @@ def query_nGPulse_server(datasource, query, version=None):
 
 	# Infrastructure querying
 	
-	url = 'http://' + hostname + '/query/table'
+	url = protocol + hostname + '/query/table'
 
 	headers = {'ngp-authorization' : token_string}
 
@@ -270,273 +278,16 @@ def query_nGPulse_server(datasource, query, version=None):
 	   # writer.writerow([output_datestamp,server,green,yellow,orange,red,gray,count])
 	   
 	return parsed_response.getvalue().strip().split("\r\n")
-	
-# def query_nGPulse_latency(datasource, query, version=None):
-	# '''
-	# Builds nGPulse API query
-	# '''
 
-	# # Setup
-	
-	# hostname = get_hostname(datasource['host'], datasource['port'])
-	# print(hostname)
-
-	# # populate a dict of service tests per service
-	# service_app = {}
-	# service_app = query['Services']
-	
-	# # kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
-	# kpi_filter_params = query['kpi_filter_params']
-
-	# # Time calculations
-	# now = datetime.datetime.now(tz)	
-	# start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
-	# end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
-	# start_time_ms = int(start_time.timestamp())
-	# end_time_ms = int(end_time.timestamp())
-	# output_datestamp =  start_time.strftime("%d-%m-%Y %H:%M:%S")
-	
-	# kpi_filter_params['start'] = start_time_ms
-	# kpi_filter_params['end'] = end_time_ms
-	
-	# logging.info("start_time: "+start_time.strftime('%d-%m-%Y %H:%M:%S'))
-	# logging.info("end_time: "+end_time.strftime('%d-%m-%Y %H:%M:%S'))
-	
-	
-	# # Get the Acces Token
-	# url = 'http://' + hostname + '/ipm/auth/login'
-	# data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
-	# response = requests.post(url, data=data)
-	# authentication_json = json.loads(response.text)
-	# token =  authentication_json['accessToken']
-	# token_string = ('Access %s' %token)
-	# auth_headers = {'ngp-authorization' : token_string}
-	
-	# # Get a list of service tests 
-	# url = 'http://' + hostname + '/ipm/v1/admin/tests'
-	# params = {'query' : '{"status":"Running"}'}
-	
-	# response = requests.get(url, params=params, headers=auth_headers)
-	# services_json = json.loads(response.text)
-
-	# service_dict = {}
-	
-	
-
-	# for service in service_app.keys():
-		# for ping_test in service_app[service]:
-			 # # get the service_id
-			# for index, item in enumerate(services_json):
-				# name =  services_json[index]['name']
-				# id =  services_json[index]['_id']
-				# type = services_json[index]['type']
-				# if (type == 'e645ec40-8e66-11e7-8fd5-29a1890f4ff0'):
-					# # it's a VoIP service test
-					# service_dict[name] = id
-
-
-	# url = 'http://' + hostname + '/query/table'
-
-	# parsed_response = StringIO()
-	# writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
-	
-	# for service in service_app.keys():
-	 # for ping_test in service_app[service]:
-	  # kpi_filter_params['test'] = service_dict[ping_test]
-
-	  # headers = {'ngp-authorization' : token_string}
-
-	  # response = requests.get(url, params=kpi_filter_params, headers=headers)
-	 
-	  # parsed_json = json.loads(response.text)
-
-	  # for index, item in enumerate(parsed_json['data']):
-	   # nPoint =  parsed_json['data'][index]['agent']['name']
-	   # availability =  parsed_json['data'][index]['availPercent'] 
-	   # Avg_Latency =  parsed_json['data'][index]['avgavg']
-	   # Best_Latency =  parsed_json['data'][index]['avgbest']
-	   # Worst_Latency =  parsed_json['data'][index]['avgworst']
-	   # count = parsed_json['data'][index]['count'] 
-	   # writer.writerow([output_datestamp,service.replace(output_separator, " "),ping_test.replace(output_separator, " "),nPoint.replace(output_separator, " "),availability,Avg_Latency,Best_Latency,Worst_Latency,count, start_time_ms, end_time_ms])
-	
-	# return parsed_response.getvalue().strip().split("\r\n")
-	
-	
-# def query_nGPulse_ping(datasource, query, version=None):
-	# '''
-	# Builds nGPulse API query
-	# '''
-
-	# # Setup
-	
-	# hostname = get_hostname(datasource['host'], datasource['port'])
-	# print(hostname)
-
-	# # populate a dict of service tests per service
-	# service_app = {}
-	# service_app = query['Services']
-	
-	# # kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
-	# kpi_filter_params = query['kpi_filter_params']
-
-	# # Time calculations
-	# now = datetime.datetime.now(tz)	
-	# start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
-	# end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
-	# start_time_ms = int(start_time.timestamp())
-	# end_time_ms = int(end_time.timestamp())
-	# output_datestamp =  start_time.strftime("%d-%m-%Y %H:%M:%S")
-	
-	# kpi_filter_params['start'] = start_time_ms
-	# kpi_filter_params['end'] = end_time_ms
-	
-	# logging.info("start_time: "+start_time.strftime('%d-%m-%Y %H:%M:%S'))
-	# logging.info("end_time: "+end_time.strftime('%d-%m-%Y %H:%M:%S'))
-	
-	
-	# # Get the Acces Token
-	# url = 'http://' + hostname + '/ipm/auth/login'
-	# data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
-	# response = requests.post(url, data=data)
-	# authentication_json = json.loads(response.text)
-	# token =  authentication_json['accessToken']
-	# token_string = ('Access %s' %token)
-	# auth_headers = {'ngp-authorization' : token_string}
-	
-	# # Get a list of service tests 
-	# url = 'http://' + hostname + '/ipm/v1/admin/tests'
-	# params = {'query' : '{"status":"Running"}'}
-	
-	# response = requests.get(url, params=params, headers=auth_headers)
-	# services_json = json.loads(response.text)
-
-	# service_dict = {}
-
-	# for service in service_app.keys():
-		# for ping_test in service_app[service]:
-			 # # get the service_id
-			# for index, item in enumerate(services_json):
-			 # name =  services_json[index]['name']
-			 # id =  services_json[index]['_id']
-			 # service_dict[name] = id
-
-
-	# url = 'http://' + hostname + '/query/table'
-
-	# parsed_response = StringIO()
-	# writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
-	
-	# for service in service_app.keys():
-	 # for ping_test in service_app[service]:
-	  # kpi_filter_params['test'] = service_dict[ping_test]
-
-	  # headers = {'ngp-authorization' : token_string}
-
-	  # response = requests.get(url, params=kpi_filter_params, headers=headers)
-	 
-	  # parsed_json = json.loads(response.text)
-
-	  # for index, item in enumerate(parsed_json['data']):
-		   # nPoint =  parsed_json['data'][index]['agent']['name']
-		   # availability =  parsed_json['data'][index]['availPercent'] 
-		   # Avg_Ping_Latency =  parsed_json['data'][index]['avgping_results']
-		   # count = parsed_json['data'][index]['count'] 
-		   # writer.writerow([output_datestamp,service.replace(output_separator, " "),ping_test.replace(output_separator, " "),nPoint.replace(output_separator, " "),availability,Avg_Ping_Latency,count, start_time_ms, end_time_ms])
-	
-	# return parsed_response.getvalue().strip().split("\r\n")
-	
-	
-# def query_nGPulse_web(datasource, query, version=None):
-	# '''
-	# Builds nGPulse API query
-	# '''
-
-	# # Setup
-	
-	# hostname = get_hostname(datasource['host'], datasource['port'])
-	# print(hostname)
-
-	# # populate a dict of service tests per service
-	# service_app = {}
-	# service_app = query['Services']
-	
-	# # kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
-	# kpi_filter_params = query['kpi_filter_params']
-
-	# # Time calculations
-	# now = datetime.datetime.now(tz)	
-	# start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
-	# end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
-	# start_time_ms = int(start_time.timestamp())
-	# end_time_ms = int(end_time.timestamp())
-	# output_datestamp =  start_time.strftime("%d-%m-%Y %H:%M:%S")
-	
-	# kpi_filter_params['start'] = start_time_ms
-	# kpi_filter_params['end'] = end_time_ms
-	
-	# logging.info("start_time: "+start_time.strftime('%d-%m-%Y %H:%M:%S'))
-	# logging.info("end_time: "+end_time.strftime('%d-%m-%Y %H:%M:%S'))
-	
-	
-	# # Get the Acces Token
-	
-	# url = 'http://' + hostname + '/ipm/auth/login'
-	
-	# data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
-	# response = requests.post(url, data=data)
-	# authentication_json = json.loads(response.text)
-	# token =  authentication_json['accessToken']
-	# token_string = ('Access %s' %token)
-	# auth_headers = {'ngp-authorization' : token_string}
-	
-	# # Get a list of service tests 
-	# url = 'http://' + hostname + '/ipm/v1/admin/tests'
-	# params = {'query' : '{"status":"Running"}'}
-	
-	# response = requests.get(url, params=params, headers=auth_headers)
-	# services_json = json.loads(response.text)
-
-	# service_dict = {}
-
-	# for service in service_app.keys():
-		# for ping_test in service_app[service]:
-			 # # get the service_id
-			# for index, item in enumerate(services_json):
-			 # name =  services_json[index]['name']
-			 # id =  services_json[index]['_id']
-			 # service_dict[name] = id
-
-
-	# url = 'http://' + hostname + '/query/table'
-
-	# parsed_response = StringIO()
-	# writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
-	
-	# for service in service_app.keys():
-	 # for ping_test in service_app[service]:
-	  # kpi_filter_params['test'] = service_dict[ping_test]
-
-	  # headers = {'ngp-authorization' : token_string}
-
-	  # response = requests.get(url, params=kpi_filter_params, headers=headers)
-	 
-	  # parsed_json = json.loads(response.text)
-
-	  # for index, item in enumerate(parsed_json['data']):
-		   # nPoint =  parsed_json['data'][index]['agent']['name']
-		   # availability =  parsed_json['data'][index]['availPercent'] 
-		   # Avg_Response =  parsed_json['data'][index]['avgResponse']
-		   # count = parsed_json['data'][index]['count'] 
-		   # writer.writerow([output_datestamp,service.replace(output_separator, " "),ping_test.replace(output_separator, " "),nPoint.replace(output_separator, " "),availability,Avg_Response,count, start_time_ms, end_time_ms])
-	
-	# return parsed_response.getvalue().strip().split("\r\n")
-
-def query_nGPulse_voip(datasource, query, version=None):
+def query_nGPulse_voip(datasource, query, version=None, ssl=False):
 	'''
 	Builds nGPulse API query
 	'''
 
 	# Setup
+	
+	protocol = get_protocol(ssl)
+	print(protocol)
 	
 	hostname = get_hostname(datasource['host'], datasource['port'])
 	
@@ -562,7 +313,7 @@ def query_nGPulse_voip(datasource, query, version=None):
 	
 	
 	# Get the Acces Token
-	url = 'http://' + hostname + '/ipm/auth/login'
+	url = protocol + hostname + '/ipm/auth/login'
 	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
 	response = requests.post(url, data=data)
 	authentication_json = json.loads(response.text)
@@ -572,7 +323,7 @@ def query_nGPulse_voip(datasource, query, version=None):
 	
 	# Get the service type_id for VoIP 
 
-	url = 'http://' + hostname + '/ipm/v1/admin/testTypes'
+	url = protocol + hostname + '/ipm/v1/admin/testTypes'
 	params = {'query' : '{"status":"Running","group":"VoIP"}'}
 	
 	response = requests.get(url, params=params, headers=auth_headers)
@@ -585,7 +336,7 @@ def query_nGPulse_voip(datasource, query, version=None):
 		
 		
 	# Get a list of service tests 
-	url = 'http://' + hostname + '/ipm/v1/admin/tests'
+	url = protocol + hostname + '/ipm/v1/admin/tests'
 	params = {'query' : '{"status":"Running"}'}
 	
 	response = requests.get(url, params=params, headers=auth_headers)
@@ -603,7 +354,7 @@ def query_nGPulse_voip(datasource, query, version=None):
 			service_dict[name] = id
 
 	
-	url = 'http://' + hostname + '/query/table'
+	url = protocol + hostname + '/query/table'
 
 	parsed_response = StringIO()
 	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
@@ -629,13 +380,15 @@ def query_nGPulse_voip(datasource, query, version=None):
 	
 	return parsed_response.getvalue().strip().split("\r\n")
 
-	
-def query_nGPulse_latency(datasource, query, version=None):
+def query_nGPulse_latency(datasource, query, version=None, ssl=False):
 	'''
 	Builds nGPulse API query
 	'''
 
 	# Setup
+	
+	protocol = get_protocol(ssl)
+	print(protocol)
 	
 	hostname = get_hostname(datasource['host'], datasource['port'])
 	
@@ -662,7 +415,7 @@ def query_nGPulse_latency(datasource, query, version=None):
 	
 	
 	# Get the Acces Token
-	url = 'http://' + hostname + '/ipm/auth/login'
+	url = protocol + hostname + '/ipm/auth/login'
 	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
 	response = requests.post(url, data=data)
 	authentication_json = json.loads(response.text)
@@ -673,7 +426,7 @@ def query_nGPulse_latency(datasource, query, version=None):
 	
 	# Get the service type_id for Latency
 
-	url = 'http://' + hostname + '/ipm/v1/admin/testTypes'
+	url = protocol + hostname + '/ipm/v1/admin/testTypes'
 	params = {'query' : '{"status":"Running","group":"latency"}'}
 	
 	response = requests.get(url, params=params, headers=auth_headers)
@@ -685,7 +438,7 @@ def query_nGPulse_latency(datasource, query, version=None):
 			service_type_id =  service_type_json[index]['_id']
 	
 	# Get a list of service tests 
-	url = 'http://' + hostname + '/ipm/v1/admin/tests'
+	url = protocol + hostname + '/ipm/v1/admin/tests'
 	params = {'query' : '{"status":"Running"}'}
 	
 	response = requests.get(url, params=params, headers=auth_headers)
@@ -702,7 +455,7 @@ def query_nGPulse_latency(datasource, query, version=None):
 			service_dict[name] = id
 
 
-	url = 'http://' + hostname + '/query/table'
+	url = protocol + hostname + '/query/table'
 
 	parsed_response = StringIO()
 	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
@@ -729,12 +482,15 @@ def query_nGPulse_latency(datasource, query, version=None):
 				
 	return parsed_response.getvalue().strip().split("\r\n")
 	
-def query_nGPulse_ping(datasource, query, version=None):
+def query_nGPulse_ping(datasource, query, version=None, ssl=False):
 	'''
 	Builds nGPulse API query
 	'''
 
 	# Setup
+
+	protocol = get_protocol(ssl)
+	print(protocol)
 	
 	hostname = get_hostname(datasource['host'], datasource['port'])
 	
@@ -761,7 +517,7 @@ def query_nGPulse_ping(datasource, query, version=None):
 	
 	
 	# Get the Acces Token
-	url = 'http://' + hostname + '/ipm/auth/login'
+	url = protocol + hostname + '/ipm/auth/login'
 	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
 	response = requests.post(url, data=data)
 	authentication_json = json.loads(response.text)
@@ -771,7 +527,7 @@ def query_nGPulse_ping(datasource, query, version=None):
 	
 	# Get the service type_id for Ping
 
-	url = 'http://' + hostname + '/ipm/v1/admin/testTypes'
+	url = protocol + hostname + '/ipm/v1/admin/testTypes'
 	params = {'query' : '{"status":"Running","group":"ping"}'}
 	
 	response = requests.get(url, params=params, headers=auth_headers)
@@ -783,7 +539,7 @@ def query_nGPulse_ping(datasource, query, version=None):
 			service_type_id =  service_type_json[index]['_id']
 	
 	# Get a list of service tests 
-	url = 'http://' + hostname + '/ipm/v1/admin/tests'
+	url = protocol + hostname + '/ipm/v1/admin/tests'
 	params = {'query' : '{"status":"Running"}'}
 	
 	response = requests.get(url, params=params, headers=auth_headers)
@@ -800,7 +556,7 @@ def query_nGPulse_ping(datasource, query, version=None):
 			service_dict[name] = id
 
 
-	url = 'http://' + hostname + '/query/table'
+	url = protocol + hostname + '/query/table'
 
 	parsed_response = StringIO()
 	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
@@ -826,12 +582,15 @@ def query_nGPulse_ping(datasource, query, version=None):
 				
 	return parsed_response.getvalue().strip().split("\r\n")
  	
-def query_nGPulse_web(datasource, query, version=None):
+def query_nGPulse_web(datasource, query, version=None, ssl=False):
 	'''
 	Builds nGPulse API query
 	'''
 
 	# Setup
+
+	protocol = get_protocol(ssl)
+	print(protocol)
 	
 	hostname = get_hostname(datasource['host'], datasource['port'])
 	
@@ -858,7 +617,7 @@ def query_nGPulse_web(datasource, query, version=None):
 	
 	
 	# Get the Acces Token
-	url = 'http://' + hostname + '/ipm/auth/login'
+	url = protocol + hostname + '/ipm/auth/login'
 	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
 	response = requests.post(url, data=data)
 	authentication_json = json.loads(response.text)
@@ -869,7 +628,7 @@ def query_nGPulse_web(datasource, query, version=None):
 	
 	# Get the service type_id for Web
 
-	url = 'http://' + hostname + '/ipm/v1/admin/testTypes'
+	url = protocol + hostname + '/ipm/v1/admin/testTypes'
 	params = {'query' : '{"status":"Running","group":"Web"}'}
 	
 	response = requests.get(url, params=params, headers=auth_headers)
@@ -881,7 +640,7 @@ def query_nGPulse_web(datasource, query, version=None):
 			service_type_id =  service_type_json[index]['_id']
 	
 	# Get a list of service tests 
-	url = 'http://' + hostname + '/ipm/v1/admin/tests'
+	url = protocol + hostname + '/ipm/v1/admin/tests'
 	params = {'query' : '{"status":"Running"}'}
 	
 	response = requests.get(url, params=params, headers=auth_headers)
@@ -898,7 +657,7 @@ def query_nGPulse_web(datasource, query, version=None):
 			service_dict[name] = id
 
 
-	url = 'http://' + hostname + '/query/table'
+	url = protocol + hostname + '/query/table'
 
 	parsed_response = StringIO()
 	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
@@ -923,15 +682,16 @@ def query_nGPulse_web(datasource, query, version=None):
 			
 				
 	return parsed_response.getvalue().strip().split("\r\n")
- 	
-
- 	
+ 	 	
 def get_hostname(hostname, port):	
 	if port is not None:
 		return hostname + ":" + port
 	else:
 		return hostname
-	
+
+def get_protocol(ssl=True):
+	return 'https://' if ssl in [None, True] else 'http://'
+		
 def transformation(text, output_headers, transformations):
 	'''
 	Provides a CSV dictionary object that matches expected Service Output format.

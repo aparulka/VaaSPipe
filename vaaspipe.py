@@ -39,19 +39,21 @@ if service['Service']['Service_Category'] in ['Applications', 'Links', 'Service 
 									   datasource.get('nG1_API').get('port'), 
 									   query_file,
 									   datasource.get('nG1_API').get('user'), 
-									   datasource.get('nG1_API').get('password'))
+									   datasource.get('nG1_API').get('password')
+									   ,ssl=datasource.get('nG1_API').get('ssl')
+									   )
 elif service['Service']['Service_Category'] in ['Availability Test']:
-	api_response = vaas_de.query_nGPulse_availability(datasource['nGPulse'],query['Query'])
+	api_response = vaas_de.query_nGPulse_availability(datasource['nGPulse'],query['Query'], ssl=datasource.get('nGPulse').get('ssl'))
 elif service['Service']['Service_Category'] in ['Infrastructure']:
-	api_response = vaas_de.query_nGPulse_server(datasource['nGPulse'],query['Query'])
+	api_response = vaas_de.query_nGPulse_server(datasource['nGPulse'],query['Query'], ssl=datasource.get('nGPulse').get('ssl'))
 elif service['Service']['Service_Category'] in ['VoIP Test']:
-	api_response = vaas_de.query_nGPulse_voip(datasource['nGPulse'],query['Query'])
+	api_response = vaas_de.query_nGPulse_voip(datasource['nGPulse'],query['Query'], ssl=datasource.get('nGPulse').get('ssl'))
 elif service['Service']['Service_Category'] in ['Latency Test']:
-	api_response = vaas_de.query_nGPulse_latency(datasource['nGPulse'],query['Query'])
+	api_response = vaas_de.query_nGPulse_latency(datasource['nGPulse'],query['Query'], ssl=datasource.get('nGPulse').get('ssl'))
 elif service['Service']['Service_Category'] in ['Ping Test']:
-	api_response = vaas_de.query_nGPulse_ping(datasource['nGPulse'],query['Query'])
+	api_response = vaas_de.query_nGPulse_ping(datasource['nGPulse'],query['Query'], ssl=datasource.get('nGPulse').get('ssl'))
 elif service['Service']['Service_Category'] in ['Web Test']:	
-	api_response = vaas_de.query_nGPulse_web(datasource['nGPulse'],query['Query'])
+	api_response = vaas_de.query_nGPulse_web(datasource['nGPulse'],query['Query'], ssl=datasource.get('nGPulse').get('ssl'))
 elif service['Service']['Service_Category'] in ['Dimensions']:
 	api_response = vaas_de.query_psql(datasource.get('postGres').get('host'),datasource.get('postGres').get('user'),datasource.get('postGres').get('password'),datasource.get('postGres').get('dbname'),service.get('Service').get('query_file'))
 else:

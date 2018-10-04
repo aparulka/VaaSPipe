@@ -1,4 +1,5 @@
 nGPulse: 
+ ssl: False
  host: ngeniuspulse.netscout.com
  port:
  emailOrUsername: ngp_api
