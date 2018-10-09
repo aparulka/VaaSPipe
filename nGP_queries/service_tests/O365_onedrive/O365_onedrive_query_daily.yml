@@ -14,7 +14,7 @@ Query:
    date_format: '%d-%m-%Y %H:%M:%S'
   end:
    relativedelta:
-    days: 0
+    days: -0
    replace:
     hour: 0
     minute: 0
