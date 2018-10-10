@@ -58,4 +58,14 @@
       </Function>
    </FunctionList>
    <TimeDef>
+   <duration>YESTERDAY</duration>
+   <resolution>ONE_DAY</resolution>
+   <!--startTime>2018-05-15_00:00:00</startTime>
+           <endTime>2018-05-16_00:00:00</endTime-->
+   </TimeDef>
+   <AggregateFlags><aggregateMe>false</aggregateMe>
+   <aggregateApp>false</aggregateApp></AggregateFlags>
+   <params><updateKeys>false</updateKeys></params>
+   </GenericClientQuery>
+
 
