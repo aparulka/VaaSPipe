@@ -2,8 +2,8 @@ Service:
  Customer: NTCT IT
  Service_Category: Dimensions
  Key: NTCT IT;All;nG1;Dimensions;Daily
- Description: Feed of lu_qosgroup lookup table from nG1
- query_file: nG1_queries/dimensions/lu_qosgroup.sql
+ Description: Feed of lu_qosgroups lookup table from nG1
+ query_file: nG1_queries/dimensions/lu_qosgroups.sql
  logging: logs/dimensions_vaaspipe.log
  logging_level: INFO
  filename: lu_qosgroup_
