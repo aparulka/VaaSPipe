@@ -2,29 +2,70 @@
    <NetworkObjectData>
    <NetworkParameter>APPLICATION</NetworkParameter>
    <SelectColumnList>
-   <ClientColumn>totalTransactions</ClientColumn>
-   <ClientColumn>responseTime</ClientColumn>
-   <ClientColumn>failedTransactions</ClientColumn>
-   <ClientColumn>serviceId</ClientColumn>
-   <ClientColumn>failedPercentage</ClientColumn>
-   <ClientColumn>targetTime</ClientColumn>
+         <ClientColumn>totalTransactions</ClientColumn>
+         <ClientColumn>successfulTransactions</ClientColumn>
+         <ClientColumn>timeOutPercentage</ClientColumn>
+         <ClientColumn>requestRetries</ClientColumn>
+         <ClientColumn>responseTime</ClientColumn>
+         <ClientColumn>failedTransactions</ClientColumn>
+         <ClientColumn>totalResets</ClientColumn>
+         <ClientColumn>timeout</ClientColumn>
+         <ClientColumn>totalRetries</ClientColumn>
+         <ClientColumn>serverConnectTime</ClientColumn>
+         <ClientColumn>serverResets</ClientColumn>
+         <ClientColumn>newSessions</ClientColumn>
+         <ClientColumn>activeSessions</ClientColumn>
+         <ClientColumn>avgConnectTime</ClientColumn>
+         <ClientColumn>successfulPercentage</ClientColumn>
+         <ClientColumn>avgClientConnectTime</ClientColumn>
+         <ClientColumn>serverRetries</ClientColumn>
+         <ClientColumn>clientResets</ClientColumn>
+         <ClientColumn>serviceId</ClientColumn>
+         <ClientColumn>failedPercentage</ClientColumn>
+         <ClientColumn>targetTime</ClientColumn>
+         <ClientColumn>clientRetries</ClientColumn>
+         <ClientColumn>clientWinSize</ClientColumn>
+         <ClientColumn>clientAckRetransmission</ClientColumn>
+         <ClientColumn>clientMinWindow</ClientColumn>
+         <ClientColumn>serverMinWindow</ClientColumn>
+         <ClientColumn>serverAckRetransmission</ClientColumn>
+         <ClientColumn>serverAckTime</ClientColumn>
+         <ClientColumn>clientAckTime</ClientColumn>
+         <ClientColumn>serverWinSize</ClientColumn>
    </SelectColumnList>
    </NetworkObjectData>
    <FlowFilterList><FlowFilter appliedServiceType="appservice" serviceId="160072365" serviceType="domain">
    <FilterList><domainId>161319272</domainId></FilterList>
    </FlowFilter></FlowFilterList>
    <FunctionList>
-   <Function>
-   <name>Percent</name><numerator>failedTransactions</numerator><denominator>totalTransactions</denominator><ClientColumn>failedPercentage</ClientColumn>
-   </Function></FunctionList>
+      <Function>
+         <name>Percent</name>
+         <numerator>successfulTransactions</numerator>
+         <denominator>totalTransactions</denominator>
+         <ClientColumn>successfulPercentage</ClientColumn>
+      </Function>
+      <Function>
+         <name>Percent</name>
+         <numerator>timeout</numerator>
+         <denominator>totalTransactions</denominator>
+         <ClientColumn>timeOutPercentage</ClientColumn>
+      </Function>
+      <Function>
+         <name>Percent</name>
+         <numerator>failedTransactions</numerator>
+         <denominator>totalTransactions</denominator>
+         <ClientColumn>failedPercentage</ClientColumn>
+      </Function>
+   </FunctionList>
    <TimeDef>
    <duration>YESTERDAY</duration>
    <resolution>ONE_DAY</resolution>
    <!--startTime>2018-05-15_00:00:00</startTime>
-   <endTime>2018-05-16_00:00:00</endTime-->
+           <endTime>2018-05-16_00:00:00</endTime-->
    </TimeDef>
    <AggregateFlags><aggregateMe>false</aggregateMe>
    <aggregateApp>false</aggregateApp></AggregateFlags>
    <params><updateKeys>false</updateKeys></params>
    </GenericClientQuery>
+
 

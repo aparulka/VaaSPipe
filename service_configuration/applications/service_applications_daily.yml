@@ -21,3 +21,27 @@ Service:
   - targetTime
   - serviceId_String
   - targetTime_String
+  - successfulTransactions
+  - timeOutPercentage
+  - requestRetries
+  - totalResets
+  - timeout
+  - totalRetries
+  - serverConnectTime
+  - serverResets
+  - newSessions
+  - activeSessions
+  - avgConnectTime
+  - successfulPercentage
+  - avgClientConnectTime
+  - serverRetries
+  - clientResets
+  - clientRetries
+  - clientWinSize
+  - clientAckRetransmission
+  - clientMinWindow
+  - serverMinWindow
+  - serverAckRetransmission
+  - serverAckTime
+  - clientAckTime
+  - serverWinSize
