@@ -1,0 +1,1 @@
+select mel_ip,mib2_iface_num,current_ip_address,mel_name,interface_speed from monitored_elements
