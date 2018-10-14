@@ -50,7 +50,7 @@ def query_dbONE(host, port, query, username, password, ssl=True, headers=dbONE_A
 	Format as of nG1 6.1 is of type: https://192.168.99.18:8443/dbonequerydata/?username=svc-dBONE/password=F34Mu93S7Rv6/encrypted=false/conversion=true/DT=csv 
 	
 	Output Format:
-	['serviceId\ttargetTime\tfailedTransactions\ttotalTransactions\tresponseTime\tfailedPercentage\tserviceId_String\ttargetTime_String', '122029775\t1535256000000\t0\t67407\t139304.6454063840\t0.0000000000\tO365 Authentication (Pune)\tSun Aug 26 00:00:00 EDT 2018', '122030298\t1535256000000\t0\t714182\t291171.5849273787\t0.0000000000\tO365 Exchange (Pune)\tSun Aug 26 00:00:00 EDT 2018', '148578737\t1535256000000\t0\t38039\t317043.3394678725\t0.0000000000\tSalesForce (Pune)\tSun Aug 26 00:00:00 EDT 2018', '94846774\t1535256000000\t0\t8865\t46995.6806848213\t0.0000000000\tO365 SharepointOnline (San Jose)\tSun Aug 26 00:00:00 EDT 2018', '122029802\t1535256000000\t0\t106665\t73553.7996398695\t0.0000000000\tO365 Authentication (San Jose)\tSun Aug 26 00:00:00 EDT 2018', '143019858\t1535256000000\t0\t63500\t59822.7504096811\t0.0000000000\tO365 Exchange (San Jose)\tSun Aug 26 00:00:00 EDT 2018', '154069910\t1535256000000\t0\t23268\t9597.5654082906\t0.0000000000\tO365 DNS - San Jose\tSun Aug 26 00:00:00 EDT 2018', '160829939\t1535256000000\t0\t10384\t108296.9919417476\t0.0000000000\tMS - Oracle Web Service (San Jose)\tSun Aug 26 00:00:00 EDT 2018', '146302544\t1535256000000\t0\t112729\t45417.2753807910\t0.0000000000\tSalesForce (San Jose)\tSun Aug 26 00:00:00 EDT 2018', '150305546\t1535256000000\t0\t4320\t117166.7053240741\t0.0000000000\tSalesForce (Dublin)\tSun Aug 26 00:00:00 EDT 2018', '150890489\t1535256000000\t0\t21609\t81929.8512155592\t0.0000000000\tO365 Authentication (Dublin)\tSun Aug 26 00:00:00 EDT 2018', '150890611\t1535256000000\t0\t6625\t21468.1678743961\t0.0000000000\tO365 Yammer (Dublin)\tSun Aug 26 00:00:00 EDT 2018', '150890195\t1535256000000\t0\t74874\t169611.7007146197\t0.0000000000\tO365 Exchange (Dublin)\tSun Aug 26 00:00:00 EDT 2018', '150890800\t1535256000000\t0\t6462\t100479.6674407803\t0.0000000000\tO365 SharePoint Online (Dublin)\tSun Aug 26 00:00:00 EDT 2018', '160829875\t1535256000000\t0\t8619\t109075.1588242128\t0.0000000000\tMS - Oracle Web Service (Dublin)\tSun Aug 26 00:00:00 EDT 2018', '149342864\t1535256000000\t0\t239052\t14331.4416870124\t0.0000000000\tOracle Web Service (Westford)\tSun Aug 26 00:00:00 EDT 2018', '164944267\t1535256000000\t0\t145920\t23786.7653852749\t0.0000000000\tOracle HTTP Westford\tSun Aug 26 00:00:00 EDT 2018', '130075227\t1535256000000\t0\t62153\t18566.1742623453\t0.0000000000\tO365 DNS (Westford)\tSun Aug 26 00:00:00 EDT 2018', '74789789\t1535256000000\t619\t42856\t4241.3775836352\t1.4443718195\tOracle DB (DEV)\tSun Aug 26 00:00:00 EDT 2018', '121963273\t1535256000000\t2\t299075\t67590.1085916253\t0.0006687286\tO365 Authentication (WST)\tSun Aug 26 00:00:00 EDT 2018', '147541832\t1535256000000\t0\t2046906\t118518.7814007372\t0.0000000000\tO365 Exchange (Westford)\tSun Aug 26 00:00:00 EDT 2018', '147542093\t1535256000000\t0\t76975\t64820.7045221033\t0.0000000000\tO365 SharePointOnline (Westford)\tSun Aug 26 00:00:00 EDT 2018', '148485149\t1535256000000\t0\t2159047\t68781.6154765379\t0.0000000000\tSalesForce (Westford)\tSun Aug 26 00:00:00 EDT 2018', '147542280\t1535256000000\t0\t59647\t34953.7453136011\t0.0000000000\tO365 Yammer (Westford)\tSun Aug 26 00:00:00 EDT 2018', '147542030\t1535256000000\t0\t16943\t30232.1714572390\t0.0000000000\tO365 Online (Westford)\tSun Aug 26 00:00:00 EDT 2018', '174471288\t1535256000000\t0\t568629\t40821.9890067947\t0.0000000000\tSalesForce (Allen)\tSun Aug 26 00:00:00 EDT 2018', '174469762\t1535256000000\t0\t13328\t23962.5794802055\t0.0000000000\tO365 SharePointOnline (Allen)\tSun Aug 26 00:00:00 EDT 2018', '174470370\t1535256000000\t0\t486939\t126330.4470779381\t0.0000000000\tO365 Exchange (Allen)\tSun Aug 26 00:00:00 EDT 2018', '174470316\t1535256000000\t0\t1308\t7626.7706422018\t0.0000000000\tO365 DNS (Allen)\tSun Aug 26 00:00:00 EDT 2018', '174469821\t1535256000000\t0\t82966\t114643.3308956400\t0.0000000000\tO365 Authentication (Allen)\tSun Aug 26 00:00:00 EDT 2018', '174469663\t1535256000000\t0\t1708\t19632.9841920375\t0.0000000000\tO365 Online (Allen)\tSun Aug 26 00:00:00 EDT 2018']
+	['serviceId\ttargetTime\tfailedTransactions\ttotalTransactions\tresponseTime\tfailedPercentage\tserviceId_String\ttargetTime_String', '122029775\t1535256000000\t0\t67407\t139304.6454063840\t0.0000000000\tO365 Authentication (Pune)\tSun Aug 26 00:00:00 EDT 2018', '122030298\t1535256000000\t0\t714182\t291171.5849273787\t0.0000000000\tO365 Exchange (Pune)\tSun Aug 26 00:00:00 EDT 2018', '148578737\t1535256000000\t0\t38039\t317043.3394678725\t0.0000000000\tSalesForce (Pune)\tSun Aug 26 00:00:00 EDT 2018']
 	'''
 	
 	# defaults to SSL
@@ -86,109 +86,40 @@ def query_psql(host,user,password,dbname,sql):
 	myList = []
 	
 	for row in all:
-		myList.append("\t".join(map(str,row)))
+		myList.append(output_separator.join(map(str,row)))
  
 	return myList
-	
-def query_nGPulse_availability(datasource, query, version=None, ssl=False):
-	'''
-	Builds nGPulse API query
-	'''
-
-	# Setup
-	
-	protocol = get_protocol(ssl)
-	print(protocol)
-	
-	hostname = get_hostname(datasource['host'], datasource['port'])
-	print(hostname)
-	nGP_Service_Test_List = query['nGP_Service_Test_List']
-	nGP_Location_List = query['nGP_Location_List']
-
-	
-	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
-	kpi_filter_params = query['kpi_filter_params']
-
-	# Time calculations
-	now = datetime.datetime.now(tz)	
-	start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
-	end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
-	start_time_ms = int(start_time.timestamp())
-	end_time_ms = int(end_time.timestamp())
-	output_datestamp =  start_time.strftime("%d-%m-%Y %H:%M:%S")
-	
-	kpi_filter_params['start'] = start_time_ms
-	kpi_filter_params['end'] = end_time_ms
-	
-	logging.info("start_time: "+start_time.strftime('%d-%m-%Y %H:%M:%S'))
-	logging.info("end_time: "+end_time.strftime('%d-%m-%Y %H:%M:%S'))
-	
-	
-	# Get the Acces Token
-	url = protocol + hostname + '/ipm/auth/login'
-	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
-	response = requests.post(url, data=data)
-	authentication_json = json.loads(response.text)
-	token =  authentication_json['accessToken']
-	token_string = ('Access %s' %token)
-	auth_headers = {'ngp-authorization' : token_string}
-	
-	# Get a list of service tests 
-	url = protocol + hostname + '/ipm/v1/admin/tests'
-	params = {'query' : '{"status":"Running"}'}
-	
-	response = requests.get(url, params=params, headers=auth_headers)
-	services_json = json.loads(response.text)
-
-	services = {}
-
-	for index, item in enumerate(services_json):
-		name =  services_json[index]['name']
-		id =  services_json[index]['_id']
-		services[name] = id
-
-	
-	url = protocol + hostname + '/query/table'
-	
-	parsed_response = StringIO()
-	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
-	
-	# Writing header as a Transformation.
-	# header=['Date','Location','Service Test','Availability (%)']
-	# writer.writerow(header)
-	
-	for nGP_Service_Test in nGP_Service_Test_List:
-		id = services[nGP_Service_Test]
-		
-		kpi_filter_params['test'] = id
-		
-		response = requests.get(url, params=kpi_filter_params, headers=auth_headers)
-		
-		parsed_json = json.loads(response.text)
-
-
-	 
-		for index, item in enumerate(parsed_json['data']):
-			nPoint =  parsed_json['data'][index]['agent']['name'].replace("\t", " ")
-			if nPoint in nGP_Location_List:  
-				availability =  parsed_json['data'][index]['availPercent'] 
-				writer.writerow([output_datestamp,nPoint,nGP_Service_Test,availability, start_time_ms, end_time_ms])
-
-	
-	return parsed_response.getvalue().strip().split("\r\n")
  
 def query_nGPulse_server(datasource, query, version=None, ssl=False):
 	'''
 	Builds nGPulse API query
 	'''
 
-	# Setup
+	# ------- Common Setup -------------	
 	
 	protocol = get_protocol(ssl)
-	print(protocol)
-	
 	hostname = get_hostname(datasource['host'], datasource['port'])
+	
+	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
+	kpi_filter_params = query['kpi_filter_params']
+	kpi_filter_params = _start_to_end_time_ms(kpi_filter_params)
+	
+	logging.info("start_time: "+ kpi_filter_params['start_str'])
+	logging.info("end_time: "+ kpi_filter_params['end_str'])
+	
+	token = _nGPulse_token(datasource['emailOrUsername'], 
+							datasource['password'],
+							protocol,
+							hostname)
+	
+	auth_headers = _nGPulse_auth_headers(token)
+	
+	output_datestamp =  kpi_filter_params['start_str']	
+	start_time_ms = kpi_filter_params['start']
+	end_time_ms = kpi_filter_params['end']	
+	# ------- Common Setup -------------	
 
+	# ------- Test-specific setup -------------	
 	
 	# Include VMs and HyperVisors in nGP_Server_List
 	nGP_Server_List = query['nGP_Server_List']
@@ -207,47 +138,18 @@ def query_nGPulse_server(datasource, query, version=None, ssl=False):
 	infra['wirelesscontroller'] = nGP_WirelessController_List or []
 	infra['generic'] = nGP_GenericDevice_List or []	
 	
+	# ------- Test-specific setup -------------	
 	
-	
-	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
-	kpi_filter_params = query['kpi_filter_params']
-
-	# Time calculations
-	now = datetime.datetime.now(tz)	
-	start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
-	end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
-	start_time_ms = int(start_time.timestamp())
-	end_time_ms = int(end_time.timestamp())
-	output_datestamp =  start_time.strftime("%d-%m-%Y %H:%M:%S")
-	
-	kpi_filter_params['start'] = start_time_ms
-	kpi_filter_params['end'] = end_time_ms
-	
-	logging.info("start_time: "+start_time.strftime('%d-%m-%Y %H:%M:%S'))
-	logging.info("end_time: "+end_time.strftime('%d-%m-%Y %H:%M:%S'))
-	
-	
-	# Get the Acces Token
-	url = protocol + hostname + '/ipm/auth/login'
-	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
-	response = requests.post(url, data=data)
-	authentication_json = json.loads(response.text)
-	token =  authentication_json['accessToken']
-	token_string = ('Access %s' %token)
-	auth_headers = {'ngp-authorization' : token_string}
-
-	# Infrastructure querying
+	# ------- Test-specific query and data processing -------------
 	
 	url = protocol + hostname + '/query/table'
-
-	headers = {'ngp-authorization' : token_string}
 
 	parsed_response = StringIO()
 	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
 	
 	for type in kpi_filter_params['type']:
 		kpi_filter_params['type'] = type
-		response = requests.get(url, params=kpi_filter_params, headers=headers) 
+		response = requests.get(url, params=kpi_filter_params, headers=auth_headers) 
 		parsed_json = json.loads(response.text)
 		
 		for index, item in enumerate(parsed_json['data']):
@@ -265,17 +167,6 @@ def query_nGPulse_server(datasource, query, version=None, ssl=False):
 				gray =  parsed_json['data'][index]['status']['gray'] 
 				count =  parsed_json['data'][index]['status']['count'] 	
 				writer.writerow([output_datestamp,service.replace(output_separator, " "),locationId.replace(output_separator, " "),infrastructureId.replace(output_separator, " "),green,yellow,orange,red,gray,count, start_time_ms, end_time_ms])
-		
-	# for index, item in enumerate(parsed_json['data']):
-	  # server =  parsed_json['data'][index]['server']['name']
-	  # if server in nGP_Server_List:  
-	   # green =  parsed_json['data'][index]['status']['green'] 
-	   # yellow =  parsed_json['data'][index]['status']['yellow'] 
-	   # orange =  parsed_json['data'][index]['status']['orange'] 
-	   # red =  parsed_json['data'][index]['status']['red'] 
-	   # gray =  parsed_json['data'][index]['status']['gray'] 
-	   # count =  parsed_json['data'][index]['status']['count'] 
-	   # writer.writerow([output_datestamp,server,green,yellow,orange,red,gray,count])
 	   
 	return parsed_response.getvalue().strip().split("\r\n")
 
@@ -283,77 +174,42 @@ def query_nGPulse_voip(datasource, query, version=None, ssl=False):
 	'''
 	Builds nGPulse API query
 	'''
-
-	# Setup
+	# ------- Common Setup -------------	
 	
 	protocol = get_protocol(ssl)
-	print(protocol)
-	
 	hostname = get_hostname(datasource['host'], datasource['port'])
-	
-	nGP_Service_Test_List = query['nGP_Service_Test_List'] or []
-	
 	
 	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
 	kpi_filter_params = query['kpi_filter_params']
+	kpi_filter_params = _start_to_end_time_ms(kpi_filter_params)
+	
+	logging.info("start_time: "+ kpi_filter_params['start_str'])
+	logging.info("end_time: "+ kpi_filter_params['end_str'])
+	
+	token = _nGPulse_token(datasource['emailOrUsername'], 
+							datasource['password'],
+							protocol,
+							hostname)
+	
+	auth_headers = _nGPulse_auth_headers(token)
+	
+	output_datestamp =  kpi_filter_params['start_str']	
+	start_time_ms = kpi_filter_params['start']
+	end_time_ms = kpi_filter_params['end']	
+	# ------- Common Setup -------------	
 
-	# Time calculations
-	now = datetime.datetime.now(tz)	
-	start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
-	end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
-	start_time_ms = int(start_time.timestamp())
-	end_time_ms = int(end_time.timestamp())
-	output_datestamp =  start_time.strftime("%d-%m-%Y %H:%M:%S")
+	# ------- Test-specific setup -------------	
 	
-	kpi_filter_params['start'] = start_time_ms
-	kpi_filter_params['end'] = end_time_ms
-	
-	logging.info("start_time: "+start_time.strftime('%d-%m-%Y %H:%M:%S'))
-	logging.info("end_time: "+end_time.strftime('%d-%m-%Y %H:%M:%S'))
-	
-	
-	# Get the Acces Token
-	url = protocol + hostname + '/ipm/auth/login'
-	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
-	response = requests.post(url, data=data)
-	authentication_json = json.loads(response.text)
-	token =  authentication_json['accessToken']
-	token_string = ('Access %s' %token)
-	auth_headers = {'ngp-authorization' : token_string}
-	
-	# Get the service type_id for VoIP 
+	nGP_Service_Test_List = query['nGP_Service_Test_List'] or []
+	group = 'VoIP'
+	service_type_name = 'VoipPulse'
 
-	url = protocol + hostname + '/ipm/v1/admin/testTypes'
-	params = {'query' : '{"status":"Running","group":"VoIP"}'}
+	# ------- Test-specific setup -------------	
 	
-	response = requests.get(url, params=params, headers=auth_headers)
-	service_type_json = json.loads(response.text)
+	# ------- Test-specific query and data processing -------------
 	
-	for index, item in enumerate(service_type_json):
-		service_type_name = service_type_json[index]['name']
-		if (service_type_name == 'VoipPulse'):
-			service_type_id =  service_type_json[index]['_id']
-		
-		
-	# Get a list of service tests 
-	url = protocol + hostname + '/ipm/v1/admin/tests'
-	params = {'query' : '{"status":"Running"}'}
-	
-	response = requests.get(url, params=params, headers=auth_headers)
-	services_json = json.loads(response.text)
-	
+	service_dict = _nGPulse_get_tests(protocol, hostname, auth_headers, group, service_type_name)
 
-	service_dict = {}
-
-	for index, item in enumerate(services_json):
-		name =  services_json[index]['name']
-		id =  services_json[index]['_id']
-		type = services_json[index]['type']
-		if (type == service_type_id):
-			# it's a VoIP service test
-			service_dict[name] = id
-
-	
 	url = protocol + hostname + '/query/table'
 
 	parsed_response = StringIO()
@@ -364,7 +220,7 @@ def query_nGPulse_voip(datasource, query, version=None, ssl=False):
 		# check if this service test is on our list or if the list is null (meaning get all service tests)
 		if (nGP_Service_Test in nGP_Service_Test_List or nGP_Service_Test_List  == []):
 			kpi_filter_params['test'] = id
-			headers = {'ngp-authorization' : token_string}
+			headers = auth_headers
 			response = requests.get(url, params=kpi_filter_params, headers=headers) 
 			parsed_json = json.loads(response.text)
 		
@@ -377,83 +233,45 @@ def query_nGPulse_voip(datasource, query, version=None, ssl=False):
 				count  =  parsed_json['data'][index]['count'] 
 				writer.writerow([output_datestamp,nGP_Service_Test.replace(output_separator, " "),nPoint,availability,caller_mos,callee_mos,count, start_time_ms, end_time_ms])
 
-	
 	return parsed_response.getvalue().strip().split("\r\n")
 
 def query_nGPulse_latency(datasource, query, version=None, ssl=False):
 	'''
 	Builds nGPulse API query
 	'''
-
-	# Setup
+	# ------- Common Setup -------------	
 	
 	protocol = get_protocol(ssl)
-	print(protocol)
-	
 	hostname = get_hostname(datasource['host'], datasource['port'])
-	
-
-	nGP_Service_Test_List = query['nGP_Service_Test_List'] or []
-
 	
 	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
 	kpi_filter_params = query['kpi_filter_params']
+	kpi_filter_params = _start_to_end_time_ms(kpi_filter_params)
+	
+	logging.info("start_time: "+ kpi_filter_params['start_str'])
+	logging.info("end_time: "+ kpi_filter_params['end_str'])
+	
+	token = _nGPulse_token(datasource['emailOrUsername'], 
+							datasource['password'],
+							protocol,
+							hostname)
+	
+	auth_headers = _nGPulse_auth_headers(token)
+	
+	output_datestamp =  kpi_filter_params['start_str']	
+	start_time_ms = kpi_filter_params['start']
+	end_time_ms = kpi_filter_params['end']	
+	# ------- Common Setup -------------	
+	# ------- Test-specific setup -------------	
 
-	# Time calculations
-	now = datetime.datetime.now(tz)	
-	start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
-	end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
-	start_time_ms = int(start_time.timestamp())
-	end_time_ms = int(end_time.timestamp())
-	output_datestamp =  start_time.strftime("%d-%m-%Y %H:%M:%S")
-	
-	kpi_filter_params['start'] = start_time_ms
-	kpi_filter_params['end'] = end_time_ms
-	
-	logging.info("start_time: "+start_time.strftime('%d-%m-%Y %H:%M:%S'))
-	logging.info("end_time: "+end_time.strftime('%d-%m-%Y %H:%M:%S'))
-	
-	
-	# Get the Acces Token
-	url = protocol + hostname + '/ipm/auth/login'
-	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
-	response = requests.post(url, data=data)
-	authentication_json = json.loads(response.text)
-	token =  authentication_json['accessToken']
-	token_string = ('Access %s' %token)
-	auth_headers = {'ngp-authorization' : token_string}
-	
-	
-	# Get the service type_id for Latency
+	nGP_Service_Test_List = query['nGP_Service_Test_List'] or []
+	group = 'latency'
+	service_type_name = 'latency'
+	# ------- Test-specific setup -------------	
 
-	url = protocol + hostname + '/ipm/v1/admin/testTypes'
-	params = {'query' : '{"status":"Running","group":"latency"}'}
-	
-	response = requests.get(url, params=params, headers=auth_headers)
-	service_type_json = json.loads(response.text)
-	
-	for index, item in enumerate(service_type_json):
-		service_type_name = service_type_json[index]['name']
-		if (service_type_name == 'latency'):
-			service_type_id =  service_type_json[index]['_id']
-	
-	# Get a list of service tests 
-	url = protocol + hostname + '/ipm/v1/admin/tests'
-	params = {'query' : '{"status":"Running"}'}
-	
-	response = requests.get(url, params=params, headers=auth_headers)
-	services_json = json.loads(response.text)
+	# ------- Test-specific query and data processing -------------
 
-	service_dict = {}
-	
-	for index, item in enumerate(services_json):
-		name =  services_json[index]['name']
-		id =  services_json[index]['_id']
-		type = services_json[index]['type']
-		if (type == service_type_id):
-			# it's a Latency service test
-			service_dict[name] = id
-
+	service_dict = _nGPulse_get_tests(protocol, hostname, auth_headers, group, service_type_name)
 
 	url = protocol + hostname + '/query/table'
 
@@ -466,7 +284,7 @@ def query_nGPulse_latency(datasource, query, version=None, ssl=False):
 		# check if this service test is on our list or if the list is null (meaning get all service tests)
 		if (nGP_Service_Test in nGP_Service_Test_List or nGP_Service_Test_List  == []):
 			kpi_filter_params['test'] = id
-			headers = {'ngp-authorization' : token_string}
+			headers = auth_headers
 			response = requests.get(url, params=kpi_filter_params, headers=headers) 
 			parsed_json = json.loads(response.text)
 		
@@ -486,89 +304,50 @@ def query_nGPulse_ping(datasource, query, version=None, ssl=False):
 	'''
 	Builds nGPulse API query
 	'''
-
-	# Setup
-
-	protocol = get_protocol(ssl)
-	print(protocol)
+	# ------- Common Setup -------------	
 	
+	protocol = get_protocol(ssl)
 	hostname = get_hostname(datasource['host'], datasource['port'])
 	
-
-	nGP_Service_Test_List = query['nGP_Service_Test_List'] or []
-
-	
-	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
+	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}	kpi_filter_params = query['kpi_filter_params']
 	kpi_filter_params = query['kpi_filter_params']
+	kpi_filter_params = _start_to_end_time_ms(kpi_filter_params)
+	
+	logging.info("start_time: "+ kpi_filter_params['start_str'])
+	logging.info("end_time: "+ kpi_filter_params['end_str'])
+	
+	token = _nGPulse_token(datasource['emailOrUsername'], 
+							datasource['password'],
+							protocol,
+							hostname)
+	
+	auth_headers = _nGPulse_auth_headers(token)
+	
+	output_datestamp =  kpi_filter_params['start_str']	
+	start_time_ms = kpi_filter_params['start']
+	end_time_ms = kpi_filter_params['end']	
+	# ------- Common Setup -------------	
+	# ------- Test-specific setup -------------	
+	nGP_Service_Test_List = query['nGP_Service_Test_List'] or []
+	group = 'ping'
+	service_type_name = 'ping'
+	# ------- Test-specific setup -------------		
 
-	# Time calculations
-	now = datetime.datetime.now(tz)	
-	start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
-	end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
-	start_time_ms = int(start_time.timestamp())
-	end_time_ms = int(end_time.timestamp())
-	output_datestamp =  start_time.strftime("%d-%m-%Y %H:%M:%S")
-	
-	kpi_filter_params['start'] = start_time_ms
-	kpi_filter_params['end'] = end_time_ms
-	
-	logging.info("start_time: "+start_time.strftime('%d-%m-%Y %H:%M:%S'))
-	logging.info("end_time: "+end_time.strftime('%d-%m-%Y %H:%M:%S'))
-	
-	
-	# Get the Acces Token
-	url = protocol + hostname + '/ipm/auth/login'
-	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
-	response = requests.post(url, data=data)
-	authentication_json = json.loads(response.text)
-	token =  authentication_json['accessToken']
-	token_string = ('Access %s' %token)
-	auth_headers = {'ngp-authorization' : token_string}
-	
-	# Get the service type_id for Ping
+	# ------- Test-specific query and data processing -------------
 
-	url = protocol + hostname + '/ipm/v1/admin/testTypes'
-	params = {'query' : '{"status":"Running","group":"ping"}'}
+	service_dict = _nGPulse_get_tests(protocol, hostname, auth_headers, group, service_type_name)
 	
-	response = requests.get(url, params=params, headers=auth_headers)
-	service_type_json = json.loads(response.text)
-	
-	for index, item in enumerate(service_type_json):
-		service_type_name = service_type_json[index]['name']
-		if (service_type_name == 'ping'):
-			service_type_id =  service_type_json[index]['_id']
-	
-	# Get a list of service tests 
-	url = protocol + hostname + '/ipm/v1/admin/tests'
-	params = {'query' : '{"status":"Running"}'}
-	
-	response = requests.get(url, params=params, headers=auth_headers)
-	services_json = json.loads(response.text)
-
-	service_dict = {}
-	
-	for index, item in enumerate(services_json):
-		name =  services_json[index]['name']
-		id =  services_json[index]['_id']
-		type = services_json[index]['type']
-		if (type == service_type_id):
-			# it's a Ping service test
-			service_dict[name] = id
-
-
 	url = protocol + hostname + '/query/table'
 
 	parsed_response = StringIO()
 	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
-	
 	
 	for nGP_Service_Test, item in service_dict.items():
 		id = service_dict[nGP_Service_Test]
 		# check if this service test is on our list or if the list is null (meaning get all service tests)
 		if (nGP_Service_Test in nGP_Service_Test_List or nGP_Service_Test_List  == []):
 			kpi_filter_params['test'] = id
-			headers = {'ngp-authorization' : token_string}
-			response = requests.get(url, params=kpi_filter_params, headers=headers) 
+			response = requests.get(url, params=kpi_filter_params, headers=auth_headers) 
 			parsed_json = json.loads(response.text)
 		
 			# get the data from all the npoints
@@ -586,76 +365,37 @@ def query_nGPulse_web(datasource, query, version=None, ssl=False):
 	'''
 	Builds nGPulse API query
 	'''
-
-	# Setup
-
+	# ------- Common Setup -------------	
+	
 	protocol = get_protocol(ssl)
-	print(protocol)
-	
 	hostname = get_hostname(datasource['host'], datasource['port'])
-	
-
-	nGP_Service_Test_List = query['nGP_Service_Test_List'] or []
-
 	
 	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
 	kpi_filter_params = query['kpi_filter_params']
+	kpi_filter_params = _start_to_end_time_ms(kpi_filter_params)
+	
+	logging.info("start_time: "+ kpi_filter_params['start_str'])
+	logging.info("end_time: "+ kpi_filter_params['end_str'])
+	
+	token = _nGPulse_token(datasource['emailOrUsername'], 
+							datasource['password'],
+							protocol,
+							hostname)
+	
+	auth_headers = _nGPulse_auth_headers(token)
+	
+	output_datestamp =  kpi_filter_params['start_str']	
+	start_time_ms = kpi_filter_params['start']
+	end_time_ms = kpi_filter_params['end']	
+	# ------- Common Setup -------------
+	# ------- Test-specific setup -------------	
+	nGP_Service_Test_List = query['nGP_Service_Test_List'] or []
+	group = 'Web'
+	service_type_name = 'Web'
+	# ------- Test-specific setup -------------
+	# ------- Test-specific query and data processing -------------
 
-	# Time calculations
-	now = datetime.datetime.now(tz)	
-	start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
-	end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
-	start_time_ms = int(start_time.timestamp())
-	end_time_ms = int(end_time.timestamp())
-	output_datestamp =  start_time.strftime("%d-%m-%Y %H:%M:%S")
-	
-	kpi_filter_params['start'] = start_time_ms
-	kpi_filter_params['end'] = end_time_ms
-	
-	logging.info("start_time: "+start_time.strftime('%d-%m-%Y %H:%M:%S'))
-	logging.info("end_time: "+end_time.strftime('%d-%m-%Y %H:%M:%S'))
-	
-	
-	# Get the Acces Token
-	url = protocol + hostname + '/ipm/auth/login'
-	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
-	response = requests.post(url, data=data)
-	authentication_json = json.loads(response.text)
-	token =  authentication_json['accessToken']
-	token_string = ('Access %s' %token)
-	auth_headers = {'ngp-authorization' : token_string}
-	
-	
-	# Get the service type_id for Web
-
-	url = protocol + hostname + '/ipm/v1/admin/testTypes'
-	params = {'query' : '{"status":"Running","group":"Web"}'}
-	
-	response = requests.get(url, params=params, headers=auth_headers)
-	service_type_json = json.loads(response.text)
-	
-	for index, item in enumerate(service_type_json):
-		service_type_name = service_type_json[index]['name']
-		if (service_type_name == 'Web'):
-			service_type_id =  service_type_json[index]['_id']
-	
-	# Get a list of service tests 
-	url = protocol + hostname + '/ipm/v1/admin/tests'
-	params = {'query' : '{"status":"Running"}'}
-	
-	response = requests.get(url, params=params, headers=auth_headers)
-	services_json = json.loads(response.text)
-
-	service_dict = {}
-	
-	for index, item in enumerate(services_json):
-		name =  services_json[index]['name']
-		id =  services_json[index]['_id']
-		type = services_json[index]['type']
-		if (type == service_type_id):
-			# it's a Web service test
-			service_dict[name] = id
-
+	service_dict = _nGPulse_get_tests(protocol, hostname, auth_headers, group, service_type_name)
 
 	url = protocol + hostname + '/query/table'
 
@@ -668,8 +408,7 @@ def query_nGPulse_web(datasource, query, version=None, ssl=False):
 		# check if this service test is on our list or if the list is null (meaning get all service tests)
 		if (nGP_Service_Test in nGP_Service_Test_List or nGP_Service_Test_List  == []):
 			kpi_filter_params['test'] = id
-			headers = {'ngp-authorization' : token_string}
-			response = requests.get(url, params=kpi_filter_params, headers=headers) 
+			response = requests.get(url, params=kpi_filter_params, headers=auth_headers) 
 			parsed_json = json.loads(response.text)
 		
 			# get the data from all the npoints
@@ -683,80 +422,43 @@ def query_nGPulse_web(datasource, query, version=None, ssl=False):
 				
 	return parsed_response.getvalue().strip().split("\r\n")
 	
-
-def query_nGPulse_o365_onedrive(datasource, query, version=None):
+def query_nGPulse_o365_onedrive(datasource, query, version=None, ssl=False):
 	'''
 	Builds nGPulse API query
 	'''
-
-	# Setup
+	# ------- Common Setup -------------	
 	
+	protocol = get_protocol(ssl)
 	hostname = get_hostname(datasource['host'], datasource['port'])
-	
-
-	nGP_Service_Test_List = query['nGP_Service_Test_List'] or []
-
 	
 	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
 	kpi_filter_params = query['kpi_filter_params']
+	kpi_filter_params = _start_to_end_time_ms(kpi_filter_params)
+	
+	logging.info("start_time: "+ kpi_filter_params['start_str'])
+	logging.info("end_time: "+ kpi_filter_params['end_str'])
+	
+	token = _nGPulse_token(datasource['emailOrUsername'], 
+							datasource['password'],
+							protocol,
+							hostname)
+	
+	auth_headers = _nGPulse_auth_headers(token)
+	
+	output_datestamp =  kpi_filter_params['start_str']	
+	start_time_ms = kpi_filter_params['start']
+	end_time_ms = kpi_filter_params['end']	
+	# ------- Common Setup -------------
+	# ------- Test-specific setup -------------	
+	nGP_Service_Test_List = query['nGP_Service_Test_List'] or []
+	group = 'o365AccountOneDrive'
+	service_type_name = 'o365AccountOneDrive'
+	# ------- Test-specific setup -------------
+	# ------- Test-specific query and data processing -------------
 
-	# Time calculations
-	now = datetime.datetime.now(tz)	
-	start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
-	end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
-	start_time_ms = int(start_time.timestamp())
-	end_time_ms = int(end_time.timestamp())
-	output_datestamp =  start_time.strftime("%d-%m-%Y %H:%M:%S")
+	service_dict = _nGPulse_get_tests(protocol, hostname, auth_headers, group, service_type_name)
 	
-	kpi_filter_params['start'] = start_time_ms
-	kpi_filter_params['end'] = end_time_ms
-	
-	logging.info("start_time: "+start_time.strftime('%d-%m-%Y %H:%M:%S'))
-	logging.info("end_time: "+end_time.strftime('%d-%m-%Y %H:%M:%S'))
-	
-	
-	# Get the Acces Token
-	url = 'http://' + hostname + '/ipm/auth/login'
-	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
-	response = requests.post(url, data=data)
-	authentication_json = json.loads(response.text)
-	token =  authentication_json['accessToken']
-	token_string = ('Access %s' %token)
-	auth_headers = {'ngp-authorization' : token_string}
-	
-	
-	# Get the service type_id for o365AccountOneDrive
-
-	url = 'http://' + hostname + '/ipm/v1/admin/testTypes'
-	params = {'query' : '{"status":"Running","group":"o365AccountOneDrive"}'}
-	
-	response = requests.get(url, params=params, headers=auth_headers)
-	service_type_json = json.loads(response.text)
-	
-	for index, item in enumerate(service_type_json):
-		service_type_name = service_type_json[index]['name']
-		if (service_type_name == 'o365AccountOneDrive'):
-			service_type_id =  service_type_json[index]['_id']
-	
-	# Get a list of service tests 
-	url = 'http://' + hostname + '/ipm/v1/admin/tests'
-	params = {'query' : '{"status":"Running"}'}
-	
-	response = requests.get(url, params=params, headers=auth_headers)
-	services_json = json.loads(response.text)
-
-	service_dict = {}
-	
-	for index, item in enumerate(services_json):
-		name =  services_json[index]['name']
-		id =  services_json[index]['_id']
-		type = services_json[index]['type']
-		if (type == service_type_id):
-			# it's a o365AccountOneDrive service test
-			service_dict[name] = id
-
-
-	url = 'http://' + hostname + '/query/table'
+	url = protocol + hostname + '/query/table'
 
 	parsed_response = StringIO()
 	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
@@ -767,8 +469,8 @@ def query_nGPulse_o365_onedrive(datasource, query, version=None):
 		# check if this service test is on our list or if the list is null (meaning get all service tests)
 		if (nGP_Service_Test in nGP_Service_Test_List or nGP_Service_Test_List  == []):
 			kpi_filter_params['test'] = id
-			headers = {'ngp-authorization' : token_string}
-			response = requests.get(url, params=kpi_filter_params, headers=headers) 
+
+			response = requests.get(url, params=kpi_filter_params, headers = auth_headers) 
 			parsed_json = json.loads(response.text)
 		
 			# get the data from all the npoints
@@ -778,85 +480,46 @@ def query_nGPulse_o365_onedrive(datasource, query, version=None):
 				maxupload_time =  parsed_json['data'][index]['maxupload_time']
 				count = parsed_json['data'][index]['count'] 
 				writer.writerow([output_datestamp,nGP_Service_Test.replace(output_separator, " "),nPoint.replace(output_separator, " "),availability,maxupload_time,count, start_time_ms, end_time_ms])
-			
 				
 	return parsed_response.getvalue().strip().split("\r\n")
  	
-
-	
-def query_nGPulse_o365_outlook(datasource, query, version=None):
+def query_nGPulse_o365_outlook(datasource, query, version=None, ssl=False):
 	'''
 	Builds nGPulse API query
 	'''
-
-	# Setup
+	# ------- Common Setup -------------	
 	
+	protocol = get_protocol(ssl)
 	hostname = get_hostname(datasource['host'], datasource['port'])
-	
-
-	nGP_Service_Test_List = query['nGP_Service_Test_List'] or []
-
 	
 	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
 	kpi_filter_params = query['kpi_filter_params']
+	kpi_filter_params = _start_to_end_time_ms(kpi_filter_params)
+	
+	logging.info("start_time: "+ kpi_filter_params['start_str'])
+	logging.info("end_time: "+ kpi_filter_params['end_str'])
+	
+	token = _nGPulse_token(datasource['emailOrUsername'], 
+							datasource['password'],
+							protocol,
+							hostname)
+	
+	auth_headers = _nGPulse_auth_headers(token)
+	
+	output_datestamp =  kpi_filter_params['start_str']	
+	start_time_ms = kpi_filter_params['start']
+	end_time_ms = kpi_filter_params['end']	
+	# ------- Common Setup -------------
+	# ------- Test-specific setup -------------	
+	nGP_Service_Test_List = query['nGP_Service_Test_List'] or []
+	group = 'o365AccountOutlook'
+	service_type_name = 'o365AccountOutlook'
+	# ------- Test-specific setup -------------
+	# ------- Test-specific query and data processing -------------
 
-	# Time calculations
-	now = datetime.datetime.now(tz)	
-	start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
-	end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
-	start_time_ms = int(start_time.timestamp())
-	end_time_ms = int(end_time.timestamp())
-	output_datestamp =  start_time.strftime("%d-%m-%Y %H:%M:%S")
+	service_dict = _nGPulse_get_tests(protocol, hostname, auth_headers, group, service_type_name)
 	
-	kpi_filter_params['start'] = start_time_ms
-	kpi_filter_params['end'] = end_time_ms
-	
-	logging.info("start_time: "+start_time.strftime('%d-%m-%Y %H:%M:%S'))
-	logging.info("end_time: "+end_time.strftime('%d-%m-%Y %H:%M:%S'))
-	
-	
-	# Get the Acces Token
-	url = 'http://' + hostname + '/ipm/auth/login'
-	data = {'emailOrUsername' : datasource['emailOrUsername'], 'password' : datasource['password']}
-	response = requests.post(url, data=data)
-	authentication_json = json.loads(response.text)
-	token =  authentication_json['accessToken']
-	token_string = ('Access %s' %token)
-	auth_headers = {'ngp-authorization' : token_string}
-	
-	
-	# Get the service type_id for o365AccountOutlook
-
-	url = 'http://' + hostname + '/ipm/v1/admin/testTypes'
-	params = {'query' : '{"status":"Running","group":"o365AccountOutlook"}'}
-	
-	response = requests.get(url, params=params, headers=auth_headers)
-	service_type_json = json.loads(response.text)
-	
-	for index, item in enumerate(service_type_json):
-		service_type_name = service_type_json[index]['name']
-		if (service_type_name == 'o365AccountOutlook'):
-			service_type_id =  service_type_json[index]['_id']
-	
-	# Get a list of service tests 
-	url = 'http://' + hostname + '/ipm/v1/admin/tests'
-	params = {'query' : '{"status":"Running"}'}
-	
-	response = requests.get(url, params=params, headers=auth_headers)
-	services_json = json.loads(response.text)
-
-	service_dict = {}
-	
-	for index, item in enumerate(services_json):
-		name =  services_json[index]['name']
-		id =  services_json[index]['_id']
-		type = services_json[index]['type']
-		if (type == service_type_id):
-			# it's a o365AccountOutlook service test
-			service_dict[name] = id
-
-
-	url = 'http://' + hostname + '/query/table'
+	url = protocol + hostname + '/query/table'
 
 	parsed_response = StringIO()
 	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
@@ -867,8 +530,8 @@ def query_nGPulse_o365_outlook(datasource, query, version=None):
 		# check if this service test is on our list or if the list is null (meaning get all service tests)
 		if (nGP_Service_Test in nGP_Service_Test_List or nGP_Service_Test_List  == []):
 			kpi_filter_params['test'] = id
-			headers = {'ngp-authorization' : token_string}
-			response = requests.get(url, params=kpi_filter_params, headers=headers) 
+
+			response = requests.get(url, params=kpi_filter_params, headers= auth_headers) 
 			parsed_json = json.loads(response.text)
 		
 			# get the data from all the npoints
@@ -881,6 +544,85 @@ def query_nGPulse_o365_outlook(datasource, query, version=None):
 			
 				
 	return parsed_response.getvalue().strip().split("\r\n")
+
+def _nGPulse_token( emailOrUsername, password, protocol, hostname ):
+	'''
+
+	'''
+	endpoint= '/ipm/auth/login'
+	
+	url = protocol + hostname + endpoint
+	
+	data = {'emailOrUsername' : emailOrUsername, 'password' : password}
+	response = requests.post(url, data= data)
+	
+	authentication_json = json.loads(response.text)
+	token =  authentication_json['accessToken']
+	
+	return token
+
+def _nGPulse_auth_headers(token):
+	'''
+	'''
+	token_string = ('Access %s' %token)
+	auth_headers = {'ngp-authorization' : token_string}
+
+	return auth_headers
+	
+def _start_to_end_time_ms(kpi_filter_params):	
+	'''
+	'''
+	
+	date_str_format='%d-%m-%Y %H:%M:%S'
+	
+	now = datetime.datetime.now(tz)	
+	start_time = (now + relativedelta(**kpi_filter_params['start']['relativedelta'])).replace(**kpi_filter_params['start']['replace'])
+
+	end_time = (now + relativedelta(**kpi_filter_params['end']['relativedelta'])).replace(**kpi_filter_params['end']['replace'])
+	
+	start_time_ms = int(start_time.timestamp())
+	end_time_ms = int(end_time.timestamp())
+	
+	kpi_filter_params['start'] = start_time_ms
+	kpi_filter_params['end'] = end_time_ms
+	
+	kpi_filter_params['start_str'] = start_time.strftime(date_str_format)
+	kpi_filter_params['end_str'] = end_time.strftime(date_str_format)
+	
+	return kpi_filter_params
+			
+def _nGPulse_get_tests(protocol, hostname, auth_headers, group, service_type_name):
+
+	url = protocol + hostname + '/ipm/v1/admin/testTypes'
+	params = {'query' : '{"status":"Running","group":"'+group+'"}'}
+	
+	response = requests.get(url, params = params, headers = auth_headers)
+	service_type_json = json.loads(response.text)
+	
+	for index, item in enumerate(service_type_json):
+		if (service_type_json[index]['name'] == service_type_name):
+			service_type_id =  service_type_json[index]['_id']
+	
+	# Get a list of service tests 
+	url = protocol + hostname + '/ipm/v1/admin/tests'
+	params = {'query' : '{"status":"Running"}'}
+	
+	response = requests.get(url, params = params, headers = auth_headers)
+	services_json = json.loads(response.text)
+
+	service_dict = {}
+	
+	for index, item in enumerate(services_json):
+		name =  services_json[index]['name']
+		id =  services_json[index]['_id']
+		type = services_json[index]['type']
+		if (type == service_type_id):
+			service_dict[name] = id
+			
+	return service_dict
+
+def _nGPulse_query_table():
+	return True
 	
 def get_hostname(hostname, port):	
 	if port is not None:
