@@ -1,4 +1,6 @@
 Notifications:
+ local_csv: True
+ local_csv_dir: output
  smtp_server: plnorelay.netscout.com
  port: 25
  password:

@@ -9,6 +9,8 @@ from dateutil.relativedelta import relativedelta
 import pytz
 import psycopg2
 
+import os
+
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning) # https://stackoverflow.com/questions/27981545/suppress-insecurerequestwarning-unverified-https-request-is-being-made-in-pytho
 
@@ -792,6 +794,15 @@ def send_notification(server, port, from_email, to_email, subject, msg_body, att
 		smtp_srv.sendmail(msg['From'], mail, msg.as_string()) 
 	
 	smtp_srv.quit()
+	
+def csv_to_disk(content,filename,directory):
+
+	output = os.path.join(directory,filename)
+	logging.info("========== Writing to local CSV %s ==========", output)
+    
+	file = open(output,"w")
+	file.write(content)
+	file.close()
 	
 def get_time(format_str="%Y%m%d_%H%M"):
 	return datetime.datetime.now(tz).strftime(format_str)
