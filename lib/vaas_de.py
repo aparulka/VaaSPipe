@@ -527,26 +527,85 @@ def query_nGPulse_o365_outlook(datasource, query, version=None, ssl=False):
 	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
 	
 	
+	
 	for nGP_Service_Test, item in service_dict.items():
 		id = service_dict[nGP_Service_Test]
 		# check if this service test is on our list or if the list is null (meaning get all service tests)
 		if (nGP_Service_Test in nGP_Service_Test_List or nGP_Service_Test_List  == []):
 			kpi_filter_params['test'] = id
-
+			
 			response = requests.get(url, params=kpi_filter_params, headers= auth_headers) 
 			parsed_json = json.loads(response.text)
+			
+			if ('trends' not in kpi_filter_params):
+				# ------- Query does not relate to trends -------
 		
-			# get the data from all the npoints
-			for index, item in enumerate(parsed_json['data']):
-				nPoint =  parsed_json['data'][index]['agent']['name']
-				availability =  parsed_json['data'][index]['availPercent'] 
-				maxresp_time =  parsed_json['data'][index]['maxresp_time']
-				count = parsed_json['data'][index]['count'] 
-				writer.writerow([output_datestamp,nGP_Service_Test.replace(output_separator, " "),nPoint.replace(output_separator, " "),availability,maxresp_time,count, start_time_ms, end_time_ms])
+				# get the data from all the npoints
+				for index, item in enumerate(parsed_json['data']):
+					nPoint =  parsed_json['data'][index]['agent']['name']
+					availability =  parsed_json['data'][index]['availPercent'] 
+					maxresp_time =  parsed_json['data'][index]['maxresp_time']
+					count = parsed_json['data'][index]['count'] 
+					writer.writerow([output_datestamp,nGP_Service_Test.replace(output_separator, " "),nPoint.replace(output_separator, " "),availability,maxresp_time,count, start_time_ms, end_time_ms])
 			
 				
-	return parsed_response.getvalue().strip().split("\r\n")
+				return parsed_response.getvalue().strip().split("\r\n")
 
+			else:
+				# ------- Query is for trends -------
+				# get the data from all the npoints
+				
+				# ------- Get trend data for kpi#1 (availability)
+				
+				
+				
+				for index, item in enumerate(parsed_json['data']):
+					nPoint =  parsed_json['data'][index]['agent']['name']
+					
+					kpi1_trend_dict = {}
+					kpi2_trend_dict = {}
+					
+					for index1, item1 in enumerate(parsed_json['data'][index]['trends']['availability']['data']):
+						
+						availability =  parsed_json['data'][index]['trends']['availability']['data'][index1]['value']
+						time = parsed_json['data'][index]['trends']['availability']['data'][index1]['str']
+						if ('count' in parsed_json['data'][index]['trends']['availability']['data'][index1]):
+							#count = parsed_json['data'][index]['trends']['availability']['data'][index1]['count']
+							kpi1_trend_dict[time] = availability
+						#else:
+							#count = 0
+						
+						
+					for index1, item1 in enumerate(parsed_json['data'][index]['trends']['maxresp_time']['data']):
+						
+						maxresp_time =  parsed_json['data'][index]['trends']['maxresp_time']['data'][index1]['value']
+						time = parsed_json['data'][index]['trends']['maxresp_time']['data'][index1]['str']
+						if ('count' in parsed_json['data'][index]['trends']['maxresp_time']['data'][index1]):
+							#count = parsed_json['data'][index]['trends']['maxresp_time']['data'][index1]['count']
+							kpi2_trend_dict[time] = maxresp_time
+						#else:
+							#count = 0
+						
+						
+					count = 1	
+					
+					for key in kpi1_trend_dict:
+						try:
+							maxresp_time = kpi2_trend_dict[key]
+						except KeyError:
+							maxresp_time = ''
+						writer.writerow(
+							[key,
+							nGP_Service_Test.replace(output_separator, " "),
+							nPoint.replace(output_separator, " "),
+							kpi1_trend_dict[key],
+							maxresp_time,
+							count,
+							start_time_ms,
+							end_time_ms])
+
+				return parsed_response.getvalue().strip().split("\r\n")
+				
 def _nGPulse_token( emailOrUsername, password, protocol, hostname ):
 	'''
 

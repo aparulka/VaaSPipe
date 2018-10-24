@@ -1,0 +1,24 @@
+Query:
+ nGP_Service_Test_List:
+ kpi_filter_params:
+  trends: availability,maxupload_time
+  type: test,agent
+  start:
+   relativedelta:
+    hours: -1
+    days: -0
+   replace:
+    minute: 0
+    second: 0
+    microsecond: 0
+   date_format: '%d-%m-%Y %H:%M:%S'
+  end:
+   relativedelta:
+    hours: -0
+    days: -0
+   replace:
+    minute: 0
+    second: 0
+    microsecond: 0
+   date_format: '%d-%m-%Y %H:%M:%S'  
+  rowLimit: 500
