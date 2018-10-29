@@ -1,7 +1,7 @@
 Service:
  Customer: NTCT IT
  Service_Category: Web Test
- Key: NTCT IT;All;nGP;Web Test;Daily
+ Key: IT;All;nGP;Web Test;Daily
  Description: Daily Feed of Service Web Tests for All Locations
  query_file: nGP_queries/service_tests/web/web_query_daily.yml
  logging: logs/web_tests.log

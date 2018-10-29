@@ -1,7 +1,7 @@
 Service:
  Customer: NTCT IT
  Service_Category: VoIP Test
- Key: NTCT IT;All;nGP;VoIP Test;Daily
+ Key: IT;All;nGP;VoIP Test;Daily
  Description: Daily Feed of Service VoIp Tests for All Locations
  query_file: nGP_queries/service_tests/voip/voip_query_daily.yml
  logging: logs/voip_tests.log

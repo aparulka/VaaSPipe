@@ -1,7 +1,7 @@
 Service:
  Customer: NTCT IT
  Service_Category: Ping Test
- Key: NTCT IT;All;nGP;Ping Test;Monthly
+ Key: IT;All;nGP;Ping Test;Monthly
  Description: Monthly Feed of Service Ping Tests for All Locations
  query_file: nGP_queries/service_tests/ping/ping_query_monthly.yml
  logging: logs/ping_tests.log

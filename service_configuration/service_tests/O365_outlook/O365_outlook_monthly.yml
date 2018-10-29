@@ -1,7 +1,7 @@
 Service:
  Customer: NTCT IT
  Service_Category: O365 Outlook Test
- Key: NTCT IT;All;nGP;O365 Outlook Test;Monthly
+ Key: IT;All;nGP;O365 Outlook Test;Monthly
  Description: Monthly Feed of Service O365 Outlook Tests for All Locations
  query_file: nGP_queries/service_tests/O365_outlook/O365_outlook_query_monthly.yml
  logging: logs/O365_outlook_tests.log
