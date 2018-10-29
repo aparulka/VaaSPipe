@@ -1,12 +1,12 @@
 Service:
  Customer: NTCT IT
  Service_Category: Links
- Key: PHASE 2;NTCT IT;Dublin;nG1;Links;Daily;DrillDown
+ Key: IT;Dublin;nG1;Links-DrillDown;Daily
  Description: Daily Feed of Dublin Links Drill-Down KPIs from nG1 
  query_file: nG1_queries/links/service_linksDrillDown_Dublin_daily.xml
  logging: logs/linksDrilldown_vaaspipe.log
  logging_level: INFO
- filename: links_nG1_Daily_DrillDown_Dublin_
+ filename: links-DrillDown_nG1_Daily_
  date_format: '%Y%m%d_%H%M'
  output_format:
   - customer

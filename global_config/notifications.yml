@@ -2,6 +2,7 @@ Notifications:
  smtp_server: plnorelay.netscout.com
  port: 25
  password:
- from: tools@netscout.com
+ from: Netscout-IT-nGenius@netscout.com
  receiver:
-  - michael.beakey@netscout.com
+#  - mbvmsmrcvr@netscout.com
+#  - MbPremiumManagedServices@netscout.com

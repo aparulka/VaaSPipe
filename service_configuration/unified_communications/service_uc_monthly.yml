@@ -1,7 +1,7 @@
 Service:
  Customer: NTCT IT
  Service_Category: Unified Communications
- Key: PHASE 2;NTCT IT;All;nG1;UnifiedCommunications;Monthly
+ Key: IT;All;nG1;UnifiedCommunications;Monthly
  Description: Monthly Feed of Unified Communications KPIs from nG1  
  query_file: nG1_queries/unified_communications/service_uc_monthly.xml
  logging: logs/uc_vaaspipe.log
