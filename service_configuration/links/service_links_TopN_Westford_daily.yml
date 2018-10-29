@@ -1,12 +1,12 @@
 Service:
  Customer: NTCT IT
  Service_Category: Links
- Key: PHASE 2;NTCT IT;Westford;nG1;Links;TopN;Daily
+ Key: IT;Westford;nG1;Links-TopN;Daily
  Description: Daily Feed of Westford Links Top Applications from nG1
  query_file: nG1_queries/links/service_linksDrillTopN_Westford_daily.xml
  logging: logs/linksDrilldown_vaaspipe.log
  logging_level: INFO
- filename: links_nG1_Daily_TopN_Westford_
+ filename: links-TopN_nG1_Daily_
  date_format: '%Y%m%d_%H%M'
  output_format:
   - customer

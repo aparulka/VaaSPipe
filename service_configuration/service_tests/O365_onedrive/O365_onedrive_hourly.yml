@@ -1,12 +1,12 @@
 Service:
  Customer: NTCT IT
  Service_Category: O365 OneDrive Test
- Key: IT;All;nGP;O365 OneDrive Test;Daily
- Description: Daily Feed of Service O365 OneDrive Tests for All Locations
- query_file: nGP_queries/service_tests/O365_onedrive/O365_onedrive_query_daily.yml
+ Key: NTCT IT;All;nGP;O365 OneDrive Test;Hourly
+ Description: Hourly Feed of Service O365 OneDrive Tests for All Locations
+ query_file: nGP_queries/service_tests/O365_onedrive/O365_onedrive_query_hourly.yml
  logging: logs/O365_onedrive_tests.log
  logging_level: INFO
- filename: O365_OneDrive_nGP_Daily_
+ filename: O365_OneDrive_nGP_Hourly_
  date_format: '%Y%m%d_%H%M'
  output_format:
   - customer

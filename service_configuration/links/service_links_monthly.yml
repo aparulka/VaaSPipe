@@ -1,7 +1,7 @@
 Service:
  Customer: NTCT IT
  Service_Category: Links
- Key: PHASE 2;NTCT IT;All;nG1;Links;Monthly
+ Key: IT;All;nG1;Links;Monthly
  Description: Monthly Feed of Links KPIs from nG1
  query_file: nG1_queries/links/service_links_monthly.xml
  logging: logs/links_monthly_vaaspipe.log

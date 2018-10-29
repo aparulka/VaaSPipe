@@ -1,7 +1,7 @@
 Service:
  Customer: NTCT IT
  Service_Category: O365 OneDrive Test
- Key: NTCT IT;All;nGP;O365 OneDrive Test;Monthly
+ Key: IT;All;nGP;O365 OneDrive Test;Monthly
  Description: Monthly Feed of Service O365 OneDrive Tests for All Locations
  query_file: nGP_queries/service_tests/O365_onedrive/O365_onedrive_query_monthly.yml
  logging: logs/O365_onedrive_tests.log

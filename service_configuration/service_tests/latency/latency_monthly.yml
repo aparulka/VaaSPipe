@@ -1,7 +1,7 @@
 Service:
  Customer: NTCT IT
  Service_Category: Latency Test
- Key: NTCT IT;All;nGP;Latency Test;Monthly
+ Key: IT;All;nGP;Latency Test;Monthly
  Description: Monthly Feed of Service Latency Tests for All Locations
  query_file: nGP_queries/service_tests/latency/latency_query_monthly.yml
  logging: logs/latency_tests.log

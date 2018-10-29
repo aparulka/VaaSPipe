@@ -1,7 +1,7 @@
 Service:
  Customer: NTCT IT
  Service_Category: Applications
- Key: PHASE 2;NTCT IT;All;nG1;Applications;Monthly
+ Key: IT;All;nG1;Applications;Monthly
  Description: Monthly Feed of Applications KPIs from nG1
  query_file: nG1_queries/applications/service_applications_monthly.xml
  logging: logs/applications_monthly_vaaspipe.log

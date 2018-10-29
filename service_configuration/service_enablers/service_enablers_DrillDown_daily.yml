@@ -1,12 +1,12 @@
 Service:
  Customer: NTCT IT
  Service_Category: Service Enablers
- Key: PHASE 2;NTCT IT;All;nG1;ServiceEnablers;Daily;Errors
+ Key: IT;All;nG1;ServiceEnablers-Errors;Daily
  Description: Daily Feed of Service Enablers Errors from nG1
  query_file: nG1_queries/service_enablers/service_enablersDrillDown_daily.xml
  logging: logs/serviceenablers_vaaspipe.log
  logging_level: INFO
- filename: serviceEnablers_nG1_Daily_Errors_
+ filename: serviceEnablers-Errors_nG1_Daily_
  date_format: '%Y%m%d_%H%M'
  output_format:
   - customer

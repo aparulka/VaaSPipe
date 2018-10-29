@@ -1,7 +1,7 @@
 Service:
  Customer: NTCT IT
  Service_Category: Infrastructure
- Key: NTCT IT;All;nGP;Infrastructure;Monthly
+ Key: IT;All;nGP;Infrastructure;Monthly
  Description: Monthly Feed of Infrastructure Health checks All Locations
  query_file: nGP_queries/infrastructure/infrastructure_query_monthly.yml
  logging: logs/infrastructure_tests.log
