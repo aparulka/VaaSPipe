@@ -47,15 +47,43 @@ for code, timezone in vaas_lib['Tzinfos'].items():
 def query_dbONE(host, port, query, username, password, ssl=True, headers=dbONE_API_headers, api_version=None, verify=False, conversion='true',DT='csv', encrypted='false'):
 	'''
 	Builds DBONE API query.
-	Format as of nG1 6.1 is of type: https://192.168.99.18:8443/dbonequerydata/?username=svc-dBONE/password=F34Mu93S7Rv6/encrypted=false/conversion=true/DT=csv 
+	Format as of nG1 6.1 is of type: https://192.168.99.18:8443/dbonequerydata/?username=svc-dBONE/password=F34Mu93S7Rv6/encrypted=false/conversion=true/DT=csv
+
+	Paramters
+	---------
+	host : str
+		ip address of nG1 system, e.g. 192.168.99.18
+	port : int
+	query : str
+		A string containing a valid nG1 XML API query
+	username : str
+	password : str
+	ssl : bool, optional
+		defaults to True
+	headers : dict
+		defaults to {'Content-Type': 'text/xml;charset=UTF-8'}
+	api_version : str, optional
+		defaults to None
+	verify : bool, optional
+		defaults to False
+	conversion : str, optional
+		defaults to 'true'		
+	DT : str, optional
+		defaults to 'csv'
+	encrypted : str, optional
+		defaults to 'false'
 	
-	Output Format:
+	Returns
+	-------
+	list
+	
+	Output Sample
+	-------------
 	['serviceId\ttargetTime\tfailedTransactions\ttotalTransactions\tresponseTime\tfailedPercentage\tserviceId_String\ttargetTime_String', '122029775\t1535256000000\t0\t67407\t139304.6454063840\t0.0000000000\tO365 Authentication (Pune)\tSun Aug 26 00:00:00 EDT 2018', '122030298\t1535256000000\t0\t714182\t291171.5849273787\t0.0000000000\tO365 Exchange (Pune)\tSun Aug 26 00:00:00 EDT 2018', '148578737\t1535256000000\t0\t38039\t317043.3394678725\t0.0000000000\tSalesForce (Pune)\tSun Aug 26 00:00:00 EDT 2018']
 	'''
 	
 	# defaults to SSL
 	protocol = get_protocol(ssl)
-	print(protocol)
 	
 	query_url= protocol+host+':'+str(port)+'/dbonequerydata/?username='+username+'/password='+password+'/encrypted='+encrypted+'/conversion='+conversion+'/DT='+DT
 	
