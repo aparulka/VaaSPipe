@@ -9,7 +9,7 @@ Transformations:
   mapping_file: service_mappings/unified_communications.cfg
  service:
   type: simple
-  default: 'Applications'
+  default: 'UC'
   lookup_column: ucServiceId_String
   mapping_file: service_mappings/unified_communications.cfg
  date:
