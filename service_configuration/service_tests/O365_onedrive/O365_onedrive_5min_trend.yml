@@ -3,11 +3,11 @@ Service:
  Service_Category: O365 OneDrive Test
  Key: NTCT IT;All;nGP;O365 OneDrive Test;5min
  Description: 5min Feed of Service O365 OneDrive Tests for All Locations
- query_file: nGP_queries/service_tests/O365_onedrive/O365_onedrive_query_5min_trend.yml
+ query_file: nGP_queries/service_tests/O365_onedrive/O365_onedrive_query_5min_trend_temp.yml
  logging: logs/O365_onedrive_tests.log
  logging_level: INFO
  filename: O365_OneDrive_nGP_5min_Trend
- date_format: '%Y%m%d_%H%M'
+ date_format: '%Y%m%d_%H%M%S'
  output_format:
   - customer
   - location  

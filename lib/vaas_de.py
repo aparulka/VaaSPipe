@@ -474,16 +474,67 @@ def query_nGPulse_o365_onedrive(datasource, query, version=None, ssl=False):
 
 			response = requests.get(url, params=kpi_filter_params, headers = auth_headers) 
 			parsed_json = json.loads(response.text)
+			
+			if ('trends' not in kpi_filter_params):
+				# ------- Query does not relate to trends -------
 		
-			# get the data from all the npoints
-			for index, item in enumerate(parsed_json['data']):
-				nPoint =  parsed_json['data'][index]['agent']['name']
-				availability =  parsed_json['data'][index]['availPercent'] 
-				maxupload_time =  parsed_json['data'][index]['maxupload_time']
-				count = parsed_json['data'][index]['count'] 
-				writer.writerow([output_datestamp,nGP_Service_Test.replace(output_separator, " "),nPoint.replace(output_separator, " "),availability,maxupload_time,count, start_time_ms, end_time_ms])
+				# get the data from all the npoints
+				for index, item in enumerate(parsed_json['data']):
+					nPoint =  parsed_json['data'][index]['agent']['name']
+					availability =  parsed_json['data'][index]['availPercent'] 
+					maxupload_time =  parsed_json['data'][index]['maxupload_time']
+					count = parsed_json['data'][index]['count'] 
+					writer.writerow([output_datestamp,nGP_Service_Test.replace(output_separator, " "),nPoint.replace(output_separator, " "),availability,maxupload_time,count, start_time_ms, end_time_ms])
 				
-	return parsed_response.getvalue().strip().split("\r\n")
+				return parsed_response.getvalue().strip().split("\r\n")
+			
+			else:
+				# ------- Query is for trends -------
+				# get the data from all the npoints
+				
+				# ------- Get trend data for kpi#1 (availability)
+				
+				
+				for index, item in enumerate(parsed_json['data']):
+					nPoint =  parsed_json['data'][index]['agent']['name']
+					
+					kpi1_trend_dict = {}
+					kpi2_trend_dict = {}
+					
+					for index1, item1 in enumerate(parsed_json['data'][index]['trends']['availability']['data']):
+						
+						availability =  parsed_json['data'][index]['trends']['availability']['data'][index1]['value']
+						time = parsed_json['data'][index]['trends']['availability']['data'][index1]['str']
+						if ('count' in parsed_json['data'][index]['trends']['availability']['data'][index1]):
+							kpi1_trend_dict[time] = availability
+						
+						
+					for index1, item1 in enumerate(parsed_json['data'][index]['trends']['maxupload_time']['data']):
+						
+						maxupload_time =  parsed_json['data'][index]['trends']['maxupload_time']['data'][index1]['value']
+						time = parsed_json['data'][index]['trends']['maxupload_time']['data'][index1]['str']
+						if ('count' in parsed_json['data'][index]['trends']['maxupload_time']['data'][index1]):
+							kpi2_trend_dict[time] = maxupload_time
+						
+						
+					count = 1	
+					
+					for key in kpi1_trend_dict:
+						try:
+							maxupload_time = kpi2_trend_dict[key]
+						except KeyError:
+							maxupload_time = ''
+						writer.writerow(
+							[key,
+							nGP_Service_Test.replace(output_separator, " "),
+							nPoint.replace(output_separator, " "),
+							kpi1_trend_dict[key],
+							maxupload_time,
+							count,
+							start_time_ms,
+							end_time_ms])
+
+				return parsed_response.getvalue().strip().split("\r\n")
  	
 def query_nGPulse_o365_outlook(datasource, query, version=None, ssl=False):
 	'''
@@ -558,7 +609,6 @@ def query_nGPulse_o365_outlook(datasource, query, version=None, ssl=False):
 				# ------- Get trend data for kpi#1 (availability)
 				
 				
-				
 				for index, item in enumerate(parsed_json['data']):
 					nPoint =  parsed_json['data'][index]['agent']['name']
 					
@@ -570,10 +620,7 @@ def query_nGPulse_o365_outlook(datasource, query, version=None, ssl=False):
 						availability =  parsed_json['data'][index]['trends']['availability']['data'][index1]['value']
 						time = parsed_json['data'][index]['trends']['availability']['data'][index1]['str']
 						if ('count' in parsed_json['data'][index]['trends']['availability']['data'][index1]):
-							#count = parsed_json['data'][index]['trends']['availability']['data'][index1]['count']
 							kpi1_trend_dict[time] = availability
-						#else:
-							#count = 0
 						
 						
 					for index1, item1 in enumerate(parsed_json['data'][index]['trends']['maxresp_time']['data']):
@@ -581,10 +628,7 @@ def query_nGPulse_o365_outlook(datasource, query, version=None, ssl=False):
 						maxresp_time =  parsed_json['data'][index]['trends']['maxresp_time']['data'][index1]['value']
 						time = parsed_json['data'][index]['trends']['maxresp_time']['data'][index1]['str']
 						if ('count' in parsed_json['data'][index]['trends']['maxresp_time']['data'][index1]):
-							#count = parsed_json['data'][index]['trends']['maxresp_time']['data'][index1]['count']
 							kpi2_trend_dict[time] = maxresp_time
-						#else:
-							#count = 0
 						
 						
 					count = 1	
@@ -863,5 +907,5 @@ def csv_to_disk(content,filename,directory):
 	file.write(content)
 	file.close()
 	
-def get_time(format_str="%Y%m%d_%H%M"):
+def get_time(format_str):
 	return datetime.datetime.now(tz).strftime(format_str)

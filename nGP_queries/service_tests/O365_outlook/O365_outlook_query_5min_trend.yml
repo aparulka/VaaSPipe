@@ -5,18 +5,18 @@ Query:
   type: test,agent
   start:
    relativedelta:
-    days: -1
+    hours: -12
+    days: -0
    replace:
-    hour: 0
     minute: 0
     second: 0
     microsecond: 0
    date_format: '%d-%m-%Y %H:%M:%S'
   end:
    relativedelta:
+    hours: -0
     days: -0
    replace:
-    hour: 0
     minute: 0
     second: 0
     microsecond: 0

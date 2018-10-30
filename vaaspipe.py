@@ -68,7 +68,8 @@ logging.info("=========== Start Transformations ======")
 result =   vaas_de.transformation(api_response, service['Service']['output_format'],
                                   transformations) 
 
-timestamp=vaas_de.get_time()
+#timestamp=vaas_de.get_time()
+timestamp=vaas_de.get_time(service['Service']['date_format'])
 
 								  
 attachment_name = service['Service']['filename']+timestamp+'.csv'
