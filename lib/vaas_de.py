@@ -504,7 +504,9 @@ def query_nGPulse_o365_onedrive(datasource, query, version=None, ssl=False):
 					for index1, item1 in enumerate(parsed_json['data'][index]['trends']['availability']['data']):
 						
 						availability =  parsed_json['data'][index]['trends']['availability']['data'][index1]['value']
-						time = parsed_json['data'][index]['trends']['availability']['data'][index1]['str']
+						str = parsed_json['data'][index]['trends']['availability']['data'][index1]['str']
+						# ------- Handle 'str' format: 2018-Oct-30_11:09 -------
+						time = datetime.datetime.strptime(str,'%Y-%b-%d_%H:%M')
 						if ('count' in parsed_json['data'][index]['trends']['availability']['data'][index1]):
 							kpi1_trend_dict[time] = availability
 						
@@ -512,7 +514,9 @@ def query_nGPulse_o365_onedrive(datasource, query, version=None, ssl=False):
 					for index1, item1 in enumerate(parsed_json['data'][index]['trends']['maxupload_time']['data']):
 						
 						maxupload_time =  parsed_json['data'][index]['trends']['maxupload_time']['data'][index1]['value']
-						time = parsed_json['data'][index]['trends']['maxupload_time']['data'][index1]['str']
+						str = parsed_json['data'][index]['trends']['maxupload_time']['data'][index1]['str']
+						# ------- Handle 'str' format: 2018-Oct-30_11:09 -------
+						time = datetime.datetime.strptime(str,'%Y-%b-%d_%H:%M')
 						if ('count' in parsed_json['data'][index]['trends']['maxupload_time']['data'][index1]):
 							kpi2_trend_dict[time] = maxupload_time
 						
@@ -618,7 +622,9 @@ def query_nGPulse_o365_outlook(datasource, query, version=None, ssl=False):
 					for index1, item1 in enumerate(parsed_json['data'][index]['trends']['availability']['data']):
 						
 						availability =  parsed_json['data'][index]['trends']['availability']['data'][index1]['value']
-						time = parsed_json['data'][index]['trends']['availability']['data'][index1]['str']
+						str = parsed_json['data'][index]['trends']['availability']['data'][index1]['str']
+						# ------- Handle 'str' format: 2018-Oct-30_11:09 -------
+						time = datetime.datetime.strptime(str,'%Y-%b-%d_%H:%M')
 						if ('count' in parsed_json['data'][index]['trends']['availability']['data'][index1]):
 							kpi1_trend_dict[time] = availability
 						
@@ -626,7 +632,9 @@ def query_nGPulse_o365_outlook(datasource, query, version=None, ssl=False):
 					for index1, item1 in enumerate(parsed_json['data'][index]['trends']['maxresp_time']['data']):
 						
 						maxresp_time =  parsed_json['data'][index]['trends']['maxresp_time']['data'][index1]['value']
-						time = parsed_json['data'][index]['trends']['maxresp_time']['data'][index1]['str']
+						str = parsed_json['data'][index]['trends']['maxresp_time']['data'][index1]['str']
+						# ------- Handle 'str' format: 2018-Oct-30_11:09 -------
+						time = datetime.datetime.strptime(str,'%Y-%b-%d_%H:%M')
 						if ('count' in parsed_json['data'][index]['trends']['maxresp_time']['data'][index1]):
 							kpi2_trend_dict[time] = maxresp_time
 						
