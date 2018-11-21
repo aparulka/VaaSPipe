@@ -225,17 +225,90 @@ def query_nGPulse_voip(datasource, query, version=None, ssl=False):
 			headers = auth_headers
 			response = requests.get(url, params=kpi_filter_params, headers=headers) 
 			parsed_json = json.loads(response.text)
+			
+			if ('trends' not in kpi_filter_params):
+				# ------- Query does not relate to trends -------
 		
-			# get the data from all the npoints
-			for index, item in enumerate(parsed_json['data']):
-				nPoint =  parsed_json['data'][index]['agent']['name'].replace(output_separator, " ")
-				availability =  parsed_json['data'][index]['availPercent']
-				caller_mos =  parsed_json['data'][index]['avgLqmosRx'] 
-				callee_mos =  parsed_json['data'][index]['avgLqmosTx'] 
-				count  =  parsed_json['data'][index]['count'] 
-				writer.writerow([output_datestamp,nGP_Service_Test.replace(output_separator, " "),nPoint,availability,caller_mos,callee_mos,count, start_time_ms, end_time_ms])
+				# get the data from all the npoints
+				for index, item in enumerate(parsed_json['data']):
+					nPoint =  parsed_json['data'][index]['agent']['name'].replace(output_separator, " ")
+					availability =  parsed_json['data'][index]['availPercent']
+					caller_mos =  parsed_json['data'][index]['avgLqmosRx'] 
+					callee_mos =  parsed_json['data'][index]['avgLqmosTx'] 
+					count  =  parsed_json['data'][index]['count'] 
+					writer.writerow([output_datestamp,nGP_Service_Test.replace(output_separator, " "),nPoint,availability,caller_mos,callee_mos,count, start_time_ms, end_time_ms])
 
-	return parsed_response.getvalue().strip().split("\r\n")
+				return parsed_response.getvalue().strip().split("\r\n")
+			else:
+				# ------- Query is for trends -------
+				# get the data from all the npoints
+				
+				# ------- Get trend data for kpi#1 (availability)
+				
+				
+				for index, item in enumerate(parsed_json['data']):
+					nPoint =  parsed_json['data'][index]['agent']['name']
+					
+					kpi1_trend_dict = {}
+					kpi2_trend_dict = {}
+					kpi3_trend_dict = {}
+					
+					for index1, item1 in enumerate(parsed_json['data'][index]['trends']['availability']['data']):
+						
+						availability =  parsed_json['data'][index]['trends']['availability']['data'][index1]['value']
+						str = parsed_json['data'][index]['trends']['availability']['data'][index1]['str']
+						# ------- Handle 'str' format: 2018-Oct-30_11:09 -------
+						time = datetime.datetime.strptime(str,'%Y-%b-%d_%H:%M')
+						if ('count' in parsed_json['data'][index]['trends']['availability']['data'][index1]):
+							kpi1_trend_dict[time] = availability
+						
+						
+					for index1, item1 in enumerate(parsed_json['data'][index]['trends']['avgLqmosRx']['data']):
+						
+						caller_mos =  parsed_json['data'][index]['trends']['avgLqmosRx']['data'][index1]['value']
+						str = parsed_json['data'][index]['trends']['avgLqmosRx']['data'][index1]['str']
+						# ------- Handle 'str' format: 2018-Oct-30_11:09 -------
+						time = datetime.datetime.strptime(str,'%Y-%b-%d_%H:%M')
+						if ('count' in parsed_json['data'][index]['trends']['avgLqmosRx']['data'][index1]):
+							kpi2_trend_dict[time] = caller_mos
+							
+							
+					for index1, item1 in enumerate(parsed_json['data'][index]['trends']['avgLqmosTx']['data']):
+						
+						callee_mos =  parsed_json['data'][index]['trends']['avgLqmosTx']['data'][index1]['value']
+						str = parsed_json['data'][index]['trends']['avgLqmosTx']['data'][index1]['str']
+						# ------- Handle 'str' format: 2018-Oct-30_11:09 -------
+						time = datetime.datetime.strptime(str,'%Y-%b-%d_%H:%M')
+						if ('count' in parsed_json['data'][index]['trends']['avgLqmosTx']['data'][index1]):
+							kpi3_trend_dict[time] = callee_mos	
+						
+					count = 1	
+					
+					for key in kpi1_trend_dict:
+						try:
+							caller_mos = kpi2_trend_dict[key]
+						except KeyError:
+							caller_mos = ''
+						try:
+							callee_mos = kpi3_trend_dict[key]
+						except KeyError:
+							callee_mos = ''
+							
+						writer.writerow(
+							[key,
+							nGP_Service_Test.replace(output_separator, " "),
+							nPoint.replace(output_separator, " "),
+							kpi1_trend_dict[key],
+							caller_mos,
+							callee_mos,
+							count,
+							start_time_ms,
+							end_time_ms])
+
+				return parsed_response.getvalue().strip().split("\r\n")
+	
+	
+	
 
 def query_nGPulse_latency(datasource, query, version=None, ssl=False):
 	'''

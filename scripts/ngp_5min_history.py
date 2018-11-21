@@ -5,7 +5,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--service", dest="service", help="service type: O365_outlook|O365_onedrive")
+parser.add_argument("--service", dest="service", help="service type: O365_outlook|O365_onedrive|VoIP")
 parser.add_argument("--days", dest="days", type=int, help="1-30")
 
 args = parser.parse_args()
@@ -23,6 +23,15 @@ elif (args.service == "O365_onedrive"):
 	t_file='transformations/transformations_O365_onedrive.yml'
 	query_file='nGP_queries/service_tests/O365_onedrive/O365_onedrive_query_5min_trend.yml'
 	temp_query_file='nGP_queries/service_tests/O365_onedrive/O365_onedrive_query_5min_trend_temp.yml'
+	
+elif (args.service == "VoIP"):
+
+	sc_file='service_configuration/service_tests/voip/voip_5min_trend.yml'
+	t_file='transformations/transformations_voip.yml'
+	query_file='nGP_queries/service_tests/voip/voip_query_5min_trend.yml'
+	temp_query_file='nGP_queries/service_tests/voip_query_5min_trend_temp.yml'
+	
+
 
 max = (args.days * 2)
 
