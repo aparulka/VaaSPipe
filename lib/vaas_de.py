@@ -217,7 +217,9 @@ def query_nGPulse_voip(datasource, query, version=None, ssl=False):
 	parsed_response = StringIO()
 	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
 	
+	
 	for nGP_Service_Test, item in service_dict.items():
+		
 		id = service_dict[nGP_Service_Test]
 		# check if this service test is on our list or if the list is null (meaning get all service tests)
 		if (nGP_Service_Test in nGP_Service_Test_List or nGP_Service_Test_List  == []):
@@ -238,7 +240,7 @@ def query_nGPulse_voip(datasource, query, version=None, ssl=False):
 					count  =  parsed_json['data'][index]['count'] 
 					writer.writerow([output_datestamp,nGP_Service_Test.replace(output_separator, " "),nPoint,availability,caller_mos,callee_mos,count, start_time_ms, end_time_ms])
 
-				return parsed_response.getvalue().strip().split("\r\n")
+	
 			else:
 				# ------- Query is for trends -------
 				# get the data from all the npoints
@@ -305,7 +307,7 @@ def query_nGPulse_voip(datasource, query, version=None, ssl=False):
 							start_time_ms,
 							end_time_ms])
 
-				return parsed_response.getvalue().strip().split("\r\n")
+	return parsed_response.getvalue().strip().split("\r\n")
 	
 	
 	
@@ -559,7 +561,6 @@ def query_nGPulse_o365_onedrive(datasource, query, version=None, ssl=False):
 					count = parsed_json['data'][index]['count'] 
 					writer.writerow([output_datestamp,nGP_Service_Test.replace(output_separator, " "),nPoint.replace(output_separator, " "),availability,maxupload_time,count, start_time_ms, end_time_ms])
 				
-				return parsed_response.getvalue().strip().split("\r\n")
 			
 			else:
 				# ------- Query is for trends -------
@@ -611,7 +612,7 @@ def query_nGPulse_o365_onedrive(datasource, query, version=None, ssl=False):
 							start_time_ms,
 							end_time_ms])
 
-				return parsed_response.getvalue().strip().split("\r\n")
+	return parsed_response.getvalue().strip().split("\r\n")
  	
 def query_nGPulse_o365_outlook(datasource, query, version=None, ssl=False):
 	'''
@@ -676,8 +677,6 @@ def query_nGPulse_o365_outlook(datasource, query, version=None, ssl=False):
 					count = parsed_json['data'][index]['count'] 
 					writer.writerow([output_datestamp,nGP_Service_Test.replace(output_separator, " "),nPoint.replace(output_separator, " "),availability,maxresp_time,count, start_time_ms, end_time_ms])
 			
-				
-				return parsed_response.getvalue().strip().split("\r\n")
 
 			else:
 				# ------- Query is for trends -------
@@ -729,7 +728,7 @@ def query_nGPulse_o365_outlook(datasource, query, version=None, ssl=False):
 							start_time_ms,
 							end_time_ms])
 
-				return parsed_response.getvalue().strip().split("\r\n")
+	return parsed_response.getvalue().strip().split("\r\n")
 				
 def _nGPulse_token( emailOrUsername, password, protocol, hostname ):
 	'''
