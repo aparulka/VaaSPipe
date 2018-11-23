@@ -29,7 +29,7 @@ elif (args.service == "VoIP"):
 	sc_file='service_configuration/service_tests/voip/voip_5min_trend.yml'
 	t_file='transformations/transformations_voip.yml'
 	query_file='nGP_queries/service_tests/voip/voip_query_5min_trend.yml'
-	temp_query_file='nGP_queries/service_tests/voip_query_5min_trend_temp.yml'
+	temp_query_file='nGP_queries/service_tests/voip/voip_query_5min_trend_temp.yml'
 	
 
 
