@@ -68,13 +68,18 @@ logging.info("=========== Start Transformations ======")
 result =   vaas_de.transformation(api_response, service['Service']['output_format'],
                                   transformations) 
 
-timestamp=vaas_de.get_time()
+#timestamp=vaas_de.get_time()
+timestamp=vaas_de.get_time(service['Service']['date_format'])
+
 								  
 attachment_name = service['Service']['filename']+timestamp+'.csv'
 subject = service['Service']['Key']+";"+timestamp
 
 
-vaas_de.send_notification(notification['Notifications']['smtp_server'],
+if (notification['Notifications']['local_csv']):
+	vaas_de.csv_to_disk(result,attachment_name,notification['Notifications']['local_csv_dir'])
+else:
+	vaas_de.send_notification(notification['Notifications']['smtp_server'],
                           notification['Notifications']['port'],
 						  notification['Notifications']['from'],
 						  notification['Notifications']['receiver'],

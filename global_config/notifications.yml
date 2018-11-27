@@ -1,4 +1,6 @@
 Notifications:
+ local_csv: False 
+ local_csv_dir: output
  smtp_server: plnorelay.netscout.com
  port: 25
  password:
@@ -6,3 +8,4 @@ Notifications:
  receiver:
 #  - mbvmsmrcvr@netscout.com
 #  - MbPremiumManagedServices@netscout.com
+
