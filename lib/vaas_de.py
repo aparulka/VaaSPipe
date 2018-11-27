@@ -982,7 +982,11 @@ def csv_to_disk(content,filename,directory):
 
 	output = os.path.join(directory,filename)
 	logging.info("========== Writing to local CSV %s ==========", output)
-    
+	
+	# create directory if it does not exist
+	if not os.path.exists(directory):
+		os.makedirs(directory)
+		
 	file = open(output,"w")
 	file.write(content)
 	file.close()
