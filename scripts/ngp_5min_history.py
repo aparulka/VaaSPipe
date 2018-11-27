@@ -5,7 +5,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--service", dest="service", help="service type: O365_outlook|O365_onedrive|VoIP")
+parser.add_argument("--service", dest="service", help="service type: O365_outlook|O365_onedrive|VoIP|fileServer")
 parser.add_argument("--days", dest="days", type=int, help="1-30")
 
 args = parser.parse_args()
@@ -30,6 +30,13 @@ elif (args.service == "VoIP"):
 	t_file='transformations/transformations_voip.yml'
 	query_file='nGP_queries/service_tests/voip/voip_query_5min_trend.yml'
 	temp_query_file='nGP_queries/service_tests/voip/voip_query_5min_trend_temp.yml'
+	
+elif (args.service == "fileServer"):
+
+	sc_file='service_configuration/service_tests/file_server/file_server_5min_trend.yml'
+	t_file='transformations/transformations_file_server.yml'
+	query_file='nGP_queries/service_tests/file_server/file_server_query_5min_trend.yml'
+	temp_query_file='nGP_queries/service_tests/file_server/file_server_query_5min_trend_temp.yml'
 	
 
 

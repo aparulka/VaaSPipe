@@ -56,6 +56,8 @@ elif service['Service']['Service_Category'] in ['O365 OneDrive Test']:
 	api_response = vaas_de.query_nGPulse_o365_onedrive(datasource['nGPulse'],query['Query'])
 elif service['Service']['Service_Category'] in ['O365 Outlook Test']:	
 	api_response = vaas_de.query_nGPulse_o365_outlook(datasource['nGPulse'],query['Query'])
+elif service['Service']['Service_Category'] in ['File Server Test']:	
+	api_response = vaas_de.query_nGPulse_file_server(datasource['nGPulse'],query['Query'])
 elif service['Service']['Service_Category'] in ['Dimensions']:
 	api_response = vaas_de.query_psql(datasource.get('postGres').get('host'),datasource.get('postGres').get('user'),datasource.get('postGres').get('password'),datasource.get('postGres').get('dbname'),service.get('Service').get('query_file'))
 else:

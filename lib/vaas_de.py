@@ -613,6 +613,121 @@ def query_nGPulse_o365_onedrive(datasource, query, version=None, ssl=False):
 							end_time_ms])
 
 	return parsed_response.getvalue().strip().split("\r\n")
+	
+def query_nGPulse_file_server(datasource, query, version=None, ssl=False):
+	'''
+	Builds nGPulse API query
+	'''
+	# ------- Common Setup -------------	
+	
+	protocol = get_protocol(ssl)
+	hostname = get_hostname(datasource['host'], datasource['port'])
+	
+	# kpi_filter_params = {'metrics': 'availPercent', 'type': 'test,agent', 'end': 'end_time_ms', 'start': 'start_time_ms', 'test': 'id', 'rowLimit': 100}
+	kpi_filter_params = query['kpi_filter_params']
+	kpi_filter_params = _start_to_end_time_ms(kpi_filter_params)
+	
+	logging.info("start_time: "+ kpi_filter_params['start_str'])
+	logging.info("end_time: "+ kpi_filter_params['end_str'])
+	
+	token = _nGPulse_token(datasource['emailOrUsername'], 
+							datasource['password'],
+							protocol,
+							hostname)
+	
+	auth_headers = _nGPulse_auth_headers(token)
+	
+	output_datestamp =  kpi_filter_params['start_str']	
+	start_time_ms = kpi_filter_params['start']
+	end_time_ms = kpi_filter_params['end']	
+	# ------- Common Setup -------------
+	# ------- Test-specific setup -------------	
+	nGP_Service_Test_List = query['nGP_Service_Test_List'] or []
+	group = 'fileServer'
+	service_type_name = 'azureFileServer'
+	# ------- Test-specific setup -------------
+	# ------- Test-specific query and data processing -------------
+
+	service_dict = _nGPulse_get_tests(protocol, hostname, auth_headers, group, service_type_name)
+	
+	url = protocol + hostname + '/query/table'
+
+	parsed_response = StringIO()
+	writer = csv.writer(parsed_response,delimiter=output_separator,quoting=csv.QUOTE_MINIMAL)
+	
+	
+	for nGP_Service_Test, item in service_dict.items():
+		id = service_dict[nGP_Service_Test]
+		# check if this service test is on our list or if the list is null (meaning get all service tests)
+		if (nGP_Service_Test in nGP_Service_Test_List or nGP_Service_Test_List  == []):
+			kpi_filter_params['test'] = id
+
+			response = requests.get(url, params=kpi_filter_params, headers = auth_headers) 
+			parsed_json = json.loads(response.text)
+			
+			if ('trends' not in kpi_filter_params):
+				# ------- Query does not relate to trends -------
+		
+				# get the data from all the npoints
+				for index, item in enumerate(parsed_json['data']):
+					nPoint =  parsed_json['data'][index]['agent']['name']
+					availability =  parsed_json['data'][index]['availPercent'] 
+					transfer_time =  parsed_json['data'][index]['avgfile_transfer_time']
+					count = parsed_json['data'][index]['count'] 
+					writer.writerow([output_datestamp,nGP_Service_Test.replace(output_separator, " "),nPoint.replace(output_separator, " "),availability,transfer_time,count, start_time_ms, end_time_ms])
+				
+			
+			else:
+				# ------- Query is for trends -------
+				# get the data from all the npoints
+				
+				# ------- Get trend data for kpi#1 (availability)
+				
+				
+				for index, item in enumerate(parsed_json['data']):
+					nPoint =  parsed_json['data'][index]['agent']['name']
+					
+					kpi1_trend_dict = {}
+					kpi2_trend_dict = {}
+					
+					for index1, item1 in enumerate(parsed_json['data'][index]['trends']['availability']['data']):
+						
+						availability =  parsed_json['data'][index]['trends']['availability']['data'][index1]['value']
+						str = parsed_json['data'][index]['trends']['availability']['data'][index1]['str']
+						# ------- Handle 'str' format: 2018-Oct-30_11:09 -------
+						time = datetime.datetime.strptime(str,'%Y-%b-%d_%H:%M')
+						if ('count' in parsed_json['data'][index]['trends']['availability']['data'][index1]):
+							kpi1_trend_dict[time] = availability
+						
+						
+					for index1, item1 in enumerate(parsed_json['data'][index]['trends']['avgfile_transfer_time']['data']):
+						
+						transfer_time =  parsed_json['data'][index]['trends']['avgfile_transfer_time']['data'][index1]['value']
+						str = parsed_json['data'][index]['trends']['avgfile_transfer_time']['data'][index1]['str']
+						# ------- Handle 'str' format: 2018-Oct-30_11:09 -------
+						time = datetime.datetime.strptime(str,'%Y-%b-%d_%H:%M')
+						if ('count' in parsed_json['data'][index]['trends']['avgfile_transfer_time']['data'][index1]):
+							kpi2_trend_dict[time] = transfer_time
+						
+						
+					count = 1	
+					
+					for key in kpi1_trend_dict:
+						try:
+							transfer_time = kpi2_trend_dict[key]
+						except KeyError:
+							transfer_time = ''
+						writer.writerow(
+							[key,
+							nGP_Service_Test.replace(output_separator, " "),
+							nPoint.replace(output_separator, " "),
+							kpi1_trend_dict[key],
+							transfer_time,
+							count,
+							start_time_ms,
+							end_time_ms])
+
+	return parsed_response.getvalue().strip().split("\r\n")
  	
 def query_nGPulse_o365_outlook(datasource, query, version=None, ssl=False):
 	'''
