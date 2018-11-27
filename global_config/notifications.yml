@@ -1,9 +1,9 @@
 Notifications:
- local_csv: True
+ local_csv: False
  local_csv_dir: output
  smtp_server: plnorelay.netscout.com
  port: 25
  password:
- from: tools@netscout.com
+ from: Netscout-IT-nGenius@netscout.com
  receiver:
-  - michael.beakey@netscout.com
+  #- michael.beakey@netscout.com
