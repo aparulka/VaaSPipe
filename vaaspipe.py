@@ -58,7 +58,15 @@ elif service['Service']['Service_Category'] in ['O365 Outlook Test']:
 	api_response = vaas_de.query_nGPulse_o365_outlook(datasource['nGPulse'],query['Query'])
 elif service['Service']['Service_Category'] in ['Dimensions']:
 	api_response = vaas_de.query_psql(datasource.get('postGres').get('host'),datasource.get('postGres').get('user'),datasource.get('postGres').get('password'),datasource.get('postGres').get('dbname'),service.get('Service').get('query_file'))
-else:
+elif service['Service']['Service_Category'] in ['Dimension_Device-Interface']:
+	api_response = vaas_de.device_extraction(datasource.get('nG1_API').get('host'), 
+               datasource.get('nG1_API').get('port'), 
+               query['Query'],
+               datasource.get('nG1_API').get('user'), 
+               datasource.get('nG1_API').get('password'),                      
+               ssl=datasource.get('nG1_API').get('ssl')
+               )
+	else:
 	raise Exception(service['Service_Category']+' is not a valid Service Category')
 								   								   
 								   

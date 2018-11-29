@@ -1,4 +1,8 @@
-import csv, json, yaml
+"""
+Documentation convention:  https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_numpy.html
+"""
+
+import xmltodict, csv, json, yaml
 from io import StringIO
 import requests
 import logging
@@ -100,7 +104,27 @@ def query_dbONE(host, port, query, username, password, ssl=True, headers=dbONE_A
 	return response.getvalue().strip().split("\r\n")
 
 def query_psql(host,user,password,dbname,sql):
+	'''
+	Submits SQL query towards nG1 PostGres schema
 
+	Paramters
+	---------
+	host: str
+		ip address of nG1 system, e.g. 192.168.99.18
+	user: str
+	password: str
+	dbname: str
+	sql: str
+		Valid SQL statement to run against target PostGres database
+	
+	Returns
+	-------
+	list
+	
+	Output Sample
+	-------------
+	['58841411\t050PLUS\t050Plus\tUGP@050Plus\tWEB\tTCP','58835929\t30th Activ\t30th Active Directory\t30th Active Directory\tNONE\tTCP','58836025\t30th Intra\t30th Intra-Farm Services\t30th Intra-Farm Services\tNONE\tTCP']
+	'''
 	conn = psycopg2.connect(host=host,user=user,password=password,dbname=dbname)
 	cur = conn.cursor()
 	query_file=open(sql, 'r')
@@ -116,6 +140,148 @@ def query_psql(host,user,password,dbname,sql):
 	for row in all:
 		myList.append(output_separator.join(map(str,row)))
  
+	return myList
+ 
+def device_extraction(host,port,query,user,password, ssl=True, verify=False):
+	'''
+	Submits SQL query towards nG1 PostGres schema
+
+	Paramters
+	---------
+	host: str
+		ip address of nG1 system, e.g. 192.168.99.18
+	port: str
+	user: str
+	password: str
+	sql: str
+		Valid SQL statement to run against target PostGres database
+	ssl : bool, optional
+		defaults to True	
+	Returns
+	-------
+	list
+	
+	Output Sample
+	-------------
+	['58841411\t050PLUS\t050Plus\tUGP@050Plus\tWEB\tTCP','58835929\t30th Activ\t30th Active Directory\t30th Active Directory\tNONE\tTCP','58836025\t30th Intra\t30th Intra-Farm Services\t30th Intra-Farm Services\tNONE\tTCP']
+	'''
+
+	protocol = get_protocol(ssl)
+	hostname = get_hostname(host, str(port))
+
+	device_api_header = [
+		'DeviceName',
+		'DeviceIPAddress',
+		'Alias',
+		'Status',
+		'nG1ServerName',
+		'DeviceType',
+		'DeviceProtocolSettings',
+		'ActiveInterfaces',
+		'InActiveInterfaces',
+		'Description',
+		'Notes',
+		'CommunicationProtocol',
+		'ReadCommunityString',
+		'WriteCommunityString',
+		'Port',
+		'NumberOfRetries',
+		'TimeOut',
+		'DeviceDownAlarm',
+		'AddNetflowRoutersFlag',
+		'vScoutForwardingDestinationCount',
+		'UUID',
+		'vScoutMode'
+	]
+
+	interface_api_header = [
+		'InterfaceName',
+		'Alias',
+		'InterfaceNumber',
+		'PortSpeed',
+		'InterfaceLinkType',
+		'InterfaceSpeed',
+		'Status',
+		'AlarmTemplateName',
+		'Virtualization',
+		'ActiveInterfaces',
+		'InActiveInterfaces',
+		'nBAnASMonitoring'
+	]
+	
+	
+	output_header = query['output_header']
+	
+	output=[]
+	output.append( output_header )
+	
+	url = protocol + hostname + '/ng1api/ncm/devices'
+
+	response = requests.get(url, 
+							verify=verify, auth=(user, password))
+
+	devices=json.loads(json.dumps(xmltodict.parse(response.text)))
+
+
+	# Ensure list of devices is supplied to for loop even when only 1 available
+	device_list = devices['DeviceConfigurations']['DeviceConfiguration'] \
+					if isinstance(devices['DeviceConfigurations']['DeviceConfiguration'], list) \
+						else [devices['DeviceConfigurations']['DeviceConfiguration']]
+
+	for dvc in device_list:
+		row = [None]*(len(device_api_header) + len(interface_api_header))
+
+		for el in dvc.items():
+			try:
+				row[device_api_header.index(el[0])]=el[1]
+			except:
+				logging.info("error:"+el[0])
+				logging.info(dvc['DeviceName'])
+		
+		url = protocol + hostname + '/ng1api/ncm/devices/' + dvc['DeviceName']+'/interfaces'
+		ifn= requests.get(url ,verify=verify, auth=(user, password))
+		if ifn.status_code == 200:
+			try:
+				ifn_dict=None
+				ifn_dict=json.loads(json.dumps(xmltodict.parse(ifn.text)))
+				
+				# Ensure list of interfaces is supplied to for loop even when only 1 available
+				ifn_list = ifn_dict['InterfaceConfigurations']['InterfaceConfiguration'] \
+							if isinstance(ifn_dict['InterfaceConfigurations']['InterfaceConfiguration'], list) \
+								else [ifn_dict['InterfaceConfigurations']['InterfaceConfiguration']]
+				
+			except Exception as e: 
+				logging.info('!!!!!Exception !!!!!!')
+				logging.info(dvc['DeviceName'])
+				logging.info(e)
+				logging.info(ifn.text)
+				# Capture also Devices with no interfaces attached
+				if ifn.text == 'No Interfaces Found':
+					output.append(row)             
+				logging.info(ifn_dict)
+				logging.info("!!!!!")
+			else:
+				for ifn_desc in ifn_list:
+					try:
+						for el in ifn_desc.items():
+							row[interface_api_header.index(el[0])+len(device_api_header)]=el[1]
+					except Exception as e:
+						logging.info("%%%%%%%%%%")
+						logging.info(e)
+						logging.info(ifn_dict)
+						logging.info("error:"+el[0])
+						logging.info(dvc['DeviceName'])
+						logging.info("%%%%%%%%%%")
+					else:
+						output.append(row)
+		else:
+			logging.info(ifn.status_code)       
+
+	myList = []
+	
+	for row in output:
+		myList.append(output_separator.join(map(str,row)))
+	
 	return myList
  
 def query_nGPulse_server(datasource, query, version=None, ssl=False):
@@ -661,21 +827,42 @@ def get_hostname(hostname, port):
 def get_protocol(ssl=True):
 	return 'https://' if ssl in [None, True] else 'http://'
 		
-def transformation(text, output_headers, transformations):
+def transformation(input_list, output_headers, transformations):
 	'''
-	Provides a CSV dictionary object that matches expected Service Output format.
-	It includes empty headers for columnns not present in the input text
+	Provides a CSV output with a defined header (supplied as input list output_headers) over an input list (, against a set of defined transformations
 	
-	text: a single string that contains a CSV file, with '\n' as line separator and ',' as field separator. 1st row is a header with column names
-	header: a list containing the name of columns expected in the output
-	e.g.
-	text= 'serviceId,targetTime,failedTransactions,totalTransactions,responseTime,failedPercentage,serviceId_String,targetTime_String\n122029775,1529208000000,0,63203,146333.6818896887,0.0,"O365 Authentication (Pune)","Sun Jun 17 00:00:00 EDT 2018"\n122030298,1529208000000,0,414200,280154.0962761872,0.0,"O365 Exchange (Pune)","Sun Jun 17 00:00:00 EDT 2018"\n148578737,1529208000000,0,60359,285514.9159168117,0.0,"SalesForce (Pune)","Sun Jun 17 00:00:00 EDT 2018"\n94846774,1529208000000,0,37689,73932.96659587379,0.0,"O365 SharepointOnline (San Jose)","Sun Jun 17 00:00:00 EDT 2018"\n143019858,1529208000000,0,30682,82367.30223308883,0.0,"O365 Exchange (San Jose)","Sun Jun 17 00:00:00 EDT 2018"\n122029802,1529208000000,24,98316,80757.40459491647,0.024411082,"O365 Authentication (San Jose)","Sun Jun 17 00:00:00 EDT 2018"\n146302544,1529208000000,0,34668,43192.169221000375,0.0,"SalesForce (San Jose)","Sun Jun 17 00:00:00 EDT 2018"'
+	Paramters
+	---------
+	
+	input_list: list
+	
+	This takes a list as input.  Each list element is a string consisting of multiple delimited elements, normally tab-separated. input_list may include a header, and these can be modified (or added, when missing) as a transformation
+	
+	output_headers: list
+	A list of elements that is added as the first row of the input response, acting as header of the resulting CSV output
+	
+	e.g. output_headers = ['customer', 'service', 'location', 'date', 'link', 'volume_in']
+	
+	transformations:
+	
+	A YAML-parsed data structure listing the transformation that apply to input_list. Transformations apply to two main blocks:
+	 - Header
+		add_header
+		modify_header
+	 - Transformations
+		simple
+		date
+		date_injection
 	 
-	headers = ['Customer', 'Service', 'Location', 'Date', 'mosBucket3In', 'mosBucket2In', 'mosBucket1In', 'ucServiceId', 'Total_Transactions', 'Avg_Good_Mos', 'Time', 'ucServiceId_String', 'targetTime_String']
+	Neither block is mandatory, so it is acceptable that a transformation is just used to conver a list to string with 
 	
+	Returns
+	-------
+	string
+	e.g.	'customer\tDeviceName\tDeviceIPAddress\tDeviceAlias\tDeviceStatus\tnG1ServerName\tDeviceType\tDeviceProtocolSettings\tDeviceActiveInterfaces\tDeviceInActiveInterfaces\tDeviceDescription\tDeviceNotes\tCommunicationProtocol\tReadCommunityString\tWriteCommunityString\tDevicePort\tNumberOfRetries\tTimeOut\tDeviceDownAlarm\tAddNetflowRoutersFlag\tvScoutForwardingDestinationCount\tDeviceUUID\tvScoutMode\tInterfaceName\tInterfaceAlias\tInterfaceNumber\tInterfacePortSpeed\tInterfaceLinkType\tInterfaceSpeed\tInterfaceStatus\tAlarmTemplateName\tVirtualization\tActiveInterfaces\tInActiveInterfaces\tnBAnASMonitoring\r\nNetscout\tAMFINF01\t10.5.50.25\tAmerican Fork INF 1\tACT\tWST-NG1\tNone\tGlobal\t4\t0\tInfinistream Model 6986B - CDM 5.5.0 (Build 914)\tNone\tHTTP\tnetscoutRO\tN3t$c0uT\t8080\t1\t5\ttrue\ttrue\t0\tNone\tNone\tif2054\tNone\t2054\tGigabitEthernet\tEnterprise\t1000000000\tABS\tDefault\tUNKNOWN\t0\t0\tfalse\r\nNetscout\tAMFINF01\t10.5.50.25\tAmerican Fork INF 1\tACT\tWST-NG1\tNone\tGlobal\t4\t0\tInfinistream Model 6986B - CDM 5.5.0 (Build 914)\tNone\tHTTP\tnetscoutRO\tN3t$c0uT\t8080\t1\t5\ttrue\ttrue\t0\tNone\tNone\tif2054\tNone\t2054\tGigabitEthernet\tEnterprise\t1000000000\tABS\tDefault\tUNKNOWN\t0\t0\tfalse\r\nNetscout\tAMFINF01\t10.5.50.25\tAmerican Fork INF 1\tACT\tWST-NG1\tNone\tGlobal\t4\t0\tInfinistream Model 6986B - CDM 5.5.0 (Build 914)\tNone\tHTTP\tnetscoutRO\tN3t$c0uT\t8080\t1\t5\ttrue\ttrue\t0\tNone\tNone\tif2054\tNone\t2054\tGigabitEthernet\tEnterprise\t1000000000\tABS\tDefault\tUNKNOWN\t0\t0\tfalse\r\nNetscout\tAMFINF01\t10.5.50.25\tAmerican Fork INF 1\tACT\tWST-NG1\tNone\tGlobal\t4\t0\tInfinistream Model 6986B - CDM 5.5.0 (Build 914)\tNone\tHTTP\tnetscoutRO\tN3t$c0uT\t8080\t1\t5\ttrue\ttrue\t0\tNone\tNone\tif2054\tNone\t2054\tGigabitEthernet\tEnterprise\t1000000000\tABS\tDefault\tUNKNOWN\t0\t0\tfalse\r\n'
 	'''
 
-	result_set = text
+	result_set = input_list
 	logging.debug(">>>======RESULT SET========")
 	logging.debug(result_set)
 	logging.debug("======RESULT SET========<<<<")

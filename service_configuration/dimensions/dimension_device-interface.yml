@@ -1,0 +1,48 @@
+---
+Service:
+ Customer: NTCT IT
+ Service_Category: Dimension_Device-Interface
+ Key: IT;Device-Interface
+ Description: Device and Interface Dimension information from nG1 API
+ query_file: nG1_queries/dimensions/device_interface.yml
+ logging: logs/dimensions_vaaspipe.log
+ logging_level: INFO
+ filename: Device-Interface_
+ date_format: '%Y%m%d_%H%M'
+ output_format:
+  - customer
+  - DeviceName
+  - DeviceIPAddress
+  - DeviceAlias # Change
+  - DeviceStatus # Change
+  - nG1ServerName
+  - DeviceType
+  - DeviceProtocolSettings
+  - DeviceActiveInterfaces # Change
+  - DeviceInActiveInterfaces # Change
+  - DeviceDescription # Change
+  - DeviceNotes # Change
+  - CommunicationProtocol
+  - ReadCommunityString
+  - WriteCommunityString
+  - DevicePort # Change 
+  - NumberOfRetries
+  - TimeOut
+  - DeviceDownAlarm
+  - AddNetflowRoutersFlag
+  - vScoutForwardingDestinationCount
+  - DeviceUUID # Change
+  - vScoutMode
+  - InterfaceName
+  - InterfaceAlias # Change
+  - InterfaceNumber
+  - InterfacePortSpeed # Change
+  - InterfaceLinkType
+  - InterfaceSpeed
+  - InterfaceStatus # Change
+  - AlarmTemplateName
+  - Virtualization
+  - ActiveInterfaces
+  - InActiveInterfaces
+  - nBAnASMonitoring
+...  

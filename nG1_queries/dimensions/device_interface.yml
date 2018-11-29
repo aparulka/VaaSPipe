@@ -1,0 +1,76 @@
+---
+Query:
+ device_api_header:
+ - DeviceName
+ - DeviceIPAddress
+ - Alias
+ - Status
+ - nG1ServerName
+ - DeviceType
+ - DeviceProtocolSettings
+ - ActiveInterfaces
+ - InActiveInterfaces
+ - Description
+ - Notes
+ - CommunicationProtocol
+ - ReadCommunityString
+ - WriteCommunityString
+ - Port
+ - NumberOfRetries
+ - TimeOut
+ - DeviceDownAlarm
+ - AddNetflowRoutersFlag
+ - vScoutForwardingDestinationCount
+ - UUID
+ - vScoutMode
+
+ interface_api_header:
+ - InterfaceName
+ - Alias
+ - InterfaceNumber
+ - PortSpeed
+ - InterfaceLinkType
+ - InterfaceSpeed
+ - Status
+ - AlarmTemplateName
+ - Virtualization
+ - ActiveInterfaces
+ - InActiveInterfaces
+ - nBAnASMonitoring
+ 
+ output_header:
+ - DeviceName
+ - DeviceIPAddress
+ - DeviceAlias # Change
+ - DeviceStatus # Change
+ - nG1ServerName
+ - DeviceType
+ - DeviceProtocolSettings
+ - DeviceActiveInterfaces # Change
+ - DeviceInActiveInterfaces # Change
+ - DeviceDescription # Change
+ - DeviceNotes # Change
+ - CommunicationProtocol
+ - ReadCommunityString
+ - WriteCommunityString
+ - DevicePort # Change 
+ - NumberOfRetries
+ - TimeOut
+ - DeviceDownAlarm
+ - AddNetflowRoutersFlag
+ - vScoutForwardingDestinationCount
+ - DeviceUUID # Change
+ - vScoutMode
+ - InterfaceName
+ - InterfaceAlias # Change
+ - InterfaceNumber
+ - InterfacePortSpeed # Change
+ - InterfaceLinkType
+ - InterfaceSpeed
+ - InterfaceStatus # Change
+ - AlarmTemplateName
+ - Virtualization
+ - ActiveInterfaces
+ - InActiveInterfaces
+ - nBAnASMonitoring
+ ...

@@ -1,0 +1,4 @@
+Transformations:
+ customer:
+  type: simple
+  default: Netscout
