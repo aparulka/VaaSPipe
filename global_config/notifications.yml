@@ -4,5 +4,6 @@ Notifications:
  password:
  from: Netscout-IT-nGenius@netscout.com
  receiver:
+  - eduardo.rodriguez@netscout.com
 #  - mbvmsmrcvr@netscout.com
 #  - MbPremiumManagedServices@netscout.com

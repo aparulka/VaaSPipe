@@ -66,7 +66,7 @@ elif service['Service']['Service_Category'] in ['Dimension_Device-Interface']:
                datasource.get('nG1_API').get('password'),                      
                ssl=datasource.get('nG1_API').get('ssl')
                )
-	else:
+else:
 	raise Exception(service['Service_Category']+' is not a valid Service Category')
 								   								   
 								   
