@@ -2,7 +2,7 @@
 Service:
  Customer: NTCT IT
  Service_Category: Dimension_Device-Interface
- Key: IT;Device-Interface
+ Key: IT;Dimension;Device-Interface;Daily
  Description: Device and Interface Dimension information from nG1 API
  query_file: nG1_queries/dimensions/device_interface.yml
  logging: logs/dimensions_vaaspipe.log
