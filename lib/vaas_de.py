@@ -169,46 +169,9 @@ def device_extraction(host,port,query,user,password, ssl=True, verify=False):
 	protocol = get_protocol(ssl)
 	hostname = get_hostname(host, str(port))
 
-	device_api_header = [
-		'DeviceName',
-		'DeviceIPAddress',
-		'Alias',
-		'Status',
-		'nG1ServerName',
-		'DeviceType',
-		'DeviceProtocolSettings',
-		'ActiveInterfaces',
-		'InActiveInterfaces',
-		'Description',
-		'Notes',
-		'CommunicationProtocol',
-		'ReadCommunityString',
-		'WriteCommunityString',
-		'Port',
-		'NumberOfRetries',
-		'TimeOut',
-		'DeviceDownAlarm',
-		'AddNetflowRoutersFlag',
-		'vScoutForwardingDestinationCount',
-		'UUID',
-		'vScoutMode'
-	]
+	device_api_header = query['device_api_header']
 
-	interface_api_header = [
-		'InterfaceName',
-		'Alias',
-		'InterfaceNumber',
-		'PortSpeed',
-		'InterfaceLinkType',
-		'InterfaceSpeed',
-		'Status',
-		'AlarmTemplateName',
-		'Virtualization',
-		'ActiveInterfaces',
-		'InActiveInterfaces',
-		'nBAnASMonitoring'
-	]
-	
+	interface_api_header = query['interface_api_header']
 	
 	output_header = query['output_header']
 	
@@ -229,11 +192,11 @@ def device_extraction(host,port,query,user,password, ssl=True, verify=False):
 						else [devices['DeviceConfigurations']['DeviceConfiguration']]
 
 	for dvc in device_list:
-		row = [None]*(len(device_api_header) + len(interface_api_header))
+		row = ['']*(len(device_api_header) + len(interface_api_header))
 
 		for el in dvc.items():
 			try:
-				row[device_api_header.index(el[0])]=el[1]
+				row[device_api_header.index(el[0])]=el[1] or ''
 			except:
 				logging.info("error:"+el[0])
 				logging.info(dvc['DeviceName'])
@@ -264,7 +227,7 @@ def device_extraction(host,port,query,user,password, ssl=True, verify=False):
 				for ifn_desc in ifn_list:
 					try:
 						for el in ifn_desc.items():
-							row[interface_api_header.index(el[0])+len(device_api_header)]=el[1]
+							row[interface_api_header.index(el[0])+len(device_api_header)]=el[1] or ''
 					except Exception as e:
 						logging.info("%%%%%%%%%%")
 						logging.info(e)
@@ -273,7 +236,9 @@ def device_extraction(host,port,query,user,password, ssl=True, verify=False):
 						logging.info(dvc['DeviceName'])
 						logging.info("%%%%%%%%%%")
 					else:
-						output.append(row)
+						output.append(row.copy())
+						row[len(device_api_header):]=['']*len(interface_api_header) # reset interface part of row, leaving device part untouched
+						
 		else:
 			logging.info(ifn.status_code)       
 
@@ -888,8 +853,20 @@ def transformation(input_list, output_headers, transformations):
 	logging.debug(result_set)
 	api_headers= result_set.pop(0).split(output_separator)
 	logging.debug(api_headers)
-	api_body = list(map(lambda x: x.replace('"','').split(output_separator),result_set)) 
-	
+
+	# api_body = list(map(lambda x: x.replace('"','').split(output_separator),result_set))
+
+	trans1 = str.maketrans('','','""') # remove "
+	trans2 = str.maketrans('\n', '.',) # map \n to .
+	trans3 = str.maketrans('','','\r') # remove \r
+
+	api_body = list(map(
+		lambda r: r.translate(trans1).
+					translate(trans2).
+					translate(trans3).    
+					split(output_separator),
+		result_set))
+
 	
 	transformed = []
 	transformed.append(output_headers)
@@ -915,7 +892,8 @@ def transformation(input_list, output_headers, transformations):
 						eRow.append(transformation_date(result, api_headers, out_field, transformations[out_field]))
 					if 	transformations[out_field]['type'] == 'date_injection':
 						eRow.append(transformation_date_injection(result, api_headers, out_field, transformations[out_field]))							
-			logging.info(eRow)			
+			logging.info(eRow)
+			
 			transformed.append(eRow)
 	else:
 		transformed = transformed + api_body
