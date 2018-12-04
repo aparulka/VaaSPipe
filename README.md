@@ -86,6 +86,8 @@ After testing the feature and getting approval, you'll be ready to merge to mast
 
 ```
 - git checkout master
+if you need to discard any local changes on that branch, issue
+- git checkout master -f
 - git pull origin master
 - git merge first_updates
 - git push origin master
