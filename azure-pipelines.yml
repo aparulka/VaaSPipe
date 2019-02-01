@@ -10,15 +10,7 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  imageName: 'github:$(build.buildId)'
+  imageName: 'mtvaas.azurecr.io/github:$(build.buildId)'
 
 steps:
-- script: 
-docker login mtvaas.azurecr.io -u mtvaas -p lBS15R=rBhF9PSBfCXrZUfuZ5CcXtfRF
-docker build -f Dockerfile -t $(imageName) .
-  displayName: 'docker build'
-inputs:
-  command: 'Push an image'
-  containerregistrytype: 'Azure Container Registry'
-  azureContainerRegistry: 'mtvaas.azurecr.io'
-  imageName: 'mtvaas.azurecr.io/github:$(Build.BuildId)'
+- script: docker login mtvaas.azurecr.io -u mtvaas -p lBS15R=rBhF9PSBfCXrZUfuZ5CcXtfRF docker build -f Dockerfile -t $(imageName) .
