@@ -13,5 +13,5 @@ variables:
   imageName: 'mtvaas.azurecr.io/github:$(build.buildId)'
 
 steps:
-- script: docker login mtvaas.azurecr.io -u mtvaas -p lBS15R=rBhF9PSBfCXrZUfuZ5CcXtfRF . 
+- script: docker login -u mtvaas -p lBS15R=rBhF9PSBfCXrZUfuZ5CcXtfRF mtvaas.azurecr.io . 
 - script: docker build -f Dockerfile -t $(imageName) .
